@@ -105,12 +105,12 @@ export function LandingPage() {
         <section className="program-hero">
           <div className="landing-shell hero-layout">
             <div className="program-hero-copy">
-              <p className="eyebrow">Four weeks of focused recruiting support</p>
-              <h1>Recruiting season is here. <em>Let&apos;s make a plan.</em></h1>
+              <p className="eyebrow">A focused four-week recruiting reset</p>
+              <h1>Recruiting season is here. <em>Apply with a strategy.</em></h1>
               <p className="hero-lede">
-                Practical, personalized mentorship for college students pursuing software
-                engineering internships and new-grad roles. Get clear on what is working,
-                what is not, and what to do next.
+                Personalized mentorship for college students pursuing software
+                engineering internships and new-grad roles—especially across big tech,
+                fintech, payments, and competitive technical environments.
               </p>
               <div className="hero-actions">
                 <ApplicationButton />
@@ -123,8 +123,8 @@ export function LandingPage() {
 
             <aside className="strategy-card" aria-label="Program strategy">
               <div className="strategy-card-heading">
-                <span>Your four-week roadmap</span>
-                <small>6 students max</small>
+                <span>Four-week strategy brief</span>
+                <small>Founding cohort</small>
               </div>
               <ol>
                 <li><span>01</span><div><strong>Diagnose</strong><small>Find the real recruiting bottleneck.</small></div></li>
@@ -257,12 +257,12 @@ export function LandingPage() {
             <div className="founder-mark" aria-hidden="true"><span>KC</span></div>
             <div>
               <p className="eyebrow">Your mentor</p>
-              <h2 id="founder-title">Real recruiting context, shared by someone who wants students to win.</h2>
+              <h2 id="founder-title">Strategy shaped by engineering, fintech, and student community work.</h2>
               <p>
-                Hi, I&apos;m Kelly—a software engineer, product builder, speaker, and community
-                leader. My experience spans Visa, JPMorgan Chase, Bloomberg, early-career
-                programs, and years of supporting students. I built this program to turn
-                recruiting advice into a plan you can actually use.
+                Kelly Chen is a software engineer, product builder, speaker, and community
+                leader whose experience spans Visa, JPMorgan Chase, Bloomberg, early-career
+                programs, and student mentorship. The program translates that context into
+                practical frameworks—not employer access.
               </p>
               <div className="experience-row" aria-label="Experience informing the program">
                 <strong>Visa</strong><strong>JPMorgan Chase</strong><strong>Bloomberg</strong>
@@ -279,12 +279,12 @@ export function LandingPage() {
         <section className="landing-section pricing-section" aria-labelledby="pricing-title">
           <div className="landing-shell pricing-layout">
             <SectionHeading
-              eyebrow="Program fee"
-              title="One simple price for four weeks of personalized support."
+              eyebrow="Founding cohort"
+              title="One transparent price. Personalized support throughout."
               id="pricing-title"
             />
             <div className="price-card">
-              <span>Founding cohort fee</span>
+              <span>Founding price</span>
               <strong>${program.price}</strong>
               <p>Paid privately after acceptance. There is no public checkout.</p>
               <div><span>Optional feedback credit</span><strong>−${program.feedbackCredit}</strong></div>
@@ -432,3 +432,4 @@ export function FaqPage() {
     </div>
   );
 }
+

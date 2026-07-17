@@ -298,11 +298,11 @@ function ApplicationPage() {
 
       <main className="application-shell">
         <aside className="application-intro">
-          <p className="eyebrow">A quick introduction</p>
-          <h1>Tell Kelly where you are—and where you want to go.</h1>
+          <p className="eyebrow">Founding cohort application</p>
+          <h1>Tell us where you are—and where you want to go.</h1>
           <p className="intro-copy">
-            There are no trick questions. This helps Kelly understand your goals,
-            where recruiting feels stuck, and whether the program is the right fit.
+            This application helps Kelly understand your recruiting context, goals,
+            and readiness for a focused four-week experience.
           </p>
 
           <dl className="program-facts">
