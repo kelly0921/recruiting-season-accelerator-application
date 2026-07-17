@@ -144,7 +144,7 @@ export function LandingPage() {
           <div className="landing-shell snapshot-layout">
             <div>
               <p className="eyebrow">Program at a glance</p>
-              <h2 id="snapshot-title">Small by design. Structured for momentum.</h2>
+              <h2 id="snapshot-title">Small cohort. Focused support.</h2>
               <p>A deliberately limited cohort creates room for useful context, direct feedback, and individual strategy.</p>
             </div>
             <dl className="snapshot-grid">
@@ -160,7 +160,7 @@ export function LandingPage() {
           <div className="landing-shell">
             <SectionHeading
               eyebrow="Start with the bottleneck"
-              title="You do not need more generic advice. You need to know what to fix next."
+              title="Find the bottleneck that matters most."
               body="The program is built for students who have already started—but are unsure which change will create the most recruiting leverage."
               id="fit-title"
             />
@@ -202,7 +202,7 @@ export function LandingPage() {
           <div className="landing-shell">
             <SectionHeading
               eyebrow="What’s included"
-              title="A connected recruiting system—not a stack of bonuses."
+              title="Everything works together."
               body="Each part supports the same progression: diagnose, position, apply, adjust, and decide."
               id="program-title"
             />
@@ -219,7 +219,7 @@ export function LandingPage() {
             <div className="journey">
               <div className="journey-heading">
                 <p className="eyebrow">The four-week journey</p>
-                <h3>From uncertainty to a focused continuation plan.</h3>
+                <h3>Four weeks. One focused plan.</h3>
               </div>
               <ol>
                 {journey.map(([week, title, body]) => (
@@ -239,7 +239,7 @@ export function LandingPage() {
           <div className="landing-shell outcome-layout">
             <SectionHeading
               eyebrow="Leave with direction"
-              title="Know what is limiting your progress—and what to do next."
+              title="Leave knowing what to do next."
               id="outcomes-title"
             />
             <ul className="outcome-list">
@@ -257,7 +257,7 @@ export function LandingPage() {
             <div className="founder-mark" aria-hidden="true"><span>KC</span></div>
             <div>
               <p className="eyebrow">Your mentor</p>
-              <h2 id="founder-title">Strategy shaped by engineering, fintech, and student community work.</h2>
+              <h2 id="founder-title">Meet Kelly, your mentor.</h2>
               <p>
                 Kelly Chen is a software engineer, product builder, speaker, and community
                 leader whose experience spans Visa, JPMorgan Chase, Bloomberg, early-career
@@ -280,7 +280,7 @@ export function LandingPage() {
           <div className="landing-shell pricing-layout">
             <SectionHeading
               eyebrow="Founding cohort"
-              title="One transparent price. Personalized support throughout."
+              title="Four weeks of personalized support."
               id="pricing-title"
             />
             <div className="price-card">
@@ -297,7 +297,7 @@ export function LandingPage() {
 
         <section className="landing-section timeline-section" id="timeline" aria-labelledby="timeline-title">
           <div className="landing-shell">
-            <SectionHeading eyebrow="Important dates" title="A short application window before recruiting accelerates." id="timeline-title" />
+            <SectionHeading eyebrow="Important dates" title="Key dates for the founding cohort." id="timeline-title" />
             <ol className="date-timeline">
               <li><span>01</span><div><strong>Applications</strong><time>{program.applicationDates}</time></div></li>
               <li><span>02</span><div><strong>Decisions</strong><time>{program.decisionDates}</time></div></li>
@@ -308,7 +308,7 @@ export function LandingPage() {
 
         <section className="landing-section faq-section" id="faq" aria-labelledby="faq-title">
           <div className="landing-shell faq-layout">
-            <SectionHeading eyebrow="Questions" title="Know what you are applying for." id="faq-title" />
+            <SectionHeading eyebrow="Questions" title="Before you apply." id="faq-title" />
             <div className="faq-list">
               {faqs.slice(0, 5).map((item) => (
                 <details key={item.question}>
@@ -324,7 +324,7 @@ export function LandingPage() {
         <section className="final-cta">
           <div className="landing-shell">
             <p className="eyebrow">Founding cohort · {program.capacity} students maximum</p>
-            <h2>Build your recruiting strategy before the season gets away from you.</h2>
+            <h2>Ready to build a clearer recruiting plan?</h2>
             <p>Review the questions, prepare your resume, and tell Kelly what you need help solving.</p>
             <ApplicationButton />
           </div>

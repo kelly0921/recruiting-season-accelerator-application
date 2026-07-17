@@ -2957,3 +2957,49 @@ body {
     margin-top: 14px;
   }
 }
+
+/* Shorter, calmer section-heading typography. */
+.snapshot h2,
+.landing-section-heading h2,
+.journey-heading h3,
+.founder-layout h2,
+.final-cta h2 {
+  max-width: 720px;
+  font-size: clamp(2.15rem, 4.1vw, 3.85rem);
+  font-weight: 740;
+  letter-spacing: -0.04em;
+  line-height: 1.04;
+  text-wrap: balance;
+}
+
+.snapshot h2 {
+  font-size: clamp(2rem, 3.5vw, 3.15rem);
+}
+
+.landing-section-heading > p:last-child {
+  max-width: 720px;
+  margin-top: 18px;
+}
+
+.included-outcomes .landing-section-heading h2,
+.outcome-section .landing-section-heading h2,
+.timeline-section .landing-section-heading h2 {
+  font-size: clamp(2rem, 3.4vw, 3.15rem);
+}
+
+.fit-panel h3 {
+  font-size: clamp(1.55rem, 2.4vw, 1.9rem);
+  line-height: 1.12;
+  text-wrap: balance;
+}
+
+@media (max-width: 620px) {
+  .snapshot h2,
+  .landing-section-heading h2,
+  .journey-heading h3,
+  .founder-layout h2,
+  .final-cta h2 {
+    font-size: clamp(2rem, 10vw, 2.9rem);
+    line-height: 1.06;
+  }
+}
