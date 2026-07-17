@@ -1,22 +1,28 @@
 import React from 'react';
 import { applicationAction, applicationState, program } from './program.js';
 
-export function ProgramHeader({ compact = false }) {
+export function ProgramHeader({ compact = false, applicationPage = false }) {
   const action = applicationAction(applicationState());
+  const headerAction = applicationPage
+    ? { label: 'Back to Program', href: '/' }
+    : action;
 
   return (
     <header className={compact ? 'site-header compact' : 'site-header'}>
-      <a className="brand" href="/" aria-label={`${program.name} home`}>
-        <span><img src="/kelly-logo.svg" alt="" /></span>
-        <strong>{program.name}</strong>
-      </a>
+      <div className="brand-lockup">
+        <a className="brand" href="/" aria-label={`${program.name} home`}>
+          <span><img src="/kelly-logo.svg" alt="" /></span>
+          <strong>{program.name}</strong>
+        </a>
+        <a className="brand-by" href={program.portfolioUrl}>by Kelly Chen</a>
+      </div>
       <nav className="program-nav" aria-label="Program navigation">
         <a href="/#fit">Who it&apos;s for</a>
         <a href="/#program">Program</a>
         <a href="/#timeline">Timeline</a>
         <a href="/faq">FAQ</a>
       </nav>
-      <a className="header-cta" href={action.href}>{action.label}</a>
+      <a className="header-cta" href={headerAction.href}>{headerAction.label}</a>
     </header>
   );
 }

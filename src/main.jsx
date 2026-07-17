@@ -294,15 +294,15 @@ function ApplicationPage() {
 
   return (
     <div className="application-page">
-      <ProgramHeader compact />
+      <ProgramHeader compact applicationPage />
 
       <main className="application-shell">
         <aside className="application-intro">
           <p className="eyebrow">Founding cohort application</p>
           <h1>Tell us where you are—and where you want to go.</h1>
           <p className="intro-copy">
-            This application helps Kelly understand your recruiting context, goals,
-            and readiness for a focused four-week experience.
+            Help Kelly understand your goals, where recruiting feels stuck, and whether
+            this four-week program is the right fit.
           </p>
 
           <dl className="program-facts">
