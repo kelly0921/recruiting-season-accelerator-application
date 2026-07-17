@@ -2757,3 +2757,203 @@ body {
     border-bottom: 0;
   }
 }
+
+/* Consolidate sparse sections into six denser visual chapters. */
+.snapshot-layout {
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.landing-section {
+  padding: 78px 0;
+}
+
+.journey {
+  margin-top: 56px;
+  padding-top: 52px;
+}
+
+.journey ol {
+  margin-top: 34px;
+}
+
+/* Program and outcomes read as one chapter. */
+.included-section {
+  padding-bottom: 56px;
+}
+
+.outcome-section {
+  background: var(--paper-soft);
+  padding-top: 0;
+  padding-bottom: 78px;
+}
+
+.outcome-section .outcome-layout {
+  border-top: 1px solid var(--line);
+  padding-top: 52px;
+}
+
+.outcome-section .landing-section-heading h2 {
+  font-size: clamp(2.2rem, 3.9vw, 3.55rem);
+  line-height: 0.98;
+}
+
+.founder-section {
+  padding-top: 80px;
+  padding-bottom: 80px;
+}
+
+/* Pricing and dates read as one chapter. */
+.pricing-section {
+  padding-bottom: 54px;
+}
+
+.timeline-section {
+  background: var(--mint);
+  padding-top: 0;
+  padding-bottom: 78px;
+}
+
+.timeline-section .landing-shell {
+  border-top: 1px solid rgba(79, 111, 232, 0.16);
+  padding-top: 48px;
+}
+
+.timeline-section .landing-section-heading {
+  display: grid;
+  max-width: none;
+  grid-template-columns: minmax(170px, 0.4fr) minmax(0, 1.6fr);
+  align-items: end;
+  gap: 30px;
+}
+
+.timeline-section .landing-section-heading .eyebrow {
+  margin: 0;
+}
+
+.timeline-section .landing-section-heading h2 {
+  max-width: 680px;
+  font-size: clamp(2rem, 3.6vw, 3.25rem);
+  line-height: 0.98;
+}
+
+.date-timeline {
+  margin-top: 34px;
+}
+
+/* Questions and the application CTA read as one chapter. */
+.faq-section {
+  padding-bottom: 52px;
+}
+
+.final-cta {
+  background: var(--paper-soft);
+  color: var(--navy);
+  text-align: left;
+}
+
+.final-cta .landing-shell {
+  display: grid;
+  width: min(1120px, calc(100% - 48px));
+  max-width: none;
+  grid-template-columns: minmax(0, 1fr) auto;
+  justify-items: start;
+  align-items: center;
+  gap: 10px 44px;
+  border-top: 1px solid var(--line);
+  padding-top: 50px;
+  padding-bottom: 72px;
+}
+
+.final-cta .eyebrow,
+.final-cta h2,
+.final-cta p:not(.eyebrow) {
+  grid-column: 1;
+}
+
+.final-cta .eyebrow {
+  margin: 0;
+  color: var(--blue);
+}
+
+.final-cta h2 {
+  max-width: 720px;
+  color: var(--navy);
+  font-size: clamp(2.15rem, 3.8vw, 3.5rem);
+  line-height: 0.98;
+}
+
+.final-cta p:not(.eyebrow) {
+  max-width: 650px;
+  margin: 4px 0 0;
+  color: var(--copy);
+}
+
+.final-cta .button {
+  grid-column: 2;
+  grid-row: 1 / 4;
+  align-self: center;
+  margin: 0;
+  border-color: var(--blue);
+  background: var(--blue);
+  color: white;
+}
+
+@media (max-width: 920px) {
+  .timeline-section .landing-section-heading {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
+
+@media (max-width: 620px) {
+  .snapshot-layout {
+    padding-top: 42px;
+    padding-bottom: 42px;
+  }
+
+  .landing-section {
+    padding: 62px 0;
+  }
+
+  .included-section {
+    padding-bottom: 44px;
+  }
+
+  .outcome-section {
+    padding-bottom: 62px;
+  }
+
+  .outcome-section .outcome-layout {
+    padding-top: 44px;
+  }
+
+  .pricing-section {
+    padding-bottom: 42px;
+  }
+
+  .timeline-section {
+    padding-bottom: 62px;
+  }
+
+  .timeline-section .landing-shell {
+    padding-top: 40px;
+  }
+
+  .faq-section {
+    padding-bottom: 42px;
+  }
+
+  .final-cta .landing-shell {
+    width: min(100% - 32px, 1120px);
+    grid-template-columns: 1fr;
+    padding-top: 42px;
+    padding-bottom: 58px;
+  }
+
+  .final-cta .button {
+    grid-column: 1;
+    grid-row: auto;
+    margin-top: 14px;
+  }
+}
