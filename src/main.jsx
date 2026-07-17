@@ -1,12 +1,12 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import './styles.css';
+import { FaqPage, LandingPage, PolicyPage } from './LandingPage.jsx';
+import { applicationState, program } from './program.js';
+import { ProgramFooter, ProgramHeader } from './siteChrome.jsx';
 
-const programUrl =
-  'https://kelly-recruiting-accelerator.kellychenmeiyi.chatgpt.site/recruiting-season-accelerator';
-const contactEmail = 'kellychenmeiyi@gmail.com';
-const applicationOpenAt = new Date('2026-07-22T00:00:00-04:00');
-const applicationCloseAt = new Date('2026-08-02T23:59:59-04:00');
+const programUrl = '/';
+const contactEmail = program.contactEmail;
 
 const steps = [
   { id: 'about', label: 'About you' },
@@ -62,12 +62,6 @@ const experienceOptions = [
   'Recruiting for a new-grad role',
   'Deciding which roles or companies to pursue',
 ];
-
-function applicationState(now = new Date()) {
-  if (now < applicationOpenAt) return 'opening-soon';
-  if (now > applicationCloseAt) return 'closed';
-  return 'open';
-}
 
 function CheckboxGroup({ legend, name, options, help, max }) {
   return (
@@ -163,7 +157,7 @@ function Turnstile({ onToken }) {
   return <div className="turnstile" ref={container} aria-label="Spam protection" />;
 }
 
-function App() {
+function ApplicationPage() {
   const [currentStep, setCurrentStep] = useState(0);
   const [status, setStatus] = useState('idle');
   const [message, setMessage] = useState('');
@@ -300,13 +294,7 @@ function App() {
 
   return (
     <div className="application-page">
-      <header className="site-header">
-        <a className="brand" href={programUrl} aria-label="Recruiting Season Accelerator program details">
-          <span>KC</span>
-          <strong>Recruiting Season Accelerator</strong>
-        </a>
-        <a className="back-link" href={programUrl}>Program details <span aria-hidden="true">↗</span></a>
-      </header>
+      <ProgramHeader compact />
 
       <main className="application-shell">
         <aside className="application-intro">
@@ -528,19 +516,33 @@ function App() {
         </section>
       </main>
 
-      <footer>
-        <p>
-          Independent educational program operated by Kelly Chen. Not affiliated
-          with or endorsed by Bloomberg or any current or former employer.
-        </p>
-        <a href={programUrl}>Program details and policies</a>
-      </footer>
+      <ProgramFooter />
     </div>
   );
 }
 
+function Router() {
+  const path = window.location.pathname.replace(/\/+$/, '') || '/';
+  const titles = {
+    '/': 'Recruiting Season Accelerator | Kelly Chen',
+    '/apply': 'Apply | Recruiting Season Accelerator',
+    '/terms': 'Participant Terms | Recruiting Season Accelerator',
+    '/privacy': 'Privacy Notice | Recruiting Season Accelerator',
+    '/refund': 'Refund Policy | Recruiting Season Accelerator',
+    '/faq': 'FAQ | Recruiting Season Accelerator',
+  };
+  document.title = titles[path] || titles['/'];
+
+  if (path === '/apply') return <ApplicationPage />;
+  if (path === '/terms') return <PolicyPage type="terms" />;
+  if (path === '/privacy') return <PolicyPage type="privacy" />;
+  if (path === '/refund') return <PolicyPage type="refund" />;
+  if (path === '/faq') return <FaqPage />;
+  return <LandingPage />;
+}
+
 createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <App />
+    <Router />
   </React.StrictMode>,
 );

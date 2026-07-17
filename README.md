@@ -1,11 +1,13 @@
 # Recruiting Season Accelerator Application
 
-Standalone application portal for Kelly Chen's six-person 2026 Recruiting Season
-Accelerator founding cohort.
+Unified program microsite and application portal for Kelly Chen's six-person 2026
+Recruiting Season Accelerator founding cohort.
 
 ## What this repository contains
 
-- A responsive, accessible five-step React application
+- A responsive program-details landing page
+- A coordinated, accessible five-step React application
+- Program FAQ, Participant Terms, Privacy Notice, and Refund Policy routes
 - Cloudflare Pages Function submission handling
 - Cloudflare Turnstile server-side verification
 - D1 application-record storage
@@ -14,6 +16,17 @@ Accelerator founding cohort.
 
 Applicant data, resumes, API secrets, payment links, and private program links must
 never be committed to this repository.
+
+## Public routes
+
+| Route | Purpose |
+| --- | --- |
+| `/` | Program details |
+| `/apply` | Founding-cohort application |
+| `/faq` | Program questions |
+| `/terms` | Participant Terms |
+| `/privacy` | Privacy Notice |
+| `/refund` | Refund and Feedback Credit Policy |
 
 ## Local development
 
@@ -88,4 +101,3 @@ Deploy again after adding bindings or environment variables.
 npm test
 npm run build
 ```
-

@@ -1,10 +1,15 @@
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 import {
   getApplicationState,
   maxResumeBytes,
   validateApplication,
 } from '../functions/_shared/validation.js';
+
+const landingSourceUrl = new URL('../src/LandingPage.jsx', import.meta.url);
+const applicationSourceUrl = new URL('../src/main.jsx', import.meta.url);
+const chromeSourceUrl = new URL('../src/siteChrome.jsx', import.meta.url);
 
 const testFile = (
   name = 'resume.pdf',
@@ -96,5 +101,27 @@ test('resume uploads must be PDFs no larger than 5 MB', () => {
   assert.match(
     validateApplication(tooLarge, new Date('2026-07-25T12:00:00-04:00')),
     /5 MB/,
+  );
+});
+
+test('the Cloudflare microsite contains details, application, and policy navigation', async () => {
+  const [landing, application, chrome] = await Promise.all([
+    readFile(landingSourceUrl, 'utf8'),
+    readFile(applicationSourceUrl, 'utf8'),
+    readFile(chromeSourceUrl, 'utf8'),
+  ]);
+
+  assert.match(landing, /Recruiting season is here/);
+  assert.match(landing, /Weekly workshops/);
+  assert.match(landing, /Private sessions/);
+  assert.match(landing, /Participant Terms/);
+  assert.match(application, /path === '\/apply'/);
+  assert.match(application, /<ApplicationPage/);
+  assert.match(chrome, /href="\/terms"/);
+  assert.match(chrome, /href="\/privacy"/);
+  assert.match(chrome, /href="\/refund"/);
+  assert.doesNotMatch(
+    `${landing}${application}${chrome}`,
+    /kelly-recruiting-accelerator\.kellychenmeiyi\.chatgpt\.site/,
   );
 });
