@@ -2323,3 +2323,306 @@ textarea:focus {
     padding: 52px 16px 72px;
   }
 }
+
+/* Final light-theme cascade: keep dark ink as an accent, not a surface. */
+.announcement {
+  background: #3157d5;
+  color: rgba(255, 255, 255, 0.84);
+}
+
+.header-cta,
+.button {
+  border-color: #ff765f;
+  border-radius: 999px;
+  background: #ff765f;
+  box-shadow: 0 5px 0 #d94f3c;
+  color: #291f2a;
+}
+
+.program-hero {
+  border-bottom: 0;
+  background:
+    radial-gradient(circle at 90% 10%, rgba(255, 209, 102, 0.62), transparent 23%),
+    radial-gradient(circle at 70% 92%, rgba(223, 247, 240, 0.95), transparent 29%),
+    linear-gradient(135deg, #f2efff 0%, #fffaf4 72%);
+  color: #243150;
+}
+
+.program-hero .eyebrow {
+  color: #3157d5;
+}
+
+.program-hero-copy h1 {
+  color: #243150;
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  font-size: clamp(3.2rem, 6.5vw, 6rem);
+  font-weight: 900;
+  letter-spacing: -0.07em;
+  line-height: 0.94;
+}
+
+.program-hero-copy h1 em {
+  display: inline;
+  color: #3157d5;
+  background-image: linear-gradient(transparent 76%, rgba(255, 118, 95, 0.42) 0);
+}
+
+.hero-lede {
+  color: #59647b;
+}
+
+.program-hero .button {
+  border-color: #ff765f;
+  background: #ff765f;
+  color: #291f2a;
+}
+
+.program-hero .text-link {
+  color: #3157d5;
+}
+
+.hero-microcopy {
+  color: #737c91;
+}
+
+.strategy-card {
+  border: 2px solid #5b68a7;
+  background: white;
+  box-shadow: 12px 14px 0 #ffd166;
+  color: #243150;
+}
+
+.strategy-card-heading {
+  border-bottom-color: #dfe3f0;
+  background: #ecebff;
+}
+
+.strategy-card-heading small {
+  color: #243150;
+}
+
+.strategy-card li {
+  border-bottom-color: #dfe3f0;
+}
+
+.strategy-card li > span {
+  color: #3157d5;
+  font-family: inherit;
+}
+
+.strategy-card li small {
+  color: #6a7388;
+}
+
+.strategy-card-result {
+  background: #dff7f0;
+}
+
+.strategy-card-result span {
+  color: #3157d5;
+}
+
+.snapshot {
+  background: white;
+}
+
+.snapshot h2,
+.landing-section-heading h2,
+.journey-heading h3,
+.founder-layout h2,
+.final-cta h2,
+.application-intro h1,
+.form-heading h2,
+.policy-shell h1,
+.policy-sections h2 {
+  color: #243150;
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  font-weight: 850;
+}
+
+.snapshot-grid > div::before {
+  display: none;
+}
+
+.snapshot-grid > div:nth-child(1) { background: #ecebff; }
+.snapshot-grid > div:nth-child(2) { background: #dff7f0; }
+.snapshot-grid > div:nth-child(3) { background: #fff1ed; }
+.snapshot-grid > div:nth-child(4) { background: #fff5d8; }
+
+.snapshot-grid dt {
+  color: #3157d5;
+  font-family: inherit;
+}
+
+.bottleneck-grid article > span,
+.included-grid article > span {
+  color: #ff765f;
+  font-family: inherit;
+}
+
+.bottleneck-grid h3,
+.fit-panel h3,
+.included-grid h3 {
+  color: #243150;
+  font-family: inherit;
+  font-weight: 850;
+}
+
+.included-section {
+  background: #eef2ff;
+  color: #243150;
+}
+
+.included-section .landing-section-heading h2,
+.included-section .journey-heading h3,
+.included-grid h3 {
+  color: #243150;
+}
+
+.included-section .landing-section-heading > p:last-child,
+.included-grid p,
+.journey li p,
+.journey > small {
+  color: #59647b;
+}
+
+.included-section .eyebrow,
+.pricing-section .eyebrow {
+  color: #3157d5;
+}
+
+.included-grid article {
+  border: 0;
+  background: white;
+}
+
+.journey {
+  border-top-color: rgba(49, 87, 213, 0.16);
+}
+
+.journey ol {
+  gap: 12px;
+  background: transparent;
+}
+
+.journey li {
+  background: white;
+}
+
+.journey li > span {
+  color: #3157d5;
+}
+
+.journey h4 {
+  color: #243150;
+  font-family: inherit;
+  font-weight: 850;
+}
+
+.outcome-section,
+.faq-section,
+.policy-main {
+  background: #fffaf4;
+}
+
+.pricing-section {
+  background:
+    radial-gradient(circle at 14% 85%, rgba(255, 118, 95, 0.18), transparent 22%),
+    #fff3c9;
+  color: #243150;
+}
+
+.pricing-section .landing-section-heading h2 {
+  color: #243150;
+}
+
+.price-card {
+  border: 2px solid #5b68a7;
+  background: white;
+  box-shadow: 12px 14px 0 #ff765f;
+  color: #243150;
+}
+
+.price-card > span {
+  color: #3157d5;
+}
+
+.price-card > strong {
+  color: #3157d5;
+  font-family: inherit;
+  font-weight: 900;
+}
+
+.price-card > p,
+.price-card > small {
+  color: #59647b;
+}
+
+.price-card > div {
+  border-top-color: #dfe3f0;
+}
+
+.price-card .button {
+  border-color: #3157d5;
+  background: #3157d5;
+  box-shadow: 0 5px 0 #1f40ae;
+  color: white;
+}
+
+.date-timeline li > span {
+  color: #3157d5;
+  font-family: inherit;
+}
+
+.final-cta {
+  background:
+    radial-gradient(circle at 10% 20%, rgba(255, 209, 102, 0.72), transparent 22%),
+    radial-gradient(circle at 90% 75%, rgba(223, 247, 240, 0.9), transparent 25%),
+    #ecebff;
+  color: #243150;
+}
+
+.final-cta h2 {
+  color: #243150;
+}
+
+.final-cta .eyebrow {
+  color: #3157d5;
+}
+
+.final-cta p:not(.eyebrow) {
+  color: #59647b;
+}
+
+.final-cta .button {
+  border-color: #ff765f;
+  background: #ff765f;
+  box-shadow: 0 5px 0 #d94f3c;
+  color: #291f2a;
+}
+
+.application-page {
+  background:
+    radial-gradient(circle at 5% 15%, rgba(255, 118, 95, 0.1), transparent 19%),
+    radial-gradient(circle at 94% 20%, rgba(255, 209, 102, 0.24), transparent 22%),
+    #f7f6ff;
+}
+
+.application-page .form-card {
+  border-color: rgba(49, 87, 213, 0.13);
+  box-shadow: 10px 12px 0 #ecebff;
+}
+
+.program-footer {
+  background: white;
+}
+
+@media (max-width: 620px) {
+  .strategy-card {
+    box-shadow: 7px 8px 0 #ffd166;
+  }
+
+  .price-card {
+    box-shadow: 7px 8px 0 #ff765f;
+  }
+}
