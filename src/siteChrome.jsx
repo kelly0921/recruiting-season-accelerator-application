@@ -7,7 +7,7 @@ export function ProgramHeader({ compact = false }) {
   return (
     <header className={compact ? 'site-header compact' : 'site-header'}>
       <a className="brand" href="/" aria-label={`${program.name} home`}>
-        <span>KC</span>
+        <span><img src="/kelly-logo.svg" alt="" /></span>
         <strong>{program.name}</strong>
       </a>
       <nav className="program-nav" aria-label="Program navigation">
@@ -26,7 +26,7 @@ export function ProgramFooter() {
     <footer className="program-footer">
       <div>
         <a className="brand footer-brand" href="/">
-          <span>KC</span>
+          <span><img src="/kelly-logo.svg" alt="" /></span>
           <strong>{program.name}</strong>
         </a>
         <p>
@@ -43,4 +43,3 @@ export function ProgramFooter() {
     </footer>
   );
 }
-
