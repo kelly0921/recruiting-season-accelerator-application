@@ -1,8 +1,18 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { applicationAction, applicationState, program } from './program.js';
+
+const shortcuts = [
+  ['fit', 'Who it\u0027s for'],
+  ['program', 'Program'],
+  ['timeline', 'Timeline'],
+  ['faq', 'FAQ'],
+];
 
 export function ProgramHeader({ compact = false, applicationPage = false }) {
   const action = applicationAction(applicationState());
+  const [activeSection, setActiveSection] = useState(
+    () => (window.location.pathname === '/faq' ? 'faq' : ''),
+  );
   const headerAction = applicationPage
     ? { label: 'Back to Program', href: '/' }
     : action;
@@ -13,6 +23,34 @@ export function ProgramHeader({ compact = false, applicationPage = false }) {
       : action.label === 'Preview the Application'
         ? 'Preview'
         : 'Closed';
+
+  useEffect(() => {
+    if (window.location.pathname !== '/') return undefined;
+
+    const updateActiveSection = () => {
+      const threshold = 150;
+      let current = '';
+
+      shortcuts.forEach(([id]) => {
+        const section = document.getElementById(id);
+        if (section && section.getBoundingClientRect().top <= threshold) current = id;
+      });
+
+      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 8) {
+        current = 'faq';
+      }
+
+      setActiveSection(current);
+    };
+
+    updateActiveSection();
+    window.addEventListener('scroll', updateActiveSection, { passive: true });
+    window.addEventListener('resize', updateActiveSection);
+    return () => {
+      window.removeEventListener('scroll', updateActiveSection);
+      window.removeEventListener('resize', updateActiveSection);
+    };
+  }, []);
 
   return (
     <header className={compact ? 'site-header compact' : 'site-header'}>
@@ -26,10 +64,16 @@ export function ProgramHeader({ compact = false, applicationPage = false }) {
         </div>
       </div>
       <nav className="program-nav" aria-label="Program navigation">
-        <a href="/#fit">Who it&apos;s for</a>
-        <a href="/#program">Program</a>
-        <a href="/#timeline">Timeline</a>
-        <a href="/#faq">FAQ</a>
+        {shortcuts.map(([id, label]) => (
+          <a
+            key={id}
+            className={activeSection === id ? 'active' : undefined}
+            href={`/#${id}`}
+            aria-current={activeSection === id ? 'location' : undefined}
+          >
+            {label}
+          </a>
+        ))}
       </nav>
       <div className="header-actions">
         <a className="header-cta" href={headerAction.href}>
@@ -39,10 +83,16 @@ export function ProgramHeader({ compact = false, applicationPage = false }) {
         <details className="mobile-nav">
           <summary>Menu</summary>
           <nav aria-label="Mobile program navigation">
-            <a href="/#fit">Who it&apos;s for</a>
-            <a href="/#program">Program</a>
-            <a href="/#timeline">Timeline</a>
-            <a href="/#faq">FAQ</a>
+            {shortcuts.map(([id, label]) => (
+              <a
+                key={id}
+                className={activeSection === id ? 'active' : undefined}
+                href={`/#${id}`}
+                aria-current={activeSection === id ? 'location' : undefined}
+              >
+                {label}
+              </a>
+            ))}
           </nav>
         </details>
       </div>
