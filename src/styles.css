@@ -3670,6 +3670,73 @@ body {
   }
 }
 
+/* Match the navy version's line-grid hierarchy exactly. */
+.bottleneck-grid {
+  gap: 1px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--line);
+  box-shadow: none;
+}
+
+.bottleneck-grid article,
+.bottleneck-grid article:nth-child(1),
+.bottleneck-grid article:nth-child(2),
+.bottleneck-grid article:nth-child(3),
+.bottleneck-grid article:nth-child(4),
+.bottleneck-grid article:nth-child(2n),
+.bottleneck-grid article:nth-last-child(-n + 2) {
+  min-height: 240px;
+  border: 0;
+  border-radius: 0;
+  background: var(--paper);
+  box-shadow: none;
+  padding: 28px;
+}
+
+.fit-panel {
+  gap: 1px;
+  overflow: hidden;
+  border: 0;
+  border-radius: 18px;
+  background: var(--line);
+}
+
+.fit-panel article,
+.fit-panel article:last-child {
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.journey ol {
+  gap: 1px;
+  overflow: hidden;
+  background: var(--line);
+}
+
+.journey li,
+.journey li:nth-child(1),
+.journey li:nth-child(2),
+.journey li:nth-child(3),
+.journey li:nth-child(4) {
+  min-height: 220px;
+  border: 0;
+  border-radius: 0;
+  background: var(--paper);
+  box-shadow: none;
+}
+
+/* Keep boxes only where the navy version used distinct cards. */
+.included-grid article,
+.outcome-list li,
+.date-timeline li,
+.faq-list details,
+.price-card {
+  box-shadow: none;
+}
+
 /* Full-width sticky header surface with page-aligned inner spacing. */
 .program-site .site-header,
 .application-page .site-header {
