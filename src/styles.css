@@ -2906,6 +2906,64 @@ body {
   }
 }
 
+/* Treat desktop navigation as in-page shortcuts, not page tabs. */
+.program-nav {
+  gap: clamp(15px, 2vw, 25px);
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+}
+
+.nav-label {
+  color: #9a929d;
+  font-size: 0.61rem;
+  font-weight: 760;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.program-nav a {
+  position: relative;
+  border-radius: 0;
+  padding: 8px 0 7px;
+  color: #59616f;
+  font-size: 0.75rem;
+}
+
+.program-nav a::after {
+  position: absolute;
+  right: 0;
+  bottom: 2px;
+  left: 0;
+  height: 2px;
+  border-radius: 999px;
+  background: rgba(217, 125, 154, 0.42);
+  content: "";
+  transform: scaleX(0.32);
+  transform-origin: left;
+  transition: background 160ms ease, transform 160ms ease;
+}
+
+.program-nav a:hover,
+.program-nav a:focus-visible {
+  background: transparent;
+  color: var(--navy);
+}
+
+.program-nav a:hover::after,
+.program-nav a:focus-visible::after {
+  background: var(--rose);
+  transform: scaleX(1);
+}
+
+@media (max-width: 920px) {
+  .nav-label {
+    display: none;
+  }
+}
+
 @media (max-width: 620px) {
   .snapshot-layout {
     padding-top: 42px;
