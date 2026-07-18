@@ -3670,6 +3670,133 @@ body {
   }
 }
 
+/* Professional color hierarchy: neutral surfaces, restrained brand accents. */
+.snapshot-grid > div,
+.snapshot-grid > div:nth-child(1),
+.snapshot-grid > div:nth-child(2),
+.snapshot-grid > div:nth-child(3),
+.snapshot-grid > div:nth-child(4) {
+  background: var(--paper);
+}
+
+.snapshot-grid dt {
+  color: var(--blue);
+}
+
+.fit-panel article,
+.fit-panel article:last-child {
+  background: var(--paper);
+}
+
+.included-grid article,
+.included-grid article:nth-child(2),
+.included-grid article:nth-child(3),
+.included-grid article:nth-child(5),
+.included-grid article:nth-child(6) {
+  background: var(--paper);
+}
+
+.included-grid article > span,
+.bottleneck-grid article > span {
+  color: var(--blue);
+}
+
+.strategy-card li:nth-child(2) > span,
+.strategy-card li:nth-child(3) > span,
+.strategy-card li:nth-child(4) > span {
+  background: var(--sky);
+  color: var(--blue);
+}
+
+.outcome-section {
+  background: var(--paper-soft);
+}
+
+.pricing-section,
+.timeline-section {
+  background: #f3f1ec;
+}
+
+.date-timeline li,
+.date-timeline li:nth-child(2),
+.date-timeline li:nth-child(3) {
+  background: var(--paper);
+}
+
+.experience-row {
+  gap: 12px 24px;
+}
+
+.experience-row strong {
+  border-right: 1px solid var(--line);
+  border-radius: 0;
+  background: transparent;
+  padding: 0 24px 0 0;
+}
+
+.experience-row strong:last-child {
+  border-right: 0;
+  padding-right: 0;
+}
+
+.founder-portrait {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background: var(--paper);
+}
+
+.founder-portrait::after {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  border-radius: 999px;
+  background: rgba(255, 253, 249, 0.9);
+  color: var(--navy);
+  padding: 7px 10px;
+  content: "Kelly Chen";
+  font-size: 0.68rem;
+  font-weight: 800;
+  backdrop-filter: blur(8px);
+}
+
+.founder-portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 58%;
+}
+
+.profile-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 22px;
+  margin: 0 0 22px;
+}
+
+.profile-links a {
+  color: var(--blue);
+  font-size: 0.78rem;
+  font-weight: 780;
+  text-decoration: underline;
+  text-decoration-color: rgba(79, 111, 232, 0.45);
+  text-underline-offset: 4px;
+}
+
+.profile-links a:hover,
+.profile-links a:focus-visible {
+  text-decoration-color: currentColor;
+}
+
+@media (max-width: 920px) {
+  .founder-portrait {
+    width: min(220px, 100%);
+  }
+}
+
 /* Match the navy version's line-grid hierarchy exactly. */
 .bottleneck-grid {
   gap: 1px;

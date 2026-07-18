@@ -254,7 +254,9 @@ export function LandingPage() {
 
         <section className="landing-section founder-section" aria-labelledby="founder-title">
           <div className="landing-shell founder-layout">
-            <div className="founder-mark" aria-hidden="true"><span>KC</span></div>
+            <div className="founder-portrait">
+              <img src="/profile.jpg" alt="Kelly Chen" loading="lazy" />
+            </div>
             <div>
               <p className="eyebrow">Your mentor</p>
               <h2 id="founder-title">Meet Kelly, your mentor.</h2>
@@ -266,6 +268,10 @@ export function LandingPage() {
               </p>
               <div className="experience-row" aria-label="Experience informing the program">
                 <strong>Visa</strong><strong>JPMorgan Chase</strong><strong>Bloomberg</strong>
+              </div>
+              <div className="profile-links" aria-label="Kelly Chen profiles">
+                <a href={program.portfolioUrl}>View Kelly&apos;s portfolio</a>
+                <a href="https://www.linkedin.com/in/kellychen0921/" target="_blank" rel="noreferrer">LinkedIn ↗</a>
               </div>
               <small>
                 Recruiting Season Accelerator is independently operated by Kelly Chen.
