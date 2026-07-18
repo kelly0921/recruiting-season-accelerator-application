@@ -3483,6 +3483,193 @@ body {
   }
 }
 
+/* Navy-version component architecture, recolored with Kelly's warm portfolio palette. */
+.bottleneck-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.bottleneck-grid article,
+.bottleneck-grid article:nth-child(2n),
+.bottleneck-grid article:nth-last-child(-n + 2) {
+  min-height: 230px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--paper);
+  box-shadow: 0 10px 26px rgba(48, 55, 72, 0.06);
+  padding: 28px;
+}
+
+.bottleneck-grid article:nth-child(1) {
+  border-top: 4px solid var(--blue);
+}
+
+.bottleneck-grid article:nth-child(2) {
+  border-top: 4px solid var(--teal);
+}
+
+.bottleneck-grid article:nth-child(3) {
+  border-top: 4px solid var(--rose);
+}
+
+.bottleneck-grid article:nth-child(4) {
+  border-top: 4px solid var(--gold);
+}
+
+.bottleneck-grid h3 {
+  margin-top: 34px;
+}
+
+.fit-panel {
+  gap: 16px;
+}
+
+.fit-panel article {
+  border: 1px solid var(--line);
+  box-shadow: 0 10px 26px rgba(48, 55, 72, 0.045);
+}
+
+.included-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.included-grid article,
+.included-grid article:nth-child(2),
+.included-grid article:nth-child(3),
+.included-grid article:nth-child(5),
+.included-grid article:nth-child(6),
+.included-grid article:nth-child(3n),
+.included-grid article:nth-last-child(-n + 3) {
+  min-height: 220px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--paper);
+  box-shadow: 0 10px 26px rgba(48, 55, 72, 0.055);
+}
+
+.included-grid article:nth-child(2),
+.included-grid article:nth-child(5) {
+  background: var(--sky);
+}
+
+.included-grid article:nth-child(3),
+.included-grid article:nth-child(6) {
+  background: var(--mint);
+}
+
+.journey ol {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  background: transparent;
+}
+
+.journey li {
+  min-height: 210px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--paper);
+  box-shadow: 0 8px 20px rgba(48, 55, 72, 0.045);
+}
+
+.journey li:nth-child(1) {
+  border-top: 4px solid var(--blue);
+}
+
+.journey li:nth-child(2) {
+  border-top: 4px solid var(--teal);
+}
+
+.journey li:nth-child(3) {
+  border-top: 4px solid var(--rose);
+}
+
+.journey li:nth-child(4) {
+  border-top: 4px solid var(--gold);
+}
+
+.outcome-list {
+  gap: 12px;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.outcome-list li,
+.outcome-list li:nth-child(2n),
+.outcome-list li:nth-last-child(-n + 2) {
+  min-height: 82px;
+  border: 1px solid rgba(79, 111, 232, 0.15);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.86);
+  box-shadow: 0 7px 18px rgba(48, 55, 72, 0.04);
+}
+
+.date-timeline {
+  gap: 14px;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.date-timeline li,
+.date-timeline li:nth-child(2),
+.date-timeline li:nth-child(3) {
+  min-height: 138px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--paper);
+  box-shadow: 0 8px 20px rgba(48, 55, 72, 0.045);
+}
+
+.date-timeline li:nth-child(2) {
+  background: var(--sky);
+}
+
+.date-timeline li:nth-child(3) {
+  background: var(--butter);
+}
+
+.faq-list details {
+  border-radius: 14px;
+  box-shadow: 0 6px 16px rgba(48, 55, 72, 0.035);
+}
+
+.price-card {
+  border: 1px solid rgba(79, 111, 232, 0.2);
+  border-radius: 20px;
+  background: var(--paper);
+  box-shadow: 0 22px 52px rgba(53, 67, 110, 0.11);
+}
+
+@media (max-width: 920px) {
+  .bottleneck-grid,
+  .included-grid,
+  .journey ol {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 620px) {
+  .bottleneck-grid,
+  .included-grid,
+  .journey ol {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* Full-width sticky header surface with page-aligned inner spacing. */
 .program-site .site-header,
 .application-page .site-header {
@@ -3502,6 +3689,50 @@ body {
     width: 100%;
     padding-right: 16px;
     padding-left: 16px;
+  }
+}
+
+/* Fit-aware heading rules: never let one-line titles collide with adjacent graphics. */
+@media (min-width: 921px) and (max-width: 1199px) {
+  .snapshot h2,
+  .landing-section-heading h2,
+  .journey-heading h3,
+  .founder-layout h2,
+  .timeline-section .landing-section-heading h2,
+  .final-cta h2 {
+    max-width: 720px;
+    white-space: normal;
+  }
+}
+
+@media (min-width: 1200px) {
+  .snapshot h2,
+  .landing-section-heading h2,
+  .journey-heading h3,
+  .founder-layout h2,
+  .timeline-section .landing-section-heading h2,
+  .final-cta h2 {
+    white-space: nowrap;
+  }
+
+  .snapshot h2 {
+    font-size: 1.9rem;
+  }
+
+  #fit .landing-section-heading h2 {
+    font-size: 2.8rem;
+  }
+
+  .outcome-section .landing-section-heading h2 {
+    font-size: 2.05rem;
+  }
+
+  .pricing-section .landing-section-heading h2 {
+    font-size: 2.65rem;
+  }
+
+  .faq-section .landing-section-heading h2 {
+    font-size: 2.35rem;
   }
 }
 
