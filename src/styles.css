@@ -4319,10 +4319,15 @@ body {
   background: rgba(246, 245, 243, 0.96);
 }
 
-.included-section,
+.included-section {
+  background: var(--paper);
+  color: var(--navy);
+}
+
 .outcome-section {
-  background: var(--navy);
-  color: white;
+  border-top: 1px solid var(--line);
+  background: var(--paper-soft);
+  color: var(--navy);
 }
 
 .included-section .landing-section-heading h2,
@@ -4330,7 +4335,7 @@ body {
 .outcome-section .landing-section-heading h2,
 .included-grid h3,
 .journey h4 {
-  color: white;
+  color: var(--navy);
 }
 
 .included-section .landing-section-heading > p:last-child,
@@ -4338,7 +4343,16 @@ body {
 .journey li p,
 .journey > small,
 .outcome-disclaimer {
-  color: rgba(255, 255, 255, 0.66);
+  color: var(--copy);
+}
+
+.included-section .eyebrow,
+.journey li > span {
+  color: var(--blue);
+}
+
+.outcome-section .eyebrow {
+  color: var(--rose);
 }
 
 .included-grid article,
@@ -4346,16 +4360,16 @@ body {
 .included-grid article:nth-child(3),
 .included-grid article:nth-child(5),
 .included-grid article:nth-child(6) {
-  border-color: rgba(255, 255, 255, 0.14);
-  background: rgba(255, 255, 255, 0.055);
+  border-color: var(--line);
+  background: #f8f8f7;
 }
 
 .journey {
-  border-top-color: rgba(255, 255, 255, 0.14);
+  border-top-color: var(--line);
 }
 
 .journey ol {
-  background: rgba(255, 255, 255, 0.12);
+  background: var(--line);
 }
 
 .journey li,
@@ -4363,19 +4377,19 @@ body {
 .journey li:nth-child(2),
 .journey li:nth-child(3),
 .journey li:nth-child(4) {
-  background: var(--navy);
+  background: var(--paper);
 }
 
 .outcome-section .outcome-layout {
-  border-top-color: rgba(255, 255, 255, 0.14);
+  border-top-color: var(--line);
 }
 
 .outcome-list li,
 .outcome-list li:nth-child(2n),
 .outcome-list li:nth-last-child(-n + 2) {
-  border-color: rgba(255, 255, 255, 0.14);
-  background: rgba(255, 255, 255, 0.06);
-  color: white;
+  border-color: var(--line);
+  background: var(--paper);
+  color: var(--navy);
 }
 
 .pricing-section,
