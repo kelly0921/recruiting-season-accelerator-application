@@ -3213,3 +3213,41 @@ body {
     max-width: 110px;
   }
 }
+
+/* Sticky one-page navigation and single-line desktop section titles. */
+.program-site .site-header,
+.application-page .site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: 0 8px 24px rgba(48, 55, 72, 0.055);
+}
+
+.landing-section[id],
+.snapshot[id] {
+  scroll-margin-top: 104px;
+}
+
+@media (min-width: 921px) {
+  .snapshot h2,
+  .landing-section-heading h2,
+  .journey-heading h3,
+  .founder-layout h2,
+  .timeline-section .landing-section-heading h2,
+  .final-cta h2 {
+    max-width: none;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 920px) {
+  .snapshot h2,
+  .landing-section-heading h2,
+  .journey-heading h3,
+  .founder-layout h2,
+  .timeline-section .landing-section-heading h2,
+  .final-cta h2 {
+    max-width: 720px;
+    white-space: normal;
+  }
+}
