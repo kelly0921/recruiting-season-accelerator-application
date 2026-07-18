@@ -2964,6 +2964,93 @@ body {
   }
 }
 
+/* Plain underlined navigation — no pills, bubbles, or decorative bars. */
+.program-site .site-header,
+.application-page .site-header {
+  box-shadow: none;
+}
+
+.program-nav {
+  gap: clamp(18px, 2.2vw, 28px);
+}
+
+.nav-label {
+  display: none;
+}
+
+.program-nav a {
+  padding: 5px 0;
+  color: #59616f;
+  text-decoration: underline;
+  text-decoration-color: rgba(217, 125, 154, 0.72);
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 6px;
+}
+
+.program-nav a::after {
+  display: none;
+}
+
+.program-nav a:hover,
+.program-nav a:focus-visible {
+  background: transparent;
+  color: var(--navy);
+  text-decoration-color: var(--rose);
+  text-decoration-thickness: 2px;
+}
+
+.header-cta {
+  min-height: auto;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: var(--blue);
+  padding: 5px 0;
+  text-decoration: underline;
+  text-decoration-color: rgba(79, 111, 232, 0.55);
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 6px;
+}
+
+.header-cta:hover,
+.header-cta:focus-visible {
+  background: transparent;
+  color: #334fb8;
+  text-decoration-color: currentColor;
+  text-decoration-thickness: 2px;
+}
+
+@media (max-width: 920px) {
+  .mobile-nav summary {
+    min-height: auto;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    padding: 5px 0;
+    text-decoration: underline;
+    text-decoration-color: rgba(217, 125, 154, 0.72);
+    text-underline-offset: 6px;
+  }
+
+  .mobile-nav[open] summary {
+    border-color: transparent;
+    background: transparent;
+  }
+
+  .mobile-nav nav {
+    border-radius: 8px;
+  }
+}
+
+@media (max-width: 620px) {
+  .header-cta,
+  .mobile-nav summary {
+    min-height: auto;
+    padding: 5px 0;
+  }
+}
+
 @media (max-width: 620px) {
   .snapshot-layout {
     padding-top: 42px;

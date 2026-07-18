@@ -26,7 +26,6 @@ export function ProgramHeader({ compact = false, applicationPage = false }) {
         </div>
       </div>
       <nav className="program-nav" aria-label="Program navigation">
-        <span className="nav-label" aria-hidden="true">Jump to</span>
         <a href="/#fit">Who it&apos;s for</a>
         <a href="/#program">Program</a>
         <a href="/#timeline">Timeline</a>
