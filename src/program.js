@@ -1,7 +1,7 @@
 export const program = Object.freeze({
   name: 'Recruiting Season Accelerator',
   contactEmail: 'kellychenmeiyi@gmail.com',
-  portfolioUrl: 'https://kelly-recruiting-accelerator.kellychenmeiyi.chatgpt.site/',
+  portfolioUrl: 'https://kellychen.dev/',
   applicationOpenAt: '2026-07-22T00:00:00-04:00',
   applicationCloseAt: '2026-08-02T23:59:59-04:00',
   applicationDates: 'July 22–August 2, 2026',
