@@ -3483,6 +3483,28 @@ body {
   }
 }
 
+/* Full-width sticky header surface with page-aligned inner spacing. */
+.program-site .site-header,
+.application-page .site-header {
+  right: 0;
+  left: 0;
+  width: 100%;
+  margin: 0;
+  border-bottom: 1px solid rgba(234, 223, 206, 0.96);
+  background: rgba(255, 248, 239, 0.94);
+  padding-right: clamp(24px, 4vw, 56px);
+  padding-left: clamp(24px, 4vw, 56px);
+}
+
+@media (max-width: 620px) {
+  .program-site .site-header,
+  .application-page .site-header {
+    width: 100%;
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+}
+
 @media (max-width: 920px) {
   .program-site .site-header,
   .application-page .site-header {
