@@ -4027,6 +4027,23 @@ body {
   background: var(--paper-soft);
 }
 
+/* Keep the application panels stacked once the layout reaches tablet width. */
+@media (max-width: 860px) {
+  .application-page .application-shell {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 36px;
+  }
+
+  .application-page .application-intro,
+  .application-page .form-card,
+  .application-page form,
+  .application-page .step-panel,
+  .application-page .field-row,
+  .application-page .field {
+    min-width: 0;
+  }
+}
+
 .price-card,
 .date-timeline li,
 .date-timeline li:nth-child(2),
