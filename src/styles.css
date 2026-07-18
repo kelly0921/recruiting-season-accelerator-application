@@ -4396,3 +4396,33 @@ body {
 .timeline-section {
   background: var(--paper-soft);
 }
+
+/* Give the closing message and CTA independent space at every viewport. */
+.final-cta .landing-shell {
+  grid-template-columns: minmax(0, 1fr) max-content;
+  column-gap: clamp(32px, 5vw, 72px);
+}
+
+.final-cta h2 {
+  max-width: 760px;
+  white-space: normal;
+}
+
+.final-cta .button {
+  min-width: max-content;
+  justify-self: end;
+  white-space: nowrap;
+}
+
+@media (max-width: 1040px) {
+  .final-cta .landing-shell {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .final-cta .button {
+    grid-column: 1;
+    grid-row: auto;
+    justify-self: start;
+    margin-top: 14px;
+  }
+}
