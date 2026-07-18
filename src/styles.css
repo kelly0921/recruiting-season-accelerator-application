@@ -3797,6 +3797,333 @@ body {
   }
 }
 
+/* Slate mentorship theme: navy structure without the financial gold-and-serif mood. */
+:root {
+  --navy: #263149;
+  --blue: #586fb6;
+  --rose: #bd7d91;
+  --teal: #718f91;
+  --gold: #bd7d91;
+  --copy: #5d6574;
+  --line: #d8dbe3;
+  --light: #f6f5f3;
+  --paper: #fcfbf9;
+  --paper-soft: #eef0f4;
+  --sky: #edf0f8;
+  --mint: #eef2f1;
+  --lilac: #f0eff4;
+  --peach: #f5eff1;
+  --butter: #f2f0ed;
+}
+
+body {
+  background:
+    radial-gradient(circle at 92% 6%, rgba(88, 111, 182, 0.07), transparent 26rem),
+    var(--light);
+}
+
+.announcement {
+  background: var(--navy);
+}
+
+.announcement span::after {
+  color: #aeb9dc;
+}
+
+.program-site .site-header,
+.application-page .site-header {
+  border-bottom-color: rgba(216, 219, 227, 0.96);
+  background: rgba(246, 245, 243, 0.95);
+}
+
+.header-cta,
+.button,
+.program-hero .button,
+.final-cta .button,
+.price-card .button {
+  border-color: var(--blue);
+  background: var(--blue);
+  color: white;
+}
+
+.header-cta:hover,
+.button:hover,
+.program-hero .button:hover,
+.final-cta .button:hover,
+.price-card .button:hover {
+  background: #485f9f;
+}
+
+.eyebrow,
+.program-hero .eyebrow {
+  color: var(--blue);
+}
+
+.program-hero {
+  background:
+    radial-gradient(circle at 88% 6%, rgba(88, 111, 182, 0.1), transparent 24rem),
+    linear-gradient(135deg, #f1f2f5, #f8f7f5 68%);
+  color: var(--navy);
+}
+
+.program-hero-copy h1,
+.program-hero-copy h1 em {
+  color: var(--navy);
+}
+
+.program-hero-copy h1 em {
+  background-image: linear-gradient(transparent 81%, rgba(189, 125, 145, 0.34) 0);
+}
+
+.hero-lede {
+  color: #465064;
+}
+
+.strategy-card {
+  border-color: rgba(38, 49, 73, 0.18);
+  background: var(--paper);
+  box-shadow: 0 22px 54px rgba(38, 49, 73, 0.11);
+}
+
+.strategy-card::before {
+  background: rgba(174, 185, 220, 0.58);
+}
+
+.strategy-card-heading small {
+  color: var(--rose);
+}
+
+.strategy-card li > span,
+.strategy-card li:nth-child(2) > span,
+.strategy-card li:nth-child(3) > span,
+.strategy-card li:nth-child(4) > span {
+  background: var(--sky);
+  color: var(--blue);
+}
+
+.strategy-card-result {
+  background: var(--navy);
+}
+
+.strategy-card-result span {
+  color: #c8d1ee;
+}
+
+.snapshot,
+.founder-section {
+  background: var(--paper);
+}
+
+.snapshot-grid > div,
+.snapshot-grid > div:nth-child(1),
+.snapshot-grid > div:nth-child(2),
+.snapshot-grid > div:nth-child(3),
+.snapshot-grid > div:nth-child(4) {
+  border-color: var(--line);
+  background: #f9f9f8;
+}
+
+.bottleneck-grid,
+.fit-panel {
+  background: var(--line);
+}
+
+.bottleneck-grid article,
+.fit-panel article,
+.fit-panel article:last-child {
+  background: var(--paper);
+}
+
+.bottleneck-grid article > span,
+.included-grid article > span {
+  color: var(--rose);
+}
+
+/* One dark program chapter creates structure without making the whole site feel financial. */
+.included-section,
+.outcome-section {
+  background: var(--navy);
+  color: white;
+}
+
+.included-section .landing-section-heading h2,
+.included-section .journey-heading h3,
+.outcome-section .landing-section-heading h2 {
+  color: white;
+}
+
+.included-section .landing-section-heading > p:last-child,
+.included-grid p,
+.journey li p,
+.journey > small,
+.outcome-disclaimer {
+  color: rgba(255, 255, 255, 0.66);
+}
+
+.included-section .eyebrow,
+.outcome-section .eyebrow,
+.journey li > span {
+  color: #c8d1ee;
+}
+
+.included-grid article,
+.included-grid article:nth-child(2),
+.included-grid article:nth-child(3),
+.included-grid article:nth-child(5),
+.included-grid article:nth-child(6) {
+  border-color: rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.055);
+}
+
+.included-grid h3,
+.journey h4 {
+  color: white;
+}
+
+.journey {
+  border-top-color: rgba(255, 255, 255, 0.14);
+}
+
+.journey ol {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.journey li,
+.journey li:nth-child(1),
+.journey li:nth-child(2),
+.journey li:nth-child(3),
+.journey li:nth-child(4) {
+  background: var(--navy);
+}
+
+.outcome-section .outcome-layout {
+  border-top-color: rgba(255, 255, 255, 0.14);
+}
+
+.outcome-list li,
+.outcome-list li:nth-child(2n),
+.outcome-list li:nth-last-child(-n + 2) {
+  border-color: rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.06);
+  color: white;
+}
+
+.outcome-list li::before,
+.fit-panel li::before {
+  background: var(--rose);
+}
+
+.founder-portrait {
+  border-color: var(--line);
+  border-radius: 20px;
+}
+
+.experience-row strong {
+  color: var(--navy);
+}
+
+.pricing-section,
+.timeline-section {
+  background: var(--paper-soft);
+}
+
+.price-card,
+.date-timeline li,
+.date-timeline li:nth-child(2),
+.date-timeline li:nth-child(3) {
+  border-color: var(--line);
+  background: var(--paper);
+}
+
+.price-card > span,
+.date-timeline li > span {
+  color: var(--rose);
+}
+
+.faq-section,
+.final-cta {
+  background: var(--light);
+}
+
+.faq-list details {
+  border-color: var(--line);
+  background: var(--paper);
+}
+
+.final-cta .landing-shell {
+  border-top-color: var(--line);
+}
+
+.profile-links a,
+.text-link {
+  color: var(--blue);
+}
+
+/* Application follows the same slate structure with a welcoming, modern form. */
+.application-page {
+  background:
+    radial-gradient(circle at 92% 6%, rgba(88, 111, 182, 0.07), transparent 26rem),
+    var(--light);
+}
+
+.application-page .application-intro {
+  border-color: rgba(38, 49, 73, 0.22);
+  background:
+    radial-gradient(circle at 110% 110%, rgba(189, 125, 145, 0.16), transparent 42%),
+    linear-gradient(145deg, #263149, #34405b);
+  box-shadow: 0 22px 54px rgba(38, 49, 73, 0.13);
+  color: white;
+}
+
+.application-page .application-intro::before {
+  background: rgba(174, 185, 220, 0.58);
+}
+
+.application-page .application-intro .eyebrow {
+  color: #c8d1ee;
+}
+
+.application-page .application-intro h1,
+.application-page .program-facts dd,
+.application-page .privacy-note strong {
+  color: white;
+}
+
+.application-page .intro-copy,
+.application-page .privacy-note p {
+  color: rgba(255, 255, 255, 0.68);
+}
+
+.application-page .program-facts div,
+.application-page .program-facts div:nth-child(2),
+.application-page .program-facts div:nth-child(3) {
+  border-color: rgba(255, 255, 255, 0.13);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.application-page .program-facts dt {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.application-page .privacy-note {
+  border-left-color: var(--rose);
+}
+
+.application-page .form-card {
+  border-color: var(--line);
+  background: var(--paper);
+  box-shadow: 0 22px 54px rgba(38, 49, 73, 0.09);
+}
+
+.application-page .progress li.active::before {
+  background: var(--rose);
+}
+
+.application-page .opening-note {
+  border-color: #d8deef;
+  background: var(--sky);
+}
+
 /* Match the navy version's line-grid hierarchy exactly. */
 .bottleneck-grid {
   gap: 1px;
@@ -3966,4 +4293,75 @@ body {
     padding: 0 11px;
     text-decoration: none;
   }
+}
+
+/* Final slate-theme cascade after all structural layout rules. */
+.program-site .site-header,
+.application-page .site-header {
+  border-bottom-color: rgba(216, 219, 227, 0.96);
+  background: rgba(246, 245, 243, 0.96);
+}
+
+.included-section,
+.outcome-section {
+  background: var(--navy);
+  color: white;
+}
+
+.included-section .landing-section-heading h2,
+.included-section .journey-heading h3,
+.outcome-section .landing-section-heading h2,
+.included-grid h3,
+.journey h4 {
+  color: white;
+}
+
+.included-section .landing-section-heading > p:last-child,
+.included-grid p,
+.journey li p,
+.journey > small,
+.outcome-disclaimer {
+  color: rgba(255, 255, 255, 0.66);
+}
+
+.included-grid article,
+.included-grid article:nth-child(2),
+.included-grid article:nth-child(3),
+.included-grid article:nth-child(5),
+.included-grid article:nth-child(6) {
+  border-color: rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.055);
+}
+
+.journey {
+  border-top-color: rgba(255, 255, 255, 0.14);
+}
+
+.journey ol {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.journey li,
+.journey li:nth-child(1),
+.journey li:nth-child(2),
+.journey li:nth-child(3),
+.journey li:nth-child(4) {
+  background: var(--navy);
+}
+
+.outcome-section .outcome-layout {
+  border-top-color: rgba(255, 255, 255, 0.14);
+}
+
+.outcome-list li,
+.outcome-list li:nth-child(2n),
+.outcome-list li:nth-last-child(-n + 2) {
+  border-color: rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.06);
+  color: white;
+}
+
+.pricing-section,
+.timeline-section {
+  background: var(--paper-soft);
 }
