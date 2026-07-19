@@ -4427,3 +4427,51 @@ body {
     margin-top: 14px;
   }
 }
+
+/* Outcomes read as an editorial checklist, not a grid of dotted cards. */
+.outcome-list {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+  overflow: visible;
+  border: 0;
+  border-top: 1px solid var(--line);
+  border-radius: 0;
+  background: transparent;
+  counter-reset: program-outcomes;
+}
+
+.outcome-list li,
+.outcome-list li:nth-child(2n),
+.outcome-list li:nth-last-child(-n + 2) {
+  display: grid;
+  min-height: 0;
+  grid-template-columns: 42px minmax(0, 1fr);
+  align-items: center;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 17px 0;
+  color: var(--navy);
+  font-weight: 680;
+  counter-increment: program-outcomes;
+}
+
+.outcome-list li:last-child {
+  border-bottom: 0;
+}
+
+.outcome-list li::before {
+  position: static;
+  width: auto;
+  height: auto;
+  border-radius: 0;
+  background: transparent;
+  color: var(--blue);
+  content: counter(program-outcomes, decimal-leading-zero);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  line-height: 1;
+}
