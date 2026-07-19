@@ -4935,13 +4935,20 @@ textarea {
   margin: 26px 0 0;
   border-top: 1px solid var(--line);
   padding-top: 18px;
+}
+
+.fit-selection-note h3 {
+  margin: 0 0 6px;
+  color: var(--navy);
+  font-size: 0.96rem;
+  line-height: 1.35;
+}
+
+.fit-selection-note p {
+  margin: 0;
   color: var(--copy);
   font-size: 0.88rem;
   line-height: 1.65;
-}
-
-.fit-selection-note strong {
-  color: var(--navy);
 }
 
 /* Turn the hero headline into a clear setup-and-payoff lockup. */

@@ -265,11 +265,13 @@ export function LandingPage() {
                 </ul>
               </article>
             </div>
-            <p className="fit-selection-note">
-              <strong>What Kelly Looks For:</strong> Students who have already started
-              recruiting, can act on direct feedback, and have a specific bottleneck the
-              program can realistically help address.
-            </p>
+            <div className="fit-selection-note">
+              <h3>What Kelly Is Looking For</h3>
+              <p>
+                Students who have already started recruiting, can act on direct feedback,
+                and have a specific bottleneck the program can realistically help address.
+              </p>
+            </div>
           </div>
         </section>
 
