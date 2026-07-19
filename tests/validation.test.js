@@ -112,8 +112,8 @@ test('the Cloudflare microsite contains details, application, and policy navigat
   ]);
 
   assert.match(landing, /Recruiting season is here/);
-  assert.match(landing, /Weekly workshops/);
-  assert.match(landing, /Private sessions/);
+  assert.match(landing, /Weekly Workshops/);
+  assert.match(landing, /Private Sessions/);
   assert.match(landing, /Participant Terms/);
   assert.match(application, /path === '\/apply'/);
   assert.match(application, /<ApplicationPage/);

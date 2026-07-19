@@ -4977,7 +4977,7 @@ textarea {
 }
 
 .program-hero-copy h1 em > span {
-  color: var(--blue);
+  color: inherit;
 }
 
 .program-hero-copy h1 em::after {
@@ -4987,7 +4987,7 @@ textarea {
   left: 0;
   height: 6px;
   border-radius: 999px;
-  background: linear-gradient(90deg, var(--blue) 0 74%, var(--rose) 74%);
+  background: var(--blue);
   content: "";
   transform: rotate(-0.7deg);
   transform-origin: left center;

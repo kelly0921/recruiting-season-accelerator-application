@@ -9,7 +9,7 @@ const programUrl = '/';
 const contactEmail = program.contactEmail;
 
 const steps = [
-  { id: 'about', label: 'About you' },
+  { id: 'about', label: 'About You' },
   { id: 'direction', label: 'Direction' },
   { id: 'experience', label: 'Experience' },
   { id: 'support', label: 'Support' },
@@ -17,41 +17,41 @@ const steps = [
 ];
 
 const opportunityOptions = [
-  'Software engineering internship',
-  'New-grad software engineering role',
-  'Product management or adjacent exploration',
-  'Data or another technical-adjacent role',
-  'Fellowship, research, or technical program',
-  'Still deciding',
+  'Software Engineering Internship',
+  'New-Grad Software Engineering Role',
+  'Product Management or Adjacent Exploration',
+  'Data or Another Technical-Adjacent Role',
+  'Fellowship, Research, or Technical Program',
+  'Still Deciding',
   'Other',
 ];
 
 const environmentOptions = [
-  'Big tech',
+  'Big Tech',
   'Fintech',
   'Payments',
-  'Banks or financial institutions',
-  'Technology-forward financial firms',
-  'Mature private technology companies',
-  'High-growth startups',
-  'Early-stage startups',
-  'Open to multiple environments',
+  'Banks or Financial Institutions',
+  'Technology-Forward Financial Firms',
+  'Mature Private Technology Companies',
+  'High-Growth Startups',
+  'Early-Stage Startups',
+  'Open to Multiple Environments',
   'Unsure',
 ];
 
 const supportOptions = [
-  'Resume positioning',
-  'Application strategy',
-  'Target-company selection',
-  'LinkedIn profile',
-  'Networking and mentorship',
-  'Career direction',
-  'SWE versus PM exploration',
-  'Project or experience planning',
-  'Behavioral interview preparation',
-  'Interview-conversion strategy',
-  'Recruiting accountability',
-  'Offer evaluation preparation',
+  'Resume Positioning',
+  'Application Strategy',
+  'Target-Company Selection',
+  'LinkedIn Profile',
+  'Networking and Mentorship',
+  'Career Direction',
+  'SWE Versus PM Exploration',
+  'Project or Experience Planning',
+  'Behavioral Interview Preparation',
+  'Interview-Conversion Strategy',
+  'Recruiting Accountability',
+  'Offer Evaluation Preparation',
 ];
 
 const experienceOptions = [
@@ -260,14 +260,14 @@ function ApplicationPage() {
       <main className="success-page">
         <section className="success-card">
           <span className="success-mark" aria-hidden="true">✓</span>
-          <p className="eyebrow">Application received</p>
-          <h1>Thank you for applying.</h1>
+          <p className="eyebrow">Application Received</p>
+          <h1>Thank You for Applying.</h1>
           <p>
             Kelly will review applications after the August 2 deadline. Decisions will
             be shared August 3–5 using the email address you provided.
           </p>
           {message ? <p className="reference">{message}</p> : null}
-          <a className="button" href={programUrl}>Return to program details</a>
+          <a className="button" href={programUrl}>Return to Program Details</a>
         </section>
       </main>
     );
@@ -277,14 +277,14 @@ function ApplicationPage() {
     return (
       <main className="success-page">
         <section className="success-card">
-          <p className="eyebrow">Founding cohort</p>
-          <h1>Applications are now closed.</h1>
+          <p className="eyebrow">Founding Cohort</p>
+          <h1>Applications Are Now Closed.</h1>
           <p>
             Join the future cohort list from the program page or email Kelly with a
             question.
           </p>
           <div className="button-row">
-            <a className="button" href={programUrl}>Return to program details</a>
+            <a className="button" href={programUrl}>Return to Program Details</a>
             <a className="text-link" href={`mailto:${contactEmail}`}>Email Kelly</a>
           </div>
         </section>
@@ -298,8 +298,8 @@ function ApplicationPage() {
 
       <main className="application-shell">
         <aside className="application-intro">
-          <p className="eyebrow">Founding cohort application</p>
-          <h1>Tell us where you are—and where you want to go.</h1>
+          <p className="eyebrow">Founding Cohort Application</p>
+          <h1>Tell Us Where You Are—and Where You Want to Go.</h1>
           <p className="intro-copy">
             Help Kelly understand your goals, where recruiting feels stuck, and whether
             this four-week program is the right fit.
@@ -341,7 +341,7 @@ function ApplicationPage() {
 
           {state === 'opening-soon' ? (
             <div className="opening-note" role="status">
-              <strong>Applications open July 22.</strong>
+              <strong>Applications Open July 22.</strong>
               You can review the questions now. Submission will activate when the
               application window opens.
             </div>
@@ -350,19 +350,19 @@ function ApplicationPage() {
           <form ref={formRef} onSubmit={handleSubmit} onChange={handleChoices}>
             <div className={currentStep === 0 ? 'step-panel active' : 'step-panel'} data-step="0">
               <div className="field-row">
-                <TextField label="Full name" name="fullName" autoComplete="name" />
-                <TextField label="Email address" name="email" type="email" autoComplete="email" />
+                <TextField label="Full Name" name="fullName" autoComplete="name" />
+                <TextField label="Email Address" name="email" type="email" autoComplete="email" />
               </div>
               <div className="field-row">
                 <TextField label="School" name="school" autoComplete="organization" />
-                <TextField label="Major or program" name="major" />
+                <TextField label="Major or Program" name="major" />
               </div>
               <div className="field-row">
-                <TextField label="Expected graduation year" name="graduationYear" type="number" min="2026" max="2032" />
+                <TextField label="Expected Graduation Year" name="graduationYear" type="number" min="2026" max="2032" />
                 <label className="field">
-                  <span>Time zone</span>
+                  <span>Time Zone</span>
                   <select name="timeZone" required defaultValue="">
-                    <option value="" disabled>Select your time zone</option>
+                    <option value="" disabled>Select Your Time Zone</option>
                     <option>Eastern Time</option>
                     <option>Central Time</option>
                     <option>Mountain Time</option>
@@ -371,7 +371,7 @@ function ApplicationPage() {
                   </select>
                 </label>
               </div>
-              <TextField label="LinkedIn profile URL" name="linkedInUrl" type="url" placeholder="https://www.linkedin.com/in/..." />
+              <TextField label="LinkedIn Profile URL" name="linkedInUrl" type="url" placeholder="https://www.linkedin.com/in/..." />
               <TextField label="Portfolio or GitHub URL" name="portfolioUrl" type="url" required={false} />
               <label className="field">
                 <span>Resume <em>PDF · 5 MB maximum</em></span>
@@ -402,7 +402,7 @@ function ApplicationPage() {
               <label className="field">
                 <span>Which best describes your current experience?</span>
                 <select name="currentExperience" required defaultValue="">
-                  <option value="" disabled>Select one</option>
+                  <option value="" disabled>Select One</option>
                   {experienceOptions.map((option) => <option key={option}>{option}</option>)}
                 </select>
               </label>
@@ -444,7 +444,7 @@ function ApplicationPage() {
 
             <div className={currentStep === 4 ? 'step-panel active' : 'step-panel'} data-step="4">
               <fieldset className="commitments">
-                <legend>Availability and commitment</legend>
+                <legend>Availability and Commitment</legend>
                 {[
                   ['attendWorkshops', 'I can attend at least three of the four weekly live workshops.'],
                   ['completeWork', 'I can complete approximately one to two hours of focused work outside each workshop.'],
@@ -464,7 +464,7 @@ function ApplicationPage() {
               <label className="field">
                 <span>How did you hear about the program?</span>
                 <select name="referralSource" required defaultValue="">
-                  <option value="" disabled>Select one</option>
+                  <option value="" disabled>Select One</option>
                   <option>Kelly&apos;s LinkedIn post</option>
                   <option>Direct message from Kelly</option>
                   <option>Friend or participant referral</option>
@@ -508,7 +508,7 @@ function ApplicationPage() {
                     ? 'Submitting…'
                     : state === 'opening-soon'
                       ? 'Opens July 22'
-                      : 'Submit application'}
+                      : 'Submit Application'}
                 </button>
               )}
             </div>

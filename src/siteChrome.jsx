@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { applicationAction, applicationState, program } from './program.js';
 
 const shortcuts = [
-  ['fit', 'Who it\u0027s for'],
+  ['fit', 'Who It\u0027s For'],
   ['program', 'Program'],
   ['timeline', 'Timeline'],
   ['faq', 'FAQ'],
@@ -19,7 +19,7 @@ export function ProgramHeader({ compact = false, applicationPage = false }) {
   const shortActionLabel = applicationPage
     ? 'Program'
     : action.label === 'Apply for the Founding Cohort'
-      ? 'Apply now'
+      ? 'Apply Now'
       : action.label === 'Preview the Application'
         ? 'Preview'
         : 'Closed';

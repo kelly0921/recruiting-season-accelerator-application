@@ -10,28 +10,28 @@ const bottlenecks = [
 ];
 
 const included = [
-  ['4', 'Weekly workshops', 'Four live, 60-minute Zoom sessions built around focused exercises—not passive lectures.'],
-  ['3', 'Private sessions', 'An initial diagnosis, midpoint course correction, and final continuation strategy.'],
-  ['1', 'Written resume review', 'Specific feedback on positioning, clarity, and the story your experience communicates.'],
-  ['1', 'Career asset review', 'Feedback on one additional asset—such as your portfolio, LinkedIn profile, outreach, or recruiting strategy—selected around your bottleneck.'],
-  ['4', 'Weeks of support', 'Private Slack, weekly accountability, and ApplyFirst tools used throughout the program.'],
-  ['1', 'Future offer strategy session', 'One 30-minute strategy session for your next internship or new-grad offer, included for every founding participant.'],
+  ['4', 'Weekly Workshops', 'Four live, 60-minute Zoom sessions built around focused exercises—not passive lectures.'],
+  ['3', 'Private Sessions', 'An initial diagnosis, midpoint course correction, and final continuation strategy.'],
+  ['1', 'Written Resume Review', 'Specific feedback on positioning, clarity, and the story your experience communicates.'],
+  ['1', 'Career Asset Review', 'Feedback on one additional asset—such as your portfolio, LinkedIn profile, outreach, or recruiting strategy—selected around your bottleneck.'],
+  ['4', 'Weeks of Support', 'Private Slack, weekly accountability, and ApplyFirst tools used throughout the program.'],
+  ['1', 'Future Offer Strategy Session', 'One 30-minute strategy session for your next internship or new-grad offer, included for every founding participant.'],
 ];
 
 const journey = [
   ['Week 1', 'Diagnose', 'Clarify your target and identify the bottleneck with the greatest leverage.'],
   ['Week 2', 'Position', 'Strengthen your resume, experience framing, and career story.'],
-  ['Week 3', 'Apply and adjust', 'Build a smarter target-company, application, and networking system.'],
+  ['Week 3', 'Apply and Adjust', 'Build a smarter target-company, application, and networking system.'],
   ['Week 4', 'Continue', 'Interpret results and leave with a focused 60- or 90-day recruiting plan.'],
 ];
 
 const outcomes = [
-  'A personalized recruiting diagnosis',
-  'A clearer target role and company strategy',
-  'An improved resume',
-  'A prioritized recruiting system',
-  'Personalized feedback on an additional career asset',
-  'A written 60- or 90-day action plan',
+  'A Personalized Recruiting Diagnosis',
+  'A Clearer Target Role and Company Strategy',
+  'An Improved Resume',
+  'A Prioritized Recruiting System',
+  'Personalized Feedback on an Additional Career Asset',
+  'A Written 60- or 90-Day Action Plan',
 ];
 
 export const faqs = [
@@ -157,13 +157,13 @@ export function LandingPage() {
     <div className="program-site">
       <a className="skip-link" href="#main-content">Skip to content</a>
       <div className={`announcement ${state}`}>
-        <span>Founding cohort · {program.capacity} students maximum</span>
+        <span>Founding Cohort · {program.capacity} Students Maximum</span>
         <strong>
           {state === 'opening-soon'
-            ? 'Applications open July 22, 2026'
+            ? 'Applications Open July 22, 2026'
             : state === 'open'
-              ? 'Applications close August 2, 2026 at 11:59 PM ET'
-              : 'Founding cohort applications are closed'}
+              ? 'Applications Close August 2, 2026 at 11:59 PM ET'
+              : 'Founding Cohort Applications Are Closed'}
         </strong>
       </div>
       <ProgramHeader />
@@ -172,7 +172,7 @@ export function LandingPage() {
         <section className="program-hero">
           <div className="landing-shell hero-layout">
             <div className="program-hero-copy">
-              <p className="eyebrow">A focused four-week recruiting reset</p>
+              <p className="eyebrow">A Focused Four-Week Recruiting Reset</p>
               <h1>
                 <span className="hero-setup">Recruiting season is here!</span>
                 <em><span>Apply</span> with a strategy.</em>
@@ -184,7 +184,7 @@ export function LandingPage() {
               </p>
               <div className="hero-actions">
                 <ApplicationButton />
-                <a className="text-link" href="#program">See what&apos;s included</a>
+                <a className="text-link" href="#program">See What&apos;s Included</a>
               </div>
               <p className="hero-microcopy">
                 Application-based · $99 upfront ($79 after optional feedback credit) · No payment when applying
@@ -193,8 +193,8 @@ export function LandingPage() {
 
             <aside className="strategy-card" aria-label="Program strategy">
               <div className="strategy-card-heading">
-                <span>Four-week strategy brief</span>
-                <small>Founding cohort</small>
+                <span>Four-Week Strategy Brief</span>
+                <small>Founding Cohort</small>
               </div>
               <ol>
                 <li><span>01</span><div><strong>Diagnose</strong><small>Find the real recruiting bottleneck.</small></div></li>
@@ -203,7 +203,7 @@ export function LandingPage() {
                 <li><span>04</span><div><strong>Adjust</strong><small>Use results to decide what comes next.</small></div></li>
               </ol>
               <div className="strategy-card-result">
-                <span>Leave with</span>
+                <span>Leave With</span>
                 <strong>A personalized 60- or 90-day plan</strong>
               </div>
             </aside>
@@ -213,15 +213,15 @@ export function LandingPage() {
         <section className="snapshot" aria-labelledby="snapshot-title">
           <div className="landing-shell snapshot-layout">
             <div>
-              <p className="eyebrow">Program at a glance</p>
-              <h2 id="snapshot-title">Small cohort. Focused support.</h2>
+              <p className="eyebrow">Program at a Glance</p>
+              <h2 id="snapshot-title">Small Cohort. Focused Support.</h2>
               <p>A deliberately limited cohort creates room for useful context, direct feedback, and individual strategy.</p>
             </div>
             <dl className="snapshot-grid">
-              <div><dt>4</dt><dd>Weekly workshops</dd><small>Live, focused, practical</small></div>
-              <div><dt>3</dt><dd>Private sessions</dd><small>Personalized to your bottleneck</small></div>
-              <div><dt>6</dt><dd>Students maximum</dd><small>A deliberately small cohort</small></div>
-              <div><dt>${program.price}</dt><dd>Upfront cost</dd><small>${effectivePrice} after the optional $20 feedback credit</small></div>
+              <div><dt>4</dt><dd>Weekly Workshops</dd><small>Live, focused, practical</small></div>
+              <div><dt>3</dt><dd>Private Sessions</dd><small>Personalized to your bottleneck</small></div>
+              <div><dt>6</dt><dd>Students Maximum</dd><small>A deliberately small cohort</small></div>
+              <div><dt>${program.price}</dt><dd>Upfront Cost</dd><small>${effectivePrice} after the optional $20 feedback credit</small></div>
             </dl>
           </div>
         </section>
@@ -229,8 +229,8 @@ export function LandingPage() {
         <section className="landing-section" id="fit" aria-labelledby="fit-title">
           <div className="landing-shell">
             <SectionHeading
-              eyebrow="Start with the bottleneck"
-              title="Find the bottleneck that matters most."
+              eyebrow="Start With the Bottleneck"
+              title="Find the Bottleneck That Matters Most."
               body="The program is built for students who have already started—but are unsure which change will create the most recruiting leverage."
               id="fit-title"
             />
@@ -245,8 +245,8 @@ export function LandingPage() {
             </div>
             <div className="fit-panel">
               <article>
-                <p className="eyebrow">A strong fit</p>
-                <h3>You are ready to use specific feedback.</h3>
+                <p className="eyebrow">A Strong Fit</p>
+                <h3>You Are Ready to Use Specific Feedback.</h3>
                 <ul>
                   <li>You are pursuing a SWE internship or new-grad role.</li>
                   <li>You have a project, coursework, research, program, leadership experience, or prior recruiting attempt.</li>
@@ -255,8 +255,8 @@ export function LandingPage() {
                 </ul>
               </article>
               <article>
-                <p className="eyebrow">Not the right format</p>
-                <h3>This is not a beginner coding course or referral service.</h3>
+                <p className="eyebrow">Not the Right Format</p>
+                <h3>This Is Not a Beginner Coding Course or Referral Service.</h3>
                 <ul>
                   <li>No LeetCode curriculum or daily application management</li>
                   <li>No guaranteed referrals, interviews, internships, or offers</li>
@@ -266,7 +266,7 @@ export function LandingPage() {
               </article>
             </div>
             <p className="fit-selection-note">
-              <strong>What Kelly looks for:</strong> Students who have already started
+              <strong>What Kelly Looks For:</strong> Students who have already started
               recruiting, can act on direct feedback, and have a specific bottleneck the
               program can realistically help address.
             </p>
@@ -276,8 +276,8 @@ export function LandingPage() {
         <section className="landing-section included-section" id="program" aria-labelledby="program-title">
           <div className="landing-shell">
             <SectionHeading
-              eyebrow="What’s included"
-              title="Everything works together."
+              eyebrow="What’s Included"
+              title="Everything Works Together."
               body="Each part supports the same progression: diagnose, position, apply, adjust, and decide."
               id="program-title"
             />
@@ -293,8 +293,8 @@ export function LandingPage() {
 
             <div className="journey">
               <div className="journey-heading">
-                <p className="eyebrow">The four-week journey</p>
-                <h3>Four weeks. One focused plan.</h3>
+                <p className="eyebrow">The Four-Week Journey</p>
+                <h3>Four Weeks. One Focused Plan.</h3>
               </div>
               <ol>
                 {journey.map(([week, title, body]) => (
@@ -313,17 +313,17 @@ export function LandingPage() {
         <section className="landing-section outcome-section" aria-labelledby="outcomes-title">
           <div className="landing-shell outcome-layout">
             <SectionHeading
-              eyebrow="Leave with direction"
-              title="Leave knowing what to do next."
+              eyebrow="Leave With Direction"
+              title="Leave Knowing What to Do Next."
               id="outcomes-title"
             />
             <aside className="sample-output" aria-label="Illustrative recruiting plan">
-              <p className="eyebrow">Sample output</p>
-              <h3>A 60-day recruiting plan</h3>
+              <p className="eyebrow">Sample Output</p>
+              <h3>A 60-Day Recruiting Plan</h3>
               <ol>
-                <li><span>Weeks 1–2</span><strong>Rewrite positioning</strong></li>
-                <li><span>Weeks 3–4</span><strong>Run a focused target-company sprint</strong></li>
-                <li><span>Weeks 5–8</span><strong>Review response patterns and adjust</strong></li>
+                <li><span>Weeks 1–2</span><strong>Rewrite Positioning</strong></li>
+                <li><span>Weeks 3–4</span><strong>Run a Focused Target-Company Sprint</strong></li>
+                <li><span>Weeks 5–8</span><strong>Review Response Patterns and Adjust</strong></li>
               </ol>
               <small>Illustrative format; each participant&apos;s plan is personalized.</small>
             </aside>
@@ -343,8 +343,8 @@ export function LandingPage() {
               <img src="/profile.jpg" alt="Kelly Chen" loading="lazy" />
             </div>
             <div>
-              <p className="eyebrow">Your mentor</p>
-              <h2 id="founder-title">Meet Kelly, your mentor.</h2>
+              <p className="eyebrow">Your Mentor</p>
+              <h2 id="founder-title">Meet Kelly, Your Mentor.</h2>
               <p>
                 Kelly Chen is a software engineer, product builder, speaker, and community
                 leader whose experience spans Visa, JPMorgan Chase, Bloomberg, early-career
@@ -355,7 +355,7 @@ export function LandingPage() {
                 <strong>Visa</strong><strong>JPMorgan Chase</strong><strong>Bloomberg</strong>
               </div>
               <div className="profile-links" aria-label="Kelly Chen profiles">
-                <a href={program.portfolioUrl}>View Kelly&apos;s portfolio</a>
+                <a href={program.portfolioUrl}>View Kelly&apos;s Portfolio</a>
                 <a href="https://www.linkedin.com/in/kellychen0921/" target="_blank" rel="noreferrer">LinkedIn ↗</a>
               </div>
               <small>
@@ -370,16 +370,16 @@ export function LandingPage() {
         <section className="landing-section pricing-section" aria-labelledby="pricing-title">
           <div className="landing-shell pricing-layout">
             <SectionHeading
-              eyebrow="Founding cohort"
-              title="Four weeks of personalized support."
+              eyebrow="Founding Cohort"
+              title="Four Weeks of Personalized Support."
               id="pricing-title"
             />
             <div className="price-card">
-              <span>Founding price</span>
+              <span>Founding Price</span>
               <strong>${program.price}</strong>
               <p>Paid privately after acceptance. There is no public checkout.</p>
-              <div><span>Optional feedback credit</span><strong>−${program.feedbackCredit}</strong></div>
-              <div><span>Effective cost after credit</span><strong>${effectivePrice}</strong></div>
+              <div><span>Optional Feedback Credit</span><strong>−${program.feedbackCredit}</strong></div>
+              <div><span>Effective Cost After Credit</span><strong>${effectivePrice}</strong></div>
               <ApplicationButton label="Review the Application" />
             </div>
           </div>
@@ -387,18 +387,18 @@ export function LandingPage() {
 
         <section className="landing-section timeline-section" id="timeline" aria-labelledby="timeline-title">
           <div className="landing-shell">
-            <SectionHeading eyebrow="Important dates" title="Key dates for the founding cohort." id="timeline-title" />
+            <SectionHeading eyebrow="Important Dates" title="Key Dates for the Founding Cohort." id="timeline-title" />
             <ol className="date-timeline">
               <li><span>01</span><div><strong>Applications</strong><time>{program.applicationDates}</time></div></li>
               <li><span>02</span><div><strong>Decisions</strong><time>{program.decisionDates}</time></div></li>
-              <li><span>03</span><div><strong>Program begins</strong><time>{program.startDate}</time></div></li>
+              <li><span>03</span><div><strong>Program Begins</strong><time>{program.startDate}</time></div></li>
             </ol>
           </div>
         </section>
 
         <section className="landing-section faq-section" id="faq" aria-labelledby="faq-title">
           <div className="landing-shell faq-layout">
-            <SectionHeading eyebrow="Questions" title="Before you apply." id="faq-title" />
+            <SectionHeading eyebrow="Questions" title="Before You Apply." id="faq-title" />
             <div className="faq-list">
               {faqs.slice(0, 5).map((item) => (
                 <details key={item.question}>
@@ -406,15 +406,15 @@ export function LandingPage() {
                   <p>{item.answer}</p>
                 </details>
               ))}
-              <a className="text-link" href="/faq">View all program questions</a>
+              <a className="text-link" href="/faq">View All Program Questions</a>
             </div>
           </div>
         </section>
 
         <section className="final-cta">
           <div className="landing-shell">
-            <p className="eyebrow">Prepare your application</p>
-            <h2>Ready to build a clearer recruiting plan?</h2>
+            <p className="eyebrow">Prepare Your Application</p>
+            <h2>Ready to Build a Clearer Recruiting Plan?</h2>
             <p>Have your resume, LinkedIn profile, graduation date, and current recruiting goals ready.</p>
             <ApplicationButton />
           </div>
@@ -428,40 +428,40 @@ export function LandingPage() {
 
 const policyContent = {
   terms: {
-    eyebrow: 'Program policy',
+    eyebrow: 'Program Policy',
     title: 'Participant Terms',
-    updated: 'Draft for the 2026 founding cohort',
+    updated: 'Draft for the 2026 Founding Cohort',
     sections: [
-      ['Program and operator', `Recruiting Season Accelerator is a four-week educational and mentorship program operated by Kelly Chen. Questions may be sent to ${program.contactEmail}.`],
-      ['Enrollment and price', `The founding-cohort price is $${program.price}. Applying does not guarantee acceptance, and a seat is confirmed only after acceptance and private payment.`],
-      ['Included support', 'The program includes four workshops, three private sessions, a written resume review, one additional personalized review, Slack support, ApplyFirst resources, a continuation plan, and one future offer-strategy session. Themes may adapt without materially reducing the promised support.'],
-      ['Participant responsibility', 'Participants remain responsible for their applications, materials, decisions, attendance, and recruiting outcomes. Materials must be accurate and must not misrepresent experience.'],
-      ['No employment guarantee', 'Participation does not guarantee a referral, interview, internship, job offer, compensation level, or other employment outcome.'],
-      ['Independent program', 'The program is not affiliated with, sponsored by, or endorsed by Bloomberg or any current or former employer. All guidance is Kelly’s own.'],
+      ['Program and Operator', `Recruiting Season Accelerator is a four-week educational and mentorship program operated by Kelly Chen. Questions may be sent to ${program.contactEmail}.`],
+      ['Enrollment and Price', `The founding-cohort price is $${program.price}. Applying does not guarantee acceptance, and a seat is confirmed only after acceptance and private payment.`],
+      ['Included Support', 'The program includes four workshops, three private sessions, a written resume review, one additional personalized review, Slack support, ApplyFirst resources, a continuation plan, and one future offer-strategy session. Themes may adapt without materially reducing the promised support.'],
+      ['Participant Responsibility', 'Participants remain responsible for their applications, materials, decisions, attendance, and recruiting outcomes. Materials must be accurate and must not misrepresent experience.'],
+      ['No Employment Guarantee', 'Participation does not guarantee a referral, interview, internship, job offer, compensation level, or other employment outcome.'],
+      ['Independent Program', 'The program is not affiliated with, sponsored by, or endorsed by Bloomberg or any current or former employer. All guidance is Kelly’s own.'],
     ],
   },
   privacy: {
-    eyebrow: 'Program policy',
+    eyebrow: 'Program Policy',
     title: 'Privacy Notice',
-    updated: 'Draft for the 2026 founding cohort',
+    updated: 'Draft for the 2026 Founding Cohort',
     sections: [
-      ['Information collected', 'The application may collect contact information, school and graduation details, resume and profile links, recruiting goals and history, participation information, and optional feedback or outcome updates.'],
-      ['How information is used', 'Information is used to evaluate applications, select and onboard participants, deliver mentorship, operate workshops and support, improve resources, and track aggregate program outcomes.'],
-      ['Storage and service providers', 'Cloudflare processes application records and private resume files for this portal. Other program vendors may process payment, scheduling, video, communication, or file information according to their own terms.'],
-      ['Your choices', `Information is not sold. Public use of a name, image, quote, school, employer, or outcome requires separate permission. Correction or deletion requests may be sent to ${program.contactEmail}.`],
+      ['Information Collected', 'The application may collect contact information, school and graduation details, resume and profile links, recruiting goals and history, participation information, and optional feedback or outcome updates.'],
+      ['How Information Is Used', 'Information is used to evaluate applications, select and onboard participants, deliver mentorship, operate workshops and support, improve resources, and track aggregate program outcomes.'],
+      ['Storage and Service Providers', 'Cloudflare processes application records and private resume files for this portal. Other program vendors may process payment, scheduling, video, communication, or file information according to their own terms.'],
+      ['Your Choices', `Information is not sold. Public use of a name, image, quote, school, employer, or outcome requires separate permission. Correction or deletion requests may be sent to ${program.contactEmail}.`],
       ['Retention', 'Rejected application data should generally be deleted within 60–90 days unless the applicant separately joins an updates list. Accepted-participant working files are minimized and removed or anonymized when no longer needed.'],
     ],
   },
   refund: {
-    eyebrow: 'Program policy',
+    eyebrow: 'Program Policy',
     title: 'Refund and Feedback Credit Policy',
-    updated: 'Draft for the 2026 founding cohort',
+    updated: 'Draft for the 2026 Founding Cohort',
     sections: [
-      ['Founding price', `The program price is $${program.price}. A participant’s seat is confirmed after payment.`],
-      ['Refund deadline', 'Participants may request a full refund until seven calendar days before the first live workshop. After that deadline, payments are generally nonrefundable because live and individual-feedback capacity has been reserved.'],
-      ['Missed participation', 'Missed workshops, private sessions, unused reviews, withdrawal, or lack of a desired recruiting outcome do not automatically create a refund right.'],
-      ['Program changes', 'If Kelly cancels the entire program, participants receive a full refund. If a material included service cannot be delivered, Kelly will provide a reasonable replacement, rescheduled service, or proportionate refund.'],
-      ['Feedback credit', `Participants may earn a $${program.feedbackCredit} partial refund by completing the published participation and feedback requirements within 14 days after the final workshop. Feedback may be positive, neutral, or critical; a testimonial or employment outcome is not required.`],
+      ['Founding Price', `The program price is $${program.price}. A participant’s seat is confirmed after payment.`],
+      ['Refund Deadline', 'Participants may request a full refund until seven calendar days before the first live workshop. After that deadline, payments are generally nonrefundable because live and individual-feedback capacity has been reserved.'],
+      ['Missed Participation', 'Missed workshops, private sessions, unused reviews, withdrawal, or lack of a desired recruiting outcome do not automatically create a refund right.'],
+      ['Program Changes', 'If Kelly cancels the entire program, participants receive a full refund. If a material included service cannot be delivered, Kelly will provide a reasonable replacement, rescheduled service, or proportionate refund.'],
+      ['Feedback Credit', `Participants may earn a $${program.feedbackCredit} partial refund by completing the published participation and feedback requirements within 14 days after the final workshop. Feedback may be positive, neutral, or critical; a testimonial or employment outcome is not required.`],
     ],
   },
 };
@@ -473,7 +473,7 @@ export function PolicyPage({ type }) {
       <ProgramHeader compact />
       <main className="policy-main">
         <div className="policy-shell">
-          <a className="text-link" href="/">← Back to program details</a>
+          <a className="text-link" href="/">← Back to Program Details</a>
           <p className="eyebrow">{content.eyebrow}</p>
           <h1>{content.title}</h1>
           <p className="policy-updated">{content.updated}</p>
@@ -501,8 +501,8 @@ export function FaqPage() {
       <ProgramHeader compact />
       <main className="policy-main">
         <div className="policy-shell faq-page-shell">
-          <a className="text-link" href="/">← Back to program details</a>
-          <p className="eyebrow">Program questions</p>
+          <a className="text-link" href="/">← Back to Program Details</a>
+          <p className="eyebrow">Program Questions</p>
           <h1>Frequently Asked Questions</h1>
           <p className="policy-updated">Clear answers before you apply.</p>
           <div className="faq-list">
