@@ -19,10 +19,10 @@ const included = [
 ];
 
 const journey = [
-  ['Week 1', 'Diagnose', 'Clarify your target and identify the bottleneck with the greatest leverage.'],
-  ['Week 2', 'Position', 'Strengthen your resume, experience framing, and career story.'],
-  ['Week 3', 'Apply and Adjust', 'Build a smarter target-company, application, and networking system.'],
-  ['Week 4', 'Continue', 'Interpret results and leave with a focused 60- or 90-day recruiting plan.'],
+  ['Week 1', 'Diagnose', 'Audit what you have already tried, compare effort with results, and identify the highest-leverage gap.'],
+  ['Week 2', 'Position', 'Turn your real experience into a sharper resume, career story, and value proposition.'],
+  ['Week 3', 'Test and Adjust', 'Use response patterns—not a generic checklist—to refine targeting, applications, and networking.'],
+  ['Week 4', 'Continue', 'Keep what works and leave with a personalized 60- or 90-day plan for what comes next.'],
 ];
 
 const outcomes = [
@@ -178,9 +178,9 @@ export function LandingPage() {
                 <em><span>Apply</span> With a Strategy.</em>
               </h1>
               <p className="hero-lede">
-                Personalized mentorship for college students pursuing software
-                engineering internships and new-grad roles—especially across big tech,
-                fintech, payments, and competitive technical environments.
+                Personalized mentorship for college students pursuing software engineering
+                internships and new-grad roles who are already putting in the work—but are
+                not seeing the response, interviews, or progress their experience should support.
               </p>
               <div className="hero-actions">
                 <ApplicationButton />
@@ -231,7 +231,7 @@ export function LandingPage() {
             <SectionHeading
               eyebrow="Start With the Bottleneck"
               title="Find the Bottleneck That Matters Most."
-              body="The program is built for students who have already started—but are unsure which change will create the most recruiting leverage."
+              body="Built for students whose materials and effort look solid on paper, but whose results point to a harder-to-see positioning, targeting, or conversion gap."
               id="fit-title"
             />
             <div className="bottleneck-grid">
@@ -296,7 +296,11 @@ export function LandingPage() {
             <div className="journey">
               <div className="journey-heading">
                 <p className="eyebrow">The Four-Week Journey</p>
-                <h3>Four Weeks. One Focused Plan.</h3>
+                <h3>Four Weeks. One Strategy That Adapts.</h3>
+                <p className="journey-summary">
+                  This is not a generic weekly checklist. Each step uses your materials,
+                  decisions, and recruiting response patterns to determine what to change next.
+                </p>
               </div>
               <ol>
                 {journey.map(([week, title, body]) => (
@@ -350,8 +354,9 @@ export function LandingPage() {
               <p>
                 Kelly Chen is a software engineer, product builder, speaker, and community
                 leader whose experience spans Visa, JPMorgan Chase, Bloomberg, early-career
-                programs, and student mentorship. The program translates that context into
-                practical frameworks—not employer access.
+                programs, and student mentorship. That range helps her spot gaps generic
+                checklists miss and tailor advice to each student&apos;s actual materials,
+                goals, and response patterns—not offer employer access.
               </p>
               <div className="experience-row" aria-label="Experience informing the program">
                 <strong>Visa</strong><strong>JPMorgan Chase</strong><strong>Bloomberg</strong>
