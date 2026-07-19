@@ -111,7 +111,7 @@ test('the Cloudflare microsite contains details, application, and policy navigat
     readFile(chromeSourceUrl, 'utf8'),
   ]);
 
-  assert.match(landing, /Recruiting season is here/);
+  assert.match(landing, /Recruiting Season Is Here/);
   assert.match(landing, /Weekly Workshops/);
   assert.match(landing, /Private Sessions/);
   assert.match(landing, /Participant Terms/);

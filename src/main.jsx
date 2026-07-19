@@ -313,7 +313,7 @@ function ApplicationPage() {
           </dl>
 
           <div className="privacy-note">
-            <strong>Your information is handled with care.</strong>
+            <strong>Your Information Is Handled With Care.</strong>
             <p>
               It is used to evaluate and operate the program and is never sold.
               Payment information is not collected here.

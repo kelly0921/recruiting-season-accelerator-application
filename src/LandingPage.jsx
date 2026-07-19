@@ -36,42 +36,42 @@ const outcomes = [
 
 export const faqs = [
   {
-    question: 'Who is the program designed for?',
+    question: 'Who Is the Program Designed For?',
     answer:
       'Primarily sophomores, juniors, and seniors pursuing software engineering internships or new-grad roles. Selective freshmen who are at least 18 and already have meaningful technical or recruiting experience may also apply.',
   },
   {
-    question: 'Is this a coding or technical interview course?',
+    question: 'Is This a Coding or Technical Interview Course?',
     answer:
       'No. The program focuses on recruiting strategy, positioning, target selection, organization, storytelling, networking, behavioral preparation, and diagnosing low response or conversion patterns.',
   },
   {
-    question: 'What is the weekly time commitment and workshop schedule?',
+    question: 'What Is the Weekly Time Commitment and Workshop Schedule?',
     answer:
       'The program includes one live, 60-minute Zoom workshop each week, three 30-minute private sessions across the four weeks, and approximately one to two hours of focused work between workshops. The exact workshop day and time will be finalized with the accepted cohort before payment and onboarding. Applicants should not assume recordings will be available; private sessions are scheduled individually.',
   },
   {
-    question: 'What happens after I apply?',
+    question: 'What Happens After I Apply?',
     answer:
       `Applications close August 2 at 11:59 PM ET. Decisions are planned for ${program.decisionDates}. Accepted applicants receive private payment and onboarding instructions.`,
   },
   {
-    question: 'Does applying or participating guarantee an interview or offer?',
+    question: 'Does Applying or Participating Guarantee an Interview or Offer?',
     answer:
       'No. The program provides education, feedback, strategy, and accountability. It does not guarantee referrals, interviews, internships, offers, compensation, or employment outcomes.',
   },
   {
-    question: 'How does the $20 feedback credit work?',
+    question: 'How Does the $20 Feedback Credit Work?',
     answer:
       'Participants who complete the published participation and feedback requirements within 14 days after the final workshop may receive a $20 partial refund. Feedback may be positive, neutral, or critical.',
   },
   {
-    question: 'Are scholarships available for the founding cohort?',
+    question: 'Are Scholarships Available for the Founding Cohort?',
     answer:
       'No scholarship seats are available for this first cohort. Accepted applicants receive private payment instructions, and no payment is collected with the application.',
   },
   {
-    question: 'Is this connected to Bloomberg or Kelly’s employers?',
+    question: 'Is This Connected to Bloomberg or Kelly’s Employers?',
     answer:
       'No. Recruiting Season Accelerator is independently operated by Kelly Chen and is not affiliated with, sponsored by, or endorsed by Bloomberg or any current or former employer.',
   },
@@ -174,8 +174,8 @@ export function LandingPage() {
             <div className="program-hero-copy">
               <p className="eyebrow">A Focused Four-Week Recruiting Reset</p>
               <h1>
-                <span className="hero-setup">Recruiting season is here!</span>
-                <em><span>Apply</span> with a strategy.</em>
+                <span className="hero-setup">Recruiting Season Is Here!</span>
+                <em><span>Apply</span> With a Strategy.</em>
               </h1>
               <p className="hero-lede">
                 Personalized mentorship for college students pursuing software
@@ -204,7 +204,7 @@ export function LandingPage() {
               </ol>
               <div className="strategy-card-result">
                 <span>Leave With</span>
-                <strong>A personalized 60- or 90-day plan</strong>
+                <strong>A Personalized 60- or 90-Day Plan</strong>
               </div>
             </aside>
           </div>
