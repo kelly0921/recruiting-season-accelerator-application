@@ -5192,3 +5192,62 @@ textarea {
     height: 5px;
   }
 }
+
+/* Keep the redesigned journey above all legacy card and grid treatments. */
+.journey ol {
+  overflow: visible;
+  gap: 0;
+  background: transparent;
+}
+
+.journey li,
+.journey li:nth-child(1),
+.journey li:nth-child(2),
+.journey li:nth-child(3),
+.journey li:nth-child(4) {
+  min-height: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+@media (max-width: 900px) {
+  .journey ol {
+    grid-template-columns: 1fr;
+  }
+
+  .journey ol::before {
+    top: 5px;
+    right: auto;
+    bottom: 5px;
+    left: 7px;
+    width: 2px;
+    height: auto;
+  }
+
+  .journey li,
+  .journey li:nth-child(1),
+  .journey li:nth-child(2),
+  .journey li:nth-child(3),
+  .journey li:nth-child(4) {
+    padding: 0 0 30px 42px;
+  }
+
+  .journey li:last-child {
+    padding-bottom: 0;
+  }
+
+  .journey li::before {
+    top: 2px;
+    left: 0;
+  }
+
+  .journey li > span {
+    margin: 0 0 6px;
+  }
+
+  .journey li p {
+    max-width: 620px;
+  }
+}
