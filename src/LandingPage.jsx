@@ -12,10 +12,10 @@ const bottlenecks = [
 const included = [
   ['4', 'Weekly workshops', 'Four live, 60-minute Zoom sessions built around focused exercises—not passive lectures.'],
   ['3', 'Private sessions', 'An initial diagnosis, midpoint course correction, and final continuation strategy.'],
-  ['01', 'Written resume review', 'Specific feedback on positioning, clarity, and the story your experience communicates.'],
-  ['01', 'Career asset review', 'Feedback on one additional asset—such as your portfolio, LinkedIn profile, outreach, or recruiting strategy—selected around your bottleneck.'],
-  ['04', 'Weeks of support', 'Private Slack, weekly accountability, and ApplyFirst tools used throughout the program.'],
-  ['01', 'Future offer strategy session', 'One 30-minute strategy session for your next internship or new-grad offer, included for every founding participant.'],
+  ['1', 'Written resume review', 'Specific feedback on positioning, clarity, and the story your experience communicates.'],
+  ['1', 'Career asset review', 'Feedback on one additional asset—such as your portfolio, LinkedIn profile, outreach, or recruiting strategy—selected around your bottleneck.'],
+  ['4', 'Weeks of support', 'Private Slack, weekly accountability, and ApplyFirst tools used throughout the program.'],
+  ['1', 'Future offer strategy session', 'One 30-minute strategy session for your next internship or new-grad offer, included for every founding participant.'],
 ];
 
 const journey = [
