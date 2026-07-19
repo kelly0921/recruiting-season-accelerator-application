@@ -4930,7 +4930,8 @@ textarea {
 }
 
 .fit-selection-note {
-  max-width: 880px;
+  width: 100%;
+  max-width: none;
   margin: 26px 0 0;
   border-top: 1px solid var(--line);
   padding-top: 18px;
