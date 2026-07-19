@@ -9,7 +9,7 @@ export const program = Object.freeze({
   startDate: 'Week of August 10, 2026',
   price: 99,
   feedbackCredit: 20,
-  capacity: 6,
+  capacity: 8,
 });
 
 export function applicationState(now = new Date()) {

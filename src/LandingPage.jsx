@@ -220,7 +220,7 @@ export function LandingPage() {
             <dl className="snapshot-grid">
               <div><dt>4</dt><dd>Weekly Workshops</dd><small>Live, focused, practical</small></div>
               <div><dt>3</dt><dd>Private Sessions</dd><small>Personalized to your bottleneck</small></div>
-              <div><dt>6</dt><dd>Students Maximum</dd><small>A deliberately small cohort</small></div>
+              <div><dt>{program.capacity}</dt><dd>Students Maximum</dd><small>A deliberately small cohort</small></div>
               <div><dt>${program.price}</dt><dd>Upfront Cost</dd><small>${effectivePrice} after the optional $20 feedback credit</small></div>
             </dl>
           </div>

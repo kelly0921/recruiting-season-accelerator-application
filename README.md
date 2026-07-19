@@ -1,6 +1,6 @@
 # Recruiting Season Accelerator Application
 
-Unified program microsite and application portal for Kelly Chen's six-person 2026
+Unified program microsite and application portal for Kelly Chen's eight-person 2026
 Recruiting Season Accelerator founding cohort.
 
 ## What this repository contains
