@@ -4787,3 +4787,19 @@ textarea {
     max-width: 18ch;
   }
 }
+
+/* Present the timeline label and title as one clear heading block. */
+.timeline-section .landing-section-heading {
+  display: block;
+  max-width: 760px;
+}
+
+.timeline-section .landing-section-heading .eyebrow {
+  margin: 0 0 12px;
+}
+
+.timeline-section .landing-section-heading h2 {
+  max-width: 15ch;
+  white-space: normal;
+  line-height: 1.04;
+}
