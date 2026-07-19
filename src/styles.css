@@ -4475,3 +4475,75 @@ body {
   letter-spacing: 0.08em;
   line-height: 1;
 }
+
+/* WCAG AA contrast pass: preserve the palette while strengthening text and controls. */
+:root {
+  --blue-ink: #465a98;
+  --rose-ink: #98506a;
+  --muted-ink: #667085;
+  --control-border: #8793a5;
+}
+
+.brand-by {
+  color: #626473;
+}
+
+.brand-by span,
+.strategy-card small,
+.included-grid article > span,
+.price-card > span,
+.date-timeline li > span,
+.outcome-section .eyebrow {
+  color: var(--rose-ink);
+}
+
+.hero-microcopy,
+.snapshot-grid small,
+.founder-layout small,
+.program-footer > div > p {
+  color: var(--muted-ink);
+}
+
+.pricing-section .eyebrow,
+.timeline-section .eyebrow,
+.outcome-list li::before {
+  color: var(--blue-ink);
+}
+
+.application-page .intro-copy,
+.application-page .privacy-note p {
+  color: rgba(255, 255, 255, 0.84);
+}
+
+.application-page .program-facts dt {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.application-page .program-facts div,
+.application-page .program-facts div:nth-child(2),
+.application-page .program-facts div:nth-child(3) {
+  border-color: rgba(255, 255, 255, 0.24);
+  background: rgba(255, 255, 255, 0.09);
+}
+
+.progress li {
+  color: var(--muted-ink);
+}
+
+.field em,
+.optional-consent em,
+.field small,
+.field-help {
+  color: var(--muted-ink);
+}
+
+input,
+select,
+textarea {
+  border-color: var(--control-border);
+}
+
+.choice,
+.confirmation {
+  border-color: var(--control-border);
+}
