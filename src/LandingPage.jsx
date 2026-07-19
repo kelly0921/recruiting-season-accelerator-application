@@ -13,9 +13,9 @@ const included = [
   ['4', 'Weekly workshops', 'Four live, 60-minute Zoom sessions built around focused exercises—not passive lectures.'],
   ['3', 'Private sessions', 'An initial diagnosis, midpoint course correction, and final continuation strategy.'],
   ['01', 'Written resume review', 'Specific feedback on positioning, clarity, and the story your experience communicates.'],
-  ['01', 'Personalized review', 'Feedback on the additional asset or strategy most connected to your recruiting bottleneck.'],
+  ['01', 'Career asset review', 'Feedback on one additional asset—such as your portfolio, LinkedIn profile, outreach, or recruiting strategy—selected around your bottleneck.'],
   ['04', 'Weeks of support', 'Private Slack, weekly accountability, and ApplyFirst tools used throughout the program.'],
-  ['01', 'Future offer session', 'A founding-participant strategy session for your next internship or new-grad offer.'],
+  ['01', 'Future offer strategy session', 'One 30-minute strategy session for your next internship or new-grad offer, included for every founding participant.'],
 ];
 
 const journey = [
@@ -46,6 +46,11 @@ export const faqs = [
       'No. The program focuses on recruiting strategy, positioning, target selection, organization, storytelling, networking, behavioral preparation, and diagnosing low response or conversion patterns.',
   },
   {
+    question: 'What is the weekly time commitment and workshop schedule?',
+    answer:
+      'The program includes one live, 60-minute Zoom workshop each week, three 30-minute private sessions across the four weeks, and focused work between sessions. The exact workshop day and time will be finalized with the accepted cohort before payment and onboarding. Applicants should not assume recordings will be available; private sessions are scheduled individually.',
+  },
+  {
     question: 'What happens after I apply?',
     answer:
       `Applications close August 2 at 11:59 PM ET. Decisions are planned for ${program.decisionDates}. Accepted applicants receive private payment and onboarding instructions.`,
@@ -59,6 +64,11 @@ export const faqs = [
     question: 'How does the $20 feedback credit work?',
     answer:
       'Participants who complete the published participation and feedback requirements within 14 days after the final workshop may receive a $20 partial refund. Feedback may be positive, neutral, or critical.',
+  },
+  {
+    question: 'Are scholarships available for the founding cohort?',
+    answer:
+      'No scholarship seats are available for this first cohort. Accepted applicants receive private payment instructions, and no payment is collected with the application.',
   },
   {
     question: 'Is this connected to Bloomberg or Kelly’s employers?',
@@ -117,7 +127,7 @@ export function LandingPage() {
                 <a className="text-link" href="#program">See what&apos;s included</a>
               </div>
               <p className="hero-microcopy">
-                Application-based · $99 founding price · No payment collected when applying
+                Application-based · $99 upfront ($79 after optional feedback credit) · No payment when applying
               </p>
             </div>
 
@@ -242,6 +252,16 @@ export function LandingPage() {
               title="Leave knowing what to do next."
               id="outcomes-title"
             />
+            <aside className="sample-output" aria-label="Illustrative recruiting plan">
+              <p className="eyebrow">Sample output</p>
+              <h3>A 60-day recruiting plan</h3>
+              <ol>
+                <li><span>Weeks 1–2</span><strong>Rewrite positioning</strong></li>
+                <li><span>Weeks 3–4</span><strong>Run a focused target-company sprint</strong></li>
+                <li><span>Weeks 5–8</span><strong>Review response patterns and adjust</strong></li>
+              </ol>
+              <small>Illustrative format; each participant&apos;s plan is personalized.</small>
+            </aside>
             <ul className="outcome-list">
               {outcomes.map((outcome) => <li key={outcome}>{outcome}</li>)}
             </ul>
@@ -296,7 +316,6 @@ export function LandingPage() {
               <div><span>Optional feedback credit</span><strong>−${program.feedbackCredit}</strong></div>
               <div><span>Effective cost after credit</span><strong>${effectivePrice}</strong></div>
               <ApplicationButton label="Review the Application" />
-              <small>No scholarship seats are available for this founding cohort.</small>
             </div>
           </div>
         </section>

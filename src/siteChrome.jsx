@@ -59,7 +59,10 @@ export function ProgramHeader({ compact = false, applicationPage = false }) {
           <span><img src="/kelly-logo.svg" alt="" /></span>
         </a>
         <div className="brand-copy">
-          <a className="program-name" href="/">{program.name}</a>
+          <a className="program-name" href="/" aria-label={program.name}>
+            <span className="program-name-full">{program.name}</span>
+            <span className="program-name-short" aria-hidden="true">Recruiting Accelerator</span>
+          </a>
           <a className="brand-by" href={program.portfolioUrl}>by Kelly Chen <span aria-hidden="true">↗</span></a>
         </div>
       </div>

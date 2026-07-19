@@ -4547,3 +4547,218 @@ textarea {
 .confirmation {
   border-color: var(--control-border);
 }
+
+/* Content-hierarchy iteration: compact deliverables, concrete proof, and calmer mobile entry. */
+.program-name-short {
+  display: none;
+}
+
+.included-grid article,
+.included-grid article:nth-child(2),
+.included-grid article:nth-child(3),
+.included-grid article:nth-child(5),
+.included-grid article:nth-child(6) {
+  min-height: 178px;
+  padding: 24px;
+}
+
+.included-grid h3 {
+  margin-top: 20px;
+  font-size: clamp(1.05rem, 1.3vw, 1.28rem);
+}
+
+.included-grid p {
+  margin-top: 9px;
+}
+
+.journey {
+  margin-top: 44px;
+  padding-top: 40px;
+}
+
+.outcome-section .outcome-layout {
+  grid-template-columns: minmax(250px, 0.72fr) minmax(420px, 1.28fr);
+  align-items: start;
+}
+
+.outcome-section .landing-section-heading {
+  grid-column: 1;
+}
+
+.sample-output {
+  grid-column: 1;
+  margin-top: 28px;
+  border-top: 3px solid var(--blue);
+  border-bottom: 1px solid var(--line);
+  padding: 22px 0 20px;
+}
+
+.sample-output .eyebrow {
+  margin: 0 0 8px;
+  color: var(--blue-ink);
+}
+
+.sample-output h3 {
+  margin: 0;
+  color: var(--navy);
+  font-family: var(--display);
+  font-size: clamp(1.28rem, 1.8vw, 1.65rem);
+  line-height: 1.1;
+}
+
+.sample-output ol {
+  list-style: none;
+  margin: 20px 0 14px;
+  padding: 0;
+}
+
+.sample-output li {
+  display: grid;
+  grid-template-columns: 76px minmax(0, 1fr);
+  gap: 12px;
+  border-top: 1px solid var(--line);
+  padding: 11px 0;
+}
+
+.sample-output li span {
+  color: var(--blue-ink);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.sample-output li strong {
+  color: var(--navy);
+  font-size: 0.86rem;
+  line-height: 1.35;
+}
+
+.sample-output small {
+  display: block;
+  color: var(--muted-ink);
+  font-size: 0.72rem;
+  line-height: 1.45;
+}
+
+.outcome-list {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+}
+
+.outcome-disclaimer {
+  grid-column: 2;
+}
+
+@media (max-width: 820px) {
+  .outcome-section .outcome-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .outcome-section .landing-section-heading,
+  .sample-output,
+  .outcome-list,
+  .outcome-disclaimer {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .sample-output {
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 620px) {
+  .program-name-full {
+    display: none;
+  }
+
+  .program-name-short {
+    display: inline;
+  }
+
+  .program-name {
+    max-width: none;
+    overflow: visible;
+    text-overflow: clip;
+    white-space: nowrap;
+  }
+
+  .included-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .included-grid article,
+  .included-grid article:nth-child(2),
+  .included-grid article:nth-child(3),
+  .included-grid article:nth-child(5),
+  .included-grid article:nth-child(6) {
+    display: grid;
+    min-height: 0;
+    grid-template-columns: 40px minmax(0, 1fr);
+    column-gap: 14px;
+    padding: 19px 20px;
+  }
+
+  .included-grid article > span {
+    grid-row: 1 / span 2;
+    padding-top: 3px;
+  }
+
+  .included-grid h3,
+  .included-grid p {
+    grid-column: 2;
+    margin-top: 0;
+  }
+
+  .included-grid p {
+    margin-top: 6px;
+  }
+
+  .journey {
+    margin-top: 34px;
+    padding-top: 32px;
+  }
+
+  .application-page .application-intro {
+    padding: 25px 22px;
+    border-radius: 22px;
+  }
+
+  .application-page .application-intro h1 {
+    margin-top: 10px;
+    font-size: clamp(2.05rem, 10vw, 2.35rem);
+    line-height: 0.99;
+  }
+
+  .application-page .intro-copy {
+    margin: 14px 0 17px;
+    font-size: 0.9rem;
+    line-height: 1.55;
+  }
+
+  .application-page .program-facts {
+    gap: 7px;
+  }
+
+  .application-page .program-facts div,
+  .application-page .program-facts div:nth-child(2),
+  .application-page .program-facts div:nth-child(3) {
+    min-height: 76px;
+    padding: 12px;
+  }
+
+  .application-page .program-facts dd {
+    font-size: 0.82rem;
+  }
+
+  .application-page .privacy-note {
+    margin-top: 16px;
+    padding-top: 14px;
+  }
+
+  .application-page .privacy-note p {
+    margin-top: 5px;
+    font-size: 0.76rem;
+  }
+}
