@@ -266,7 +266,7 @@ export function LandingPage() {
               </article>
             </div>
             <div className="fit-selection-note">
-              <h3>What Kelly Is Looking For</h3>
+              <h3>What Kelly Looks For:</h3>
               <p>
                 Students who have already started recruiting, can act on direct feedback,
                 and have a specific bottleneck the program can realistically help address.
