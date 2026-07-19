@@ -3799,26 +3799,26 @@ body {
 
 /* Slate mentorship theme: navy structure without the financial gold-and-serif mood. */
 :root {
-  --navy: #263149;
-  --blue: #586fb6;
-  --rose: #bd7d91;
-  --teal: #718f91;
-  --gold: #bd7d91;
-  --copy: #5d6574;
-  --line: #d8dbe3;
-  --light: #f6f5f3;
-  --paper: #fcfbf9;
-  --paper-soft: #eef0f4;
-  --sky: #edf0f8;
-  --mint: #eef2f1;
-  --lilac: #f0eff4;
-  --peach: #f5eff1;
-  --butter: #f2f0ed;
+  --navy: #33405d;
+  --blue: #667fc8;
+  --rose: #ca8399;
+  --teal: #789c98;
+  --gold: #ca8399;
+  --copy: #606776;
+  --line: #dedde1;
+  --light: #faf8f4;
+  --paper: #fffefa;
+  --paper-soft: #f2f0ed;
+  --sky: #f0f3fb;
+  --mint: #f0f4f2;
+  --lilac: #f4f1f6;
+  --peach: #f8f0f2;
+  --butter: #f5f2ec;
 }
 
 body {
   background:
-    radial-gradient(circle at 92% 6%, rgba(88, 111, 182, 0.07), transparent 26rem),
+    radial-gradient(circle at 92% 6%, rgba(102, 127, 200, 0.07), transparent 26rem),
     var(--light);
 }
 
@@ -3832,8 +3832,8 @@ body {
 
 .program-site .site-header,
 .application-page .site-header {
-  border-bottom-color: rgba(216, 219, 227, 0.96);
-  background: rgba(246, 245, 243, 0.95);
+  border-bottom-color: rgba(222, 221, 225, 0.96);
+  background: rgba(250, 248, 244, 0.95);
 }
 
 .header-cta,
@@ -3851,7 +3851,7 @@ body {
 .program-hero .button:hover,
 .final-cta .button:hover,
 .price-card .button:hover {
-  background: #485f9f;
+  background: #566fb8;
 }
 
 .eyebrow,
@@ -3861,8 +3861,9 @@ body {
 
 .program-hero {
   background:
-    radial-gradient(circle at 88% 6%, rgba(88, 111, 182, 0.1), transparent 24rem),
-    linear-gradient(135deg, #f1f2f5, #f8f7f5 68%);
+    radial-gradient(circle at 88% 6%, rgba(102, 127, 200, 0.1), transparent 24rem),
+    radial-gradient(circle at 10% 92%, rgba(202, 131, 153, 0.07), transparent 22rem),
+    linear-gradient(135deg, #f8f5f1, #fffefa 68%);
   color: var(--navy);
 }
 
@@ -3872,7 +3873,7 @@ body {
 }
 
 .program-hero-copy h1 em {
-  background-image: linear-gradient(transparent 81%, rgba(189, 125, 145, 0.34) 0);
+  background-image: linear-gradient(transparent 81%, rgba(202, 131, 153, 0.32) 0);
 }
 
 .hero-lede {
@@ -3880,9 +3881,9 @@ body {
 }
 
 .strategy-card {
-  border-color: rgba(38, 49, 73, 0.18);
+  border-color: rgba(51, 64, 93, 0.17);
   background: var(--paper);
-  box-shadow: 0 22px 54px rgba(38, 49, 73, 0.11);
+  box-shadow: 0 22px 54px rgba(51, 64, 93, 0.09);
 }
 
 .strategy-card::before {
@@ -4079,16 +4080,16 @@ body {
 /* Application follows the same slate structure with a welcoming, modern form. */
 .application-page {
   background:
-    radial-gradient(circle at 92% 6%, rgba(88, 111, 182, 0.07), transparent 26rem),
+    radial-gradient(circle at 92% 6%, rgba(102, 127, 200, 0.07), transparent 26rem),
     var(--light);
 }
 
 .application-page .application-intro {
-  border-color: rgba(38, 49, 73, 0.22);
+  border-color: rgba(51, 64, 93, 0.19);
   background:
-    radial-gradient(circle at 110% 110%, rgba(189, 125, 145, 0.16), transparent 42%),
-    linear-gradient(145deg, #263149, #34405b);
-  box-shadow: 0 22px 54px rgba(38, 49, 73, 0.13);
+    radial-gradient(circle at 110% 110%, rgba(202, 131, 153, 0.18), transparent 42%),
+    linear-gradient(145deg, #33405d, #465576);
+  box-shadow: 0 22px 54px rgba(51, 64, 93, 0.11);
   color: white;
 }
 
@@ -4129,7 +4130,7 @@ body {
 .application-page .form-card {
   border-color: var(--line);
   background: var(--paper);
-  box-shadow: 0 22px 54px rgba(38, 49, 73, 0.09);
+  box-shadow: 0 22px 54px rgba(51, 64, 93, 0.08);
 }
 
 .application-page .progress li.active::before {
@@ -4315,8 +4316,8 @@ body {
 /* Final slate-theme cascade after all structural layout rules. */
 .program-site .site-header,
 .application-page .site-header {
-  border-bottom-color: rgba(216, 219, 227, 0.96);
-  background: rgba(246, 245, 243, 0.96);
+  border-bottom-color: rgba(222, 221, 225, 0.96);
+  background: rgba(250, 248, 244, 0.96);
 }
 
 .included-section {
