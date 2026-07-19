@@ -3800,7 +3800,7 @@ body {
 /* Slate mentorship theme: navy structure without the financial gold-and-serif mood. */
 :root {
   --navy: #33405d;
-  --blue: #667fc8;
+  --blue: #586fb6;
   --rose: #ca8399;
   --teal: #789c98;
   --gold: #ca8399;
@@ -3818,7 +3818,7 @@ body {
 
 body {
   background:
-    radial-gradient(circle at 92% 6%, rgba(102, 127, 200, 0.07), transparent 26rem),
+    radial-gradient(circle at 92% 6%, rgba(88, 111, 182, 0.08), transparent 26rem),
     var(--light);
 }
 
@@ -3851,7 +3851,7 @@ body {
 .program-hero .button:hover,
 .final-cta .button:hover,
 .price-card .button:hover {
-  background: #566fb8;
+  background: #485f9f;
 }
 
 .eyebrow,
@@ -3861,7 +3861,7 @@ body {
 
 .program-hero {
   background:
-    radial-gradient(circle at 88% 6%, rgba(102, 127, 200, 0.1), transparent 24rem),
+    radial-gradient(circle at 88% 6%, rgba(88, 111, 182, 0.12), transparent 24rem),
     radial-gradient(circle at 10% 92%, rgba(202, 131, 153, 0.07), transparent 22rem),
     linear-gradient(135deg, #f8f5f1, #fffefa 68%);
   color: var(--navy);
@@ -4080,7 +4080,7 @@ body {
 /* Application follows the same slate structure with a welcoming, modern form. */
 .application-page {
   background:
-    radial-gradient(circle at 92% 6%, rgba(102, 127, 200, 0.07), transparent 26rem),
+    radial-gradient(circle at 92% 6%, rgba(88, 111, 182, 0.08), transparent 26rem),
     var(--light);
 }
 
