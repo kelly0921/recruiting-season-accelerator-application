@@ -116,7 +116,10 @@ export function LandingPage() {
           <div className="landing-shell hero-layout">
             <div className="program-hero-copy">
               <p className="eyebrow">A focused four-week recruiting reset</p>
-              <h1>Recruiting season is here. <em>Apply with a strategy.</em></h1>
+              <h1>
+                <span className="hero-setup">Recruiting season is here!</span>
+                <em><span>Apply</span> with a strategy.</em>
+              </h1>
               <p className="hero-lede">
                 Personalized mentorship for college students pursuing software
                 engineering internships and new-grad roles—especially across big tech,
