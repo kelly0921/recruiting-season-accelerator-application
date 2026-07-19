@@ -5200,6 +5200,10 @@ textarea {
   background: transparent;
 }
 
+.journey ol::before {
+  right: 25%;
+}
+
 .journey li,
 .journey li:nth-child(1),
 .journey li:nth-child(2),
