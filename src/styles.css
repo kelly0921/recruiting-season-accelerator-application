@@ -4803,3 +4803,17 @@ textarea {
   white-space: normal;
   line-height: 1.04;
 }
+
+.fit-selection-note {
+  max-width: 880px;
+  margin: 26px 0 0;
+  border-top: 1px solid var(--line);
+  padding-top: 18px;
+  color: var(--copy);
+  font-size: 0.88rem;
+  line-height: 1.65;
+}
+
+.fit-selection-note strong {
+  color: var(--navy);
+}

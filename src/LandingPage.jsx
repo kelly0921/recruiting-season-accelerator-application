@@ -48,7 +48,7 @@ export const faqs = [
   {
     question: 'What is the weekly time commitment and workshop schedule?',
     answer:
-      'The program includes one live, 60-minute Zoom workshop each week, three 30-minute private sessions across the four weeks, and focused work between sessions. The exact workshop day and time will be finalized with the accepted cohort before payment and onboarding. Applicants should not assume recordings will be available; private sessions are scheduled individually.',
+      'The program includes one live, 60-minute Zoom workshop each week, three 30-minute private sessions across the four weeks, and approximately one to two hours of focused work between workshops. The exact workshop day and time will be finalized with the accepted cohort before payment and onboarding. Applicants should not assume recordings will be available; private sessions are scheduled individually.',
   },
   {
     question: 'What happens after I apply?',
@@ -103,9 +103,9 @@ export function LandingPage() {
         <span>Founding cohort · {program.capacity} students maximum</span>
         <strong>
           {state === 'opening-soon'
-            ? 'Applications open July 22'
+            ? 'Applications open July 22, 2026'
             : state === 'open'
-              ? 'Applications close August 2 at 11:59 PM ET'
+              ? 'Applications close August 2, 2026 at 11:59 PM ET'
               : 'Founding cohort applications are closed'}
         </strong>
       </div>
@@ -161,7 +161,7 @@ export function LandingPage() {
               <div><dt>4</dt><dd>Weekly workshops</dd><small>Live, focused, practical</small></div>
               <div><dt>3</dt><dd>Private sessions</dd><small>Personalized to your bottleneck</small></div>
               <div><dt>6</dt><dd>Students maximum</dd><small>A deliberately small cohort</small></div>
-              <div><dt>${effectivePrice}</dt><dd>Effective cost</dd><small>After the optional $20 feedback credit</small></div>
+              <div><dt>${program.price}</dt><dd>Upfront cost</dd><small>${effectivePrice} after the optional $20 feedback credit</small></div>
             </dl>
           </div>
         </section>
@@ -205,6 +205,11 @@ export function LandingPage() {
                 </ul>
               </article>
             </div>
+            <p className="fit-selection-note">
+              <strong>What Kelly looks for:</strong> Students who have already started
+              recruiting, can act on direct feedback, and have a specific bottleneck the
+              program can realistically help address.
+            </p>
           </div>
         </section>
 
@@ -348,9 +353,9 @@ export function LandingPage() {
 
         <section className="final-cta">
           <div className="landing-shell">
-            <p className="eyebrow">Founding cohort · {program.capacity} students maximum</p>
+            <p className="eyebrow">Prepare your application</p>
             <h2>Ready to build a clearer recruiting plan?</h2>
-            <p>Review the questions, prepare your resume, and tell Kelly what you need help solving.</p>
+            <p>Have your resume, LinkedIn profile, graduation date, and current recruiting goals ready.</p>
             <ApplicationButton />
           </div>
         </section>
