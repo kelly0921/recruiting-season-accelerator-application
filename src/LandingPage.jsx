@@ -14,7 +14,7 @@ const included = [
   ['3', 'Private Sessions', 'An initial diagnosis, midpoint course correction, and final continuation strategy.'],
   ['1', 'Written Resume Review', 'Specific feedback on positioning, clarity, and the story your experience communicates.'],
   ['1', 'Career Asset Review', 'Feedback on one additional asset—such as your portfolio, LinkedIn profile, outreach, or recruiting strategy—selected around your bottleneck.'],
-  ['4', 'Weeks of Support', 'Private Slack, weekly accountability, and ApplyFirst tools used throughout the program.'],
+  ['4', 'Weeks of Support', 'A private cohort space for weekly updates, accountability, curated resource sharing, and learning from what others are testing—with ApplyFirst tools throughout.'],
   ['1', 'Future Offer Strategy Session', 'One 30-minute strategy session for your next internship or new-grad offer, included for every founding participant.'],
 ];
 
@@ -441,7 +441,7 @@ const policyContent = {
     sections: [
       ['Program and Operator', `Recruiting Season Accelerator is a four-week educational and mentorship program operated by Kelly Chen. Questions may be sent to ${program.contactEmail}.`],
       ['Enrollment and Price', `The founding-cohort price is $${program.price}. Applying does not guarantee acceptance, and a seat is confirmed only after acceptance and private payment.`],
-      ['Included Support', 'The program includes four workshops, three private sessions, a written resume review, one additional personalized review, Slack support, ApplyFirst resources, a continuation plan, and one future offer-strategy session. Themes may adapt without materially reducing the promised support.'],
+      ['Included Support', 'The program includes four workshops, three private sessions, a written resume review, one additional personalized review, a private cohort space for updates and resource sharing, ApplyFirst resources, a continuation plan, and one future offer-strategy session. Themes may adapt without materially reducing the promised support.'],
       ['Participant Responsibility', 'Participants remain responsible for their applications, materials, decisions, attendance, and recruiting outcomes. Materials must be accurate and must not misrepresent experience.'],
       ['No Employment Guarantee', 'Participation does not guarantee a referral, interview, internship, job offer, compensation level, or other employment outcome.'],
       ['Independent Program', 'The program is not affiliated with, sponsored by, or endorsed by Bloomberg or any current or former employer. All guidance is Kelly’s own.'],
