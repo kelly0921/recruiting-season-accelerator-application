@@ -2,11 +2,20 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import './styles.css';
 import { FaqPage, LandingPage, PolicyPage } from './LandingPage.jsx';
-import { applicationState, program } from './program.js';
+import {
+  applicationState,
+  applicationStepRequiresValidation,
+  program,
+} from './program.js';
 import { ProgramFooter, ProgramHeader } from './siteChrome.jsx';
 
 const programUrl = '/';
 const contactEmail = program.contactEmail;
+const futureCohortFormUrl = String(
+  import.meta.env.VITE_FUTURE_COHORT_FORM_URL || '',
+).trim();
+const futureCohortEmailUrl =
+  `mailto:${contactEmail}?subject=${encodeURIComponent('Future Recruiting Season Accelerator Cohort')}`;
 
 const steps = [
   { id: 'about', label: 'About You' },
@@ -201,7 +210,8 @@ function ApplicationPage() {
   };
 
   const goNext = () => {
-    if (!validateStep()) return;
+    if (applicationStepRequiresValidation(state) && !validateStep()) return;
+    setMessage('');
     setCurrentStep((step) => Math.min(step + 1, steps.length - 1));
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -279,13 +289,36 @@ function ApplicationPage() {
         <section className="success-card">
           <p className="eyebrow">Founding Cohort</p>
           <h1>Applications Are Now Closed.</h1>
-          <p>
-            Join the future cohort list from the program page or email Kelly with a
-            question.
-          </p>
+          {futureCohortFormUrl ? (
+            <p>
+              Join the future cohort interest list to receive updates when the next
+              application window is announced.
+            </p>
+          ) : (
+            <>
+              <p>
+                The future cohort interest form is being prepared. For now, email Kelly
+                if you would like to be notified when the next cohort is announced.
+              </p>
+              <p className="configuration-note">
+                <strong>Future Cohort Interest Form:</strong> Coming soon.
+              </p>
+            </>
+          )}
           <div className="button-row">
-            <a className="button" href={programUrl}>Return to Program Details</a>
-            <a className="text-link" href={`mailto:${contactEmail}`}>Email Kelly</a>
+            {futureCohortFormUrl ? (
+              <a
+                className="button"
+                href={futureCohortFormUrl}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Join the Future Cohort List
+              </a>
+            ) : (
+              <a className="button" href={futureCohortEmailUrl}>Request Future Cohort Updates</a>
+            )}
+            <a className="text-link" href={programUrl}>Return to Program Details</a>
           </div>
         </section>
       </main>
@@ -342,8 +375,8 @@ function ApplicationPage() {
           {state === 'opening-soon' ? (
             <div className="opening-note" role="status">
               <strong>Applications Open July 22.</strong>
-              You can review the questions now. Submission will activate when the
-              application window opens.
+              You can browse all five steps without entering information. Required-field
+              checks and submission will activate when the application window opens.
             </div>
           ) : null}
 

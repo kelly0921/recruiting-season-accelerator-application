@@ -6,6 +6,7 @@ import {
   maxResumeBytes,
   validateApplication,
 } from '../functions/_shared/validation.js';
+import { applicationStepRequiresValidation } from '../src/program.js';
 
 const landingSourceUrl = new URL('../src/LandingPage.jsx', import.meta.url);
 const applicationSourceUrl = new URL('../src/main.jsx', import.meta.url);
@@ -59,6 +60,12 @@ test('application dates enforce the 2026 ET window', () => {
   assert.equal(getApplicationState(new Date('2026-07-22T00:00:00-04:00')), 'open');
   assert.equal(getApplicationState(new Date('2026-08-02T23:59:59-04:00')), 'open');
   assert.equal(getApplicationState(new Date('2026-08-03T00:00:00-04:00')), 'closed');
+});
+
+test('the pre-launch application can be browsed without field validation', () => {
+  assert.equal(applicationStepRequiresValidation('opening-soon'), false);
+  assert.equal(applicationStepRequiresValidation('open'), true);
+  assert.equal(applicationStepRequiresValidation('closed'), true);
 });
 
 test('a complete application passes server validation', () => {
@@ -117,6 +124,8 @@ test('the Cloudflare microsite contains details, application, and policy navigat
   assert.match(landing, /Participant Terms/);
   assert.match(application, /path === '\/apply'/);
   assert.match(application, /<ApplicationPage/);
+  assert.match(application, /VITE_FUTURE_COHORT_FORM_URL/);
+  assert.match(application, /Future Cohort Interest Form/);
   assert.match(chrome, /href="\/terms"/);
   assert.match(chrome, /href="\/privacy"/);
   assert.match(chrome, /href="\/refund"/);

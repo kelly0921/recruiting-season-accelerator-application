@@ -77,12 +77,33 @@ Add:
 | --- | --- | --- |
 | `VITE_TURNSTILE_SITE_KEY` | Plaintext | Renders the browser widget during the build |
 | `TURNSTILE_SECRET_KEY` | Secret | Verifies tokens inside the Pages Function |
+| `VITE_FUTURE_COHORT_FORM_URL` | Plaintext | Replaces the closed-state placeholder with the future-cohort interest form |
 
 Apply `VITE_TURNSTILE_SITE_KEY` to both production and preview builds if previews
 need working submissions. Restrict production submissions to the production
 hostname in the Turnstile widget.
 
 Deploy again after adding bindings or environment variables.
+
+## Future-cohort interest form
+
+The closed-application experience currently includes a clearly labeled placeholder
+and an email fallback. When the future-cohort interest form is ready, set
+`VITE_FUTURE_COHORT_FORM_URL` to its public URL and redeploy.
+
+Keep this form intentionally short. Recommended fields:
+
+- Full name
+- Email address
+- School
+- Expected graduation year
+- Primary role or opportunity interest
+- Preferred future cohort timing, if known
+- Optional one-sentence note about the support they are seeking
+- Separate consent to receive future cohort announcements
+
+Do not request a resume, detailed recruiting history, payment information, or other
+sensitive application material in the interest form.
 
 ## Privacy and operations
 

@@ -577,6 +577,15 @@ footer a {
   margin-top: 14px;
 }
 
+.success-card .configuration-note {
+  margin: 0 auto 4px;
+  text-align: left;
+}
+
+.success-card .configuration-note strong {
+  color: var(--navy);
+}
+
 @media (max-width: 860px) {
   .application-shell {
     grid-template-columns: 1fr;

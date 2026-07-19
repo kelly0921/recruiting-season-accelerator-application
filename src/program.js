@@ -27,3 +27,7 @@ export function applicationAction(state = applicationState()) {
   }
   return { label: 'Applications Are Closed', href: '/apply' };
 }
+
+export function applicationStepRequiresValidation(state = applicationState()) {
+  return state !== 'opening-soon';
+}
