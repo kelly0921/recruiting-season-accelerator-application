@@ -2691,6 +2691,44 @@ body {
   }
 }
 
+/* Keep the future-cohort form visually aligned with the application without
+   making a two-minute interest form feel like another long application. */
+.interest-card .form-heading {
+  margin-bottom: 24px;
+}
+
+.interest-card .opening-note {
+  margin-bottom: 26px;
+}
+
+.interest-card form {
+  display: grid;
+  gap: 23px;
+}
+
+.interest-card .form-actions {
+  margin-top: 8px;
+}
+
+.interest-card .form-actions .button {
+  min-width: 230px;
+}
+
+@media (max-width: 620px) {
+  .interest-card .form-actions {
+    align-items: stretch;
+    flex-direction: column-reverse;
+  }
+
+  .interest-card .form-actions .button {
+    width: 100%;
+  }
+
+  .interest-card .form-actions .text-link {
+    text-align: center;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .landing-motion-ready .journey li {
     opacity: 1;

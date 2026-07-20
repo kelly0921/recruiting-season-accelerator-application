@@ -2,6 +2,8 @@ export const applicationOpenAt = '2026-07-22T00:00:00-04:00';
 export const applicationCloseAt = '2026-08-02T23:59:59-04:00';
 export const maxResumeBytes = 5 * 1024 * 1024;
 
+const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 const requiredTextFields = [
   'fullName',
   'email',
@@ -49,7 +51,7 @@ export function validateApplication(formData, now = new Date()) {
   }
 
   const email = String(formData.get('email'));
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+  if (!emailPattern.test(email)) {
     return 'Enter a valid email address.';
   }
 
@@ -129,3 +131,62 @@ export function applicationRecord(formData, id, resumeKey, now = new Date()) {
   };
 }
 
+export function validateFutureInterest(formData) {
+  for (const field of [
+    'fullName',
+    'email',
+    'graduationYear',
+    'opportunityInterest',
+  ]) {
+    if (!String(formData.get(field) || '').trim()) {
+      return `Missing required field: ${field}.`;
+    }
+  }
+
+  const email = String(formData.get('email')).trim();
+  if (!emailPattern.test(email)) {
+    return 'Enter a valid email address.';
+  }
+
+  const graduationYear = String(formData.get('graduationYear')).trim();
+  if (!/^\d{4}$/.test(graduationYear)) {
+    return 'Enter a valid four-digit graduation year.';
+  }
+
+  const lengthLimits = {
+    fullName: 120,
+    email: 254,
+    school: 200,
+    graduationYear: 4,
+    opportunityInterest: 120,
+    preferredTiming: 120,
+    supportNote: 1000,
+  };
+
+  for (const [field, maxLength] of Object.entries(lengthLimits)) {
+    if (String(formData.get(field) || '').trim().length > maxLength) {
+      return `${field} is too long.`;
+    }
+  }
+
+  if (formData.get('announcementConsent') !== 'yes') {
+    return 'Confirm that you would like to receive future cohort announcements.';
+  }
+
+  return '';
+}
+
+export function futureInterestRecord(formData, id, now = new Date()) {
+  return {
+    id,
+    submittedAt: now.toISOString(),
+    fullName: String(formData.get('fullName')).trim(),
+    email: String(formData.get('email')).trim().toLowerCase(),
+    school: String(formData.get('school') || '').trim(),
+    graduationYear: String(formData.get('graduationYear')).trim(),
+    opportunityInterest: String(formData.get('opportunityInterest')).trim(),
+    preferredTiming: String(formData.get('preferredTiming') || '').trim(),
+    supportNote: String(formData.get('supportNote') || '').trim(),
+    announcementConsent: 1,
+  };
+}

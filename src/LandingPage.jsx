@@ -88,8 +88,10 @@ function SectionHeading({ eyebrow, title, body, id }) {
 }
 
 function ApplicationButton({ className = 'button', label }) {
-  const action = applicationAction(applicationState());
-  return <a className={className} href={action.href}>{label || action.label}</a>;
+  const state = applicationState();
+  const action = applicationAction(state);
+  const resolvedLabel = state === 'closed' ? action.label : label || action.label;
+  return <a className={className} href={action.href}>{resolvedLabel}</a>;
 }
 
 function useLandingPageMotion() {
@@ -452,9 +454,9 @@ const policyContent = {
     title: 'Privacy Notice',
     updated: 'Draft for the 2026 Founding Cohort',
     sections: [
-      ['Information Collected', 'The application may collect contact information, school and graduation details, resume and profile links, recruiting goals and history, participation information, and optional feedback or outcome updates.'],
-      ['How Information Is Used', 'Information is used to evaluate applications, select and onboard participants, deliver mentorship, operate workshops and support, improve resources, and track aggregate program outcomes.'],
-      ['Storage and Service Providers', 'Cloudflare processes application records and private resume files for this portal. Other program vendors may process payment, scheduling, video, communication, or file information according to their own terms.'],
+      ['Information Collected', 'The application may collect contact information, school and graduation details, resume and profile links, recruiting goals and history, participation information, and optional feedback or outcome updates. The future cohort interest form collects contact, education, opportunity-interest, timing, and optional support-preference information.'],
+      ['How Information Is Used', 'Information is used to evaluate applications, select and onboard participants, deliver mentorship, operate workshops and support, improve resources, track aggregate program outcomes, plan future cohorts, and send requested cohort announcements.'],
+      ['Storage and Service Providers', 'Cloudflare processes application and future-cohort interest records, along with private resume files, for this portal. Other program vendors may process payment, scheduling, video, communication, or file information according to their own terms.'],
       ['Your Choices', `Information is not sold. Public use of a name, image, quote, school, employer, or outcome requires separate permission. Correction or deletion requests may be sent to ${program.contactEmail}.`],
       ['Retention', 'Rejected application data should generally be deleted within 60–90 days unless the applicant separately joins an updates list. Accepted-participant working files are minimized and removed or anonymized when no longer needed.'],
     ],

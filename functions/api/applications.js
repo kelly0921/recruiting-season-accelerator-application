@@ -2,6 +2,7 @@ import {
   applicationRecord,
   validateApplication,
 } from '../_shared/validation.js';
+import { verifyTurnstile } from '../_shared/turnstile.js';
 
 const json = (body, status = 200) =>
   new Response(JSON.stringify(body), {
@@ -11,22 +12,6 @@ const json = (body, status = 200) =>
       'Cache-Control': 'no-store',
     },
   });
-
-async function verifyTurnstile(token, secret, ip) {
-  if (!secret) return false;
-
-  const body = new FormData();
-  body.set('secret', secret);
-  body.set('response', token);
-  if (ip) body.set('remoteip', ip);
-
-  const response = await fetch(
-    'https://challenges.cloudflare.com/turnstile/v0/siteverify',
-    { method: 'POST', body },
-  );
-  const result = await response.json();
-  return Boolean(result.success);
-}
 
 export async function onRequestPost({ request, env }) {
   if (!env.APPLICATIONS_DB || !env.RESUMES_BUCKET || !env.TURNSTILE_SECRET_KEY) {
@@ -125,4 +110,3 @@ export async function onRequestPost({ request, env }) {
 export function onRequestGet() {
   return json({ error: 'Method not allowed.' }, 405);
 }
-

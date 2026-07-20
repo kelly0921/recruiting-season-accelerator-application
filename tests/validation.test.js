@@ -2,9 +2,11 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 import {
+  futureInterestRecord,
   getApplicationState,
   maxResumeBytes,
   validateApplication,
+  validateFutureInterest,
 } from '../functions/_shared/validation.js';
 import { applicationStepRequiresValidation } from '../src/program.js';
 
@@ -52,6 +54,19 @@ function validApplication() {
     'understandIndependence',
   ].forEach((key) => data.set(key, 'yes'));
   data.set('resume', testFile());
+  return data;
+}
+
+function validFutureInterest() {
+  const data = new FormData();
+  data.set('fullName', 'Future Participant');
+  data.set('email', 'future@example.com');
+  data.set('school', 'Example University');
+  data.set('graduationYear', '2028');
+  data.set('opportunityInterest', 'Software Engineering Internship');
+  data.set('preferredTiming', 'Next Available Cohort');
+  data.set('supportNote', 'I would like help improving interview conversion.');
+  data.set('announcementConsent', 'yes');
   return data;
 }
 
@@ -111,7 +126,36 @@ test('resume uploads must be PDFs no larger than 5 MB', () => {
   );
 });
 
-test('the Cloudflare microsite contains details, application, and policy navigation', async () => {
+test('a complete future cohort interest form passes validation', () => {
+  assert.equal(validateFutureInterest(validFutureInterest()), '');
+});
+
+test('future cohort interest requires a valid email and explicit announcement consent', () => {
+  const invalidEmail = validFutureInterest();
+  invalidEmail.set('email', 'not-an-email');
+  assert.match(validateFutureInterest(invalidEmail), /valid email/);
+
+  const missingConsent = validFutureInterest();
+  missingConsent.delete('announcementConsent');
+  assert.match(validateFutureInterest(missingConsent), /future cohort announcements/);
+});
+
+test('future cohort records normalize email and preserve only the intended fields', () => {
+  const data = validFutureInterest();
+  data.set('email', '  FUTURE@EXAMPLE.COM ');
+  const record = futureInterestRecord(
+    data,
+    'interest-test-id',
+    new Date('2026-07-19T12:00:00-04:00'),
+  );
+
+  assert.equal(record.id, 'interest-test-id');
+  assert.equal(record.email, 'future@example.com');
+  assert.equal(record.announcementConsent, 1);
+  assert.equal(record.supportNote, 'I would like help improving interview conversion.');
+});
+
+test('the Cloudflare microsite contains details, both forms, and policy navigation', async () => {
   const [landing, application, chrome] = await Promise.all([
     readFile(landingSourceUrl, 'utf8'),
     readFile(applicationSourceUrl, 'utf8'),
@@ -124,8 +168,9 @@ test('the Cloudflare microsite contains details, application, and policy navigat
   assert.match(landing, /Participant Terms/);
   assert.match(application, /path === '\/apply'/);
   assert.match(application, /<ApplicationPage/);
-  assert.match(application, /VITE_FUTURE_COHORT_FORM_URL/);
-  assert.match(application, /Future Cohort Interest Form/);
+  assert.match(application, /path === '\/interest'/);
+  assert.match(application, /<FutureInterestPage/);
+  assert.match(application, /fetch\('\/api\/interest'/);
   assert.match(chrome, /href="\/terms"/);
   assert.match(chrome, /href="\/privacy"/);
   assert.match(chrome, /href="\/refund"/);

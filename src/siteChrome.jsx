@@ -22,7 +22,7 @@ export function ProgramHeader({ compact = false, applicationPage = false }) {
       ? 'Apply Now'
       : action.label === 'Preview the Application'
         ? 'Preview'
-        : 'Closed';
+        : 'Future Cohort';
 
   useEffect(() => {
     if (window.location.pathname !== '/') return undefined;

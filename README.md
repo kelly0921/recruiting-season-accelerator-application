@@ -7,6 +7,7 @@ Recruiting Season Accelerator founding cohort.
 
 - A responsive program-details landing page
 - A coordinated, accessible five-step React application
+- A lightweight future-cohort interest form
 - Program FAQ, Participant Terms, Privacy Notice, and Refund Policy routes
 - Cloudflare Pages Function submission handling
 - Cloudflare Turnstile server-side verification
@@ -22,7 +23,8 @@ never be committed to this repository.
 | Route | Purpose |
 | --- | --- |
 | `/` | Program details |
-| `/apply` | Founding-cohort application |
+| `/apply` | Founding-cohort application and closed-state handoff |
+| `/interest` | Future-cohort interest form |
 | `/faq` | Program questions |
 | `/terms` | Participant Terms |
 | `/privacy` | Privacy Notice |
@@ -61,7 +63,11 @@ Create and attach these under the Pages project's **Settings → Bindings**:
 1. **D1 database**
    - Create a database such as `rsa-applications`
    - Binding name: `APPLICATIONS_DB`
-   - Run `migrations/0001_create_applications.sql` against the production database
+   - Run `migrations/0001_create_applications.sql` and
+     `migrations/0002_create_future_cohort_interest.sql` against the production
+     database
+   - The future-interest endpoint also creates its table safely if the second
+     migration has not yet been run
 
 2. **R2 bucket**
    - Create a private bucket such as `rsa-application-resumes`
@@ -77,7 +83,6 @@ Add:
 | --- | --- | --- |
 | `VITE_TURNSTILE_SITE_KEY` | Plaintext | Renders the browser widget during the build |
 | `TURNSTILE_SECRET_KEY` | Secret | Verifies tokens inside the Pages Function |
-| `VITE_FUTURE_COHORT_FORM_URL` | Plaintext | Replaces the closed-state placeholder with the future-cohort interest form |
 
 Apply `VITE_TURNSTILE_SITE_KEY` to both production and preview builds if previews
 need working submissions. Restrict production submissions to the production
@@ -87,23 +92,26 @@ Deploy again after adding bindings or environment variables.
 
 ## Future-cohort interest form
 
-The closed-application experience currently includes a clearly labeled placeholder
-and an email fallback. When the future-cohort interest form is ready, set
-`VITE_FUTURE_COHORT_FORM_URL` to its public URL and redeploy.
+The native form is available at `/interest`. It intentionally stays out of the
+primary navigation while founding-cohort applications are active. After the
+application deadline, program calls to action and the closed `/apply` state route
+visitors to this form.
 
-Keep this form intentionally short. Recommended fields:
+It collects:
 
-- Full name
-- Email address
-- School
+- Full name and email address
+- Optional school
 - Expected graduation year
-- Primary role or opportunity interest
-- Preferred future cohort timing, if known
-- Optional one-sentence note about the support they are seeking
-- Separate consent to receive future cohort announcements
+- Primary opportunity interest
+- Optional preferred cohort timing
+- Optional short note about the support the student is seeking
+- Explicit consent to receive future cohort announcements
 
-Do not request a resume, detailed recruiting history, payment information, or other
-sensitive application material in the interest form.
+Submissions are validated in `/functions/api/interest.js`, protected by the same
+Turnstile configuration as the application, and stored in the
+`future_cohort_interest` D1 table. Duplicate email submissions are acknowledged
+without creating duplicate records. The form does not request a resume, detailed
+recruiting history, or payment information.
 
 ## Privacy and operations
 
@@ -114,6 +122,8 @@ sensitive application material in the interest form.
   joins an updates list.
 - Do not place applicant names, emails, school information, resume details, or form
   responses in analytics.
+- Honor correction, deletion, and future-announcement removal requests sent to the
+  program contact email.
 - The form does not collect payment information.
 
 ## Validation

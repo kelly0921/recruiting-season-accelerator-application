@@ -25,7 +25,7 @@ export function applicationAction(state = applicationState()) {
   if (state === 'opening-soon') {
     return { label: 'Preview the Application', href: '/apply' };
   }
-  return { label: 'Applications Are Closed', href: '/apply' };
+  return { label: 'Join the Future Cohort List', href: '/interest' };
 }
 
 export function applicationStepRequiresValidation(state = applicationState()) {

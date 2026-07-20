@@ -11,11 +11,6 @@ import { ProgramFooter, ProgramHeader } from './siteChrome.jsx';
 
 const programUrl = '/';
 const contactEmail = program.contactEmail;
-const futureCohortFormUrl = String(
-  import.meta.env.VITE_FUTURE_COHORT_FORM_URL || '',
-).trim();
-const futureCohortEmailUrl =
-  `mailto:${contactEmail}?subject=${encodeURIComponent('Future Recruiting Season Accelerator Cohort')}`;
 
 const steps = [
   { id: 'about', label: 'About You' },
@@ -101,17 +96,19 @@ function TextField({ label, name, type = 'text', required = true, hint, ...props
   );
 }
 
-function TextArea({ label, name, hint }) {
+function TextArea({ label, name, hint, required = true, ...props }) {
   return (
     <label className="field">
-      <span>{label}</span>
+      <span>
+        {label} {!required ? <em>Optional</em> : null}
+      </span>
       {hint ? <small>{hint}</small> : null}
-      <textarea name={name} rows="5" required />
+      <textarea name={name} rows="5" required={required} {...props} />
     </label>
   );
 }
 
-function Turnstile({ onToken }) {
+function Turnstile({ onToken, configurationMessage }) {
   const container = useRef(null);
   const widgetId = useRef(null);
   const siteKey = import.meta.env.VITE_TURNSTILE_SITE_KEY;
@@ -157,8 +154,12 @@ function Turnstile({ onToken }) {
   if (!siteKey) {
     return (
       <p className="configuration-note">
-        Submission protection is being configured. You can review the application now,
-        but submission will remain unavailable until launch.
+        {configurationMessage || (
+          <>
+            Submission protection is being configured. You can review the application now,
+            but submission will remain unavailable until launch.
+          </>
+        )}
       </p>
     );
   }
@@ -289,35 +290,12 @@ function ApplicationPage() {
         <section className="success-card">
           <p className="eyebrow">Founding Cohort</p>
           <h1>Applications Are Now Closed.</h1>
-          {futureCohortFormUrl ? (
-            <p>
-              Join the future cohort interest list to receive updates when the next
-              application window is announced.
-            </p>
-          ) : (
-            <>
-              <p>
-                The future cohort interest form is being prepared. For now, email Kelly
-                if you would like to be notified when the next cohort is announced.
-              </p>
-              <p className="configuration-note">
-                <strong>Future Cohort Interest Form:</strong> Coming soon.
-              </p>
-            </>
-          )}
+          <p>
+            Join the future cohort interest list to receive updates when the next
+            application window is announced.
+          </p>
           <div className="button-row">
-            {futureCohortFormUrl ? (
-              <a
-                className="button"
-                href={futureCohortFormUrl}
-                target="_blank"
-                rel="noreferrer"
-              >
-                Join the Future Cohort List
-              </a>
-            ) : (
-              <a className="button" href={futureCohortEmailUrl}>Request Future Cohort Updates</a>
-            )}
+            <a className="button" href="/interest">Join the Future Cohort List</a>
             <a className="text-link" href={programUrl}>Return to Program Details</a>
           </div>
         </section>
@@ -554,11 +532,225 @@ function ApplicationPage() {
   );
 }
 
+function FutureInterestPage() {
+  const [status, setStatus] = useState('idle');
+  const [message, setMessage] = useState('');
+  const [turnstileToken, setTurnstileToken] = useState('');
+  const canSubmit = Boolean(import.meta.env.VITE_TURNSTILE_SITE_KEY);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    if (!canSubmit || !turnstileToken) {
+      setMessage('Complete the spam-protection check before joining the list.');
+      return;
+    }
+
+    setStatus('submitting');
+    setMessage('');
+    const data = new FormData(event.currentTarget);
+    data.set('cf-turnstile-response', turnstileToken);
+
+    try {
+      const response = await fetch('/api/interest', {
+        method: 'POST',
+        body: data,
+        headers: { Accept: 'application/json' },
+      });
+      const result = await response.json();
+      if (!response.ok) {
+        throw new Error(result.error || 'Unable to save your information.');
+      }
+      setStatus('success');
+      setMessage(
+        result.alreadyRegistered
+          ? 'This email address was already on the list, so no duplicate was created.'
+          : '',
+      );
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch (error) {
+      setStatus('error');
+      setMessage(error.message);
+      if (window.turnstile) window.turnstile.reset();
+      setTurnstileToken('');
+    }
+  };
+
+  if (status === 'success') {
+    return (
+      <main className="success-page">
+        <section className="success-card">
+          <span className="success-mark" aria-hidden="true">✓</span>
+          <p className="eyebrow">Future Cohort</p>
+          <h1>You’re on the Future Cohort List.</h1>
+          <p>
+            Kelly will email you when the next cohort and application window are
+            announced. Joining this list is not an application or an acceptance.
+          </p>
+          {message ? <p className="reference">{message}</p> : null}
+          <a className="button" href={programUrl}>Return to Program Details</a>
+        </section>
+      </main>
+    );
+  }
+
+  return (
+    <div className="application-page interest-page">
+      <ProgramHeader compact applicationPage />
+
+      <main className="application-shell interest-shell">
+        <aside className="application-intro">
+          <p className="eyebrow">Future Cohort Interest</p>
+          <h1>Stay in the Loop for What Comes Next.</h1>
+          <p className="intro-copy">
+            Share a few details so Kelly can let you know when a future Recruiting
+            Season Accelerator cohort is announced.
+          </p>
+
+          <dl className="program-facts">
+            <div><dt>Time</dt><dd>About 2 minutes</dd></div>
+            <div><dt>Purpose</dt><dd>Future cohort updates</dd></div>
+            <div><dt>Resume</dt><dd>Not required</dd></div>
+            <div><dt>Payment</dt><dd>Not collected</dd></div>
+          </dl>
+
+          <div className="privacy-note">
+            <strong>A Short, Low-Commitment Form.</strong>
+            <p>
+              This is not the selective program application. Your information is
+              used only for future cohort planning and announcements.
+            </p>
+          </div>
+        </aside>
+
+        <section className="form-card interest-card" aria-labelledby="interest-heading">
+          <div className="form-heading">
+            <div>
+              <span>Future Cohort</span>
+              <h2 id="interest-heading">Join the Interest List</h2>
+            </div>
+          </div>
+
+          <div className="opening-note" role="note">
+            <strong>This Is Not an Application.</strong>
+            You will still need to apply when a future cohort opens.
+          </div>
+
+          <form onSubmit={handleSubmit}>
+            <div className="field-row">
+              <TextField
+                label="Full Name"
+                name="fullName"
+                autoComplete="name"
+                maxLength="120"
+              />
+              <TextField
+                label="Email Address"
+                name="email"
+                type="email"
+                autoComplete="email"
+                maxLength="254"
+              />
+            </div>
+
+            <div className="field-row">
+              <TextField
+                label="School"
+                name="school"
+                autoComplete="organization"
+                maxLength="200"
+                required={false}
+              />
+              <TextField
+                label="Expected Graduation Year"
+                name="graduationYear"
+                type="number"
+                min="2026"
+                max="2035"
+              />
+            </div>
+
+            <label className="field">
+              <span>Primary Opportunity Interest</span>
+              <select name="opportunityInterest" required defaultValue="">
+                <option value="" disabled>Select One</option>
+                {opportunityOptions.map((option) => <option key={option}>{option}</option>)}
+              </select>
+            </label>
+
+            <label className="field">
+              <span>Preferred Cohort Timing <em>Optional</em></span>
+              <select name="preferredTiming" defaultValue="">
+                <option value="">No Preference</option>
+                <option>Next Available Cohort</option>
+                <option>Within 3–6 Months</option>
+                <option>Within 6–12 Months</option>
+                <option>Not Sure Yet</option>
+              </select>
+            </label>
+
+            <TextArea
+              label="What Kind of Support Would Be Most Helpful?"
+              name="supportNote"
+              hint="A short sentence is enough."
+              maxLength="1000"
+              required={false}
+            />
+
+            <label className="confirmation">
+              <input type="checkbox" name="announcementConsent" value="yes" required />
+              <span>
+                I would like to receive future Recruiting Season Accelerator cohort
+                announcements by email.
+              </span>
+            </label>
+
+            <Turnstile
+              onToken={setTurnstileToken}
+              configurationMessage="Submission protection is being configured. The interest form will be available as soon as setup is complete."
+            />
+
+            <p className="legal-copy">
+              Your information is never sold. You can request correction, deletion,
+              or removal from the list by emailing{' '}
+              <a href={`mailto:${contactEmail}`}>{contactEmail}</a>. See the{' '}
+              <a href="/privacy">Privacy Notice</a>.
+            </p>
+
+            {message ? (
+              <p
+                className={status === 'error' ? 'form-message error' : 'form-message'}
+                role="alert"
+              >
+                {message}
+              </p>
+            ) : null}
+
+            <div className="form-actions">
+              <a className="text-link" href={programUrl}>Back to Program Details</a>
+              <button
+                type="submit"
+                className="button"
+                disabled={status === 'submitting' || !canSubmit}
+              >
+                {status === 'submitting' ? 'Joining…' : 'Join the Future Cohort List'}
+              </button>
+            </div>
+          </form>
+        </section>
+      </main>
+
+      <ProgramFooter />
+    </div>
+  );
+}
+
 function Router() {
   const path = window.location.pathname.replace(/\/+$/, '') || '/';
   const titles = {
     '/': 'Recruiting Season Accelerator | Kelly Chen',
     '/apply': 'Apply | Recruiting Season Accelerator',
+    '/interest': 'Future Cohort Interest | Recruiting Season Accelerator',
     '/terms': 'Participant Terms | Recruiting Season Accelerator',
     '/privacy': 'Privacy Notice | Recruiting Season Accelerator',
     '/refund': 'Refund Policy | Recruiting Season Accelerator',
@@ -567,6 +759,7 @@ function Router() {
   document.title = titles[path] || titles['/'];
 
   if (path === '/apply') return <ApplicationPage />;
+  if (path === '/interest') return <FutureInterestPage />;
   if (path === '/terms') return <PolicyPage type="terms" />;
   if (path === '/privacy') return <PolicyPage type="privacy" />;
   if (path === '/refund') return <PolicyPage type="refund" />;
