@@ -48,12 +48,12 @@ export const faqs = [
   {
     question: 'What Is the Weekly Time Commitment and Workshop Schedule?',
     answer:
-      'The program includes one live, 60-minute Zoom workshop each week, three 30-minute private sessions across the four weeks, and approximately one to two hours of focused work between workshops. The exact workshop day and time will be finalized with the accepted cohort before payment and onboarding. Applicants should not assume recordings will be available; private sessions are scheduled individually.',
+      'The program includes one live, 60-minute Zoom workshop each week, three 30-minute private sessions across the four weeks, and approximately one to two hours of focused work between workshops. The tentative kickoff is August 1 if a viable cohort is confirmed. The recurring workshop day and time will be finalized with accepted participants before payment and onboarding. Applicants should not assume recordings will be available; private sessions are scheduled individually.',
   },
   {
     question: 'What Happens After I Apply?',
     answer:
-      `Applications close August 2 at 11:59 PM ET. Decisions are planned for ${program.decisionDates}. Accepted applicants receive private payment and onboarding instructions.`,
+      `Applications are reviewed on a rolling basis and close July 30 at 11:59 PM ET or earlier if all ${program.capacity} seats are filled. Final decisions are planned by July 31. Accepted applicants receive private payment and onboarding instructions. The August 1 kickoff remains tentative until the cohort is confirmed.`,
   },
   {
     question: 'Does Applying or Participating Guarantee an Interview or Offer?',
@@ -162,9 +162,9 @@ export function LandingPage() {
         <span>Founding Cohort · {program.capacity} Students Maximum</span>
         <strong>
           {state === 'opening-soon'
-            ? 'Applications Open July 22, 2026'
+            ? 'Applications Open July 24, 2026'
             : state === 'open'
-              ? 'Applications Close August 2, 2026 at 11:59 PM ET'
+              ? 'Rolling Applications Close July 30 at 11:59 PM ET'
               : 'Founding Cohort Applications Are Closed'}
         </strong>
       </div>
@@ -386,7 +386,7 @@ export function LandingPage() {
             <div className="price-card">
               <span>Founding Price</span>
               <strong>${program.price}</strong>
-              <p>Paid privately after acceptance. There is no public checkout.</p>
+              <p>Paid privately after acceptance. Scholarship seats are not available for the founding cohort.</p>
               <div><span>Optional Feedback Credit</span><strong>−${program.feedbackCredit}</strong></div>
               <div><span>Effective Cost After Credit</span><strong>${effectivePrice}</strong></div>
               <ApplicationButton label="Review the Application" />
@@ -467,7 +467,7 @@ const policyContent = {
     updated: 'Draft for the 2026 Founding Cohort',
     sections: [
       ['Founding Price', `The program price is $${program.price}. A participant’s seat is confirmed after payment.`],
-      ['Refund Deadline', 'Participants may request a full refund until seven calendar days before the first live workshop. After that deadline, payments are generally nonrefundable because live and individual-feedback capacity has been reserved.'],
+      ['Refund Deadline', 'Accepted participants receive the applicable refund deadline with private payment instructions. The deadline will not be earlier than 24 hours after payment and will never be later than the first live workshop. After that point, payments are generally nonrefundable because live and individual-feedback capacity has been reserved.'],
       ['Missed Participation', 'Missed workshops, private sessions, unused reviews, withdrawal, or lack of a desired recruiting outcome do not automatically create a refund right.'],
       ['Program Changes', 'If Kelly cancels the entire program, participants receive a full refund. If a material included service cannot be delivered, Kelly will provide a reasonable replacement, rescheduled service, or proportionate refund.'],
       ['Feedback Credit', `Participants may earn a $${program.feedbackCredit} partial refund by completing the published participation and feedback requirements within 14 days after the final workshop. Feedback may be positive, neutral, or critical; a testimonial or employment outcome is not required.`],

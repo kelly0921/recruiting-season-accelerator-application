@@ -60,10 +60,13 @@ export async function onRequestPost({ request, env }) {
         resume_key, resume_original_name, opportunities, company_environments,
         current_experience, recruiting_history, three_month_goal,
         primary_obstacle, worthwhile_change, feedback_priority, program_fit,
-        desired_support, referral_source, marketing_consent
+        desired_support, referral_source, marketing_consent,
+        applications_submitted, first_interviews, final_rounds, offers_received,
+        scheduling_constraints, community_commitment
       ) VALUES (
         ?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13,
-        ?14, ?15, ?16, ?17, ?18, ?19, ?20, ?21, ?22, ?23, ?24, ?25
+        ?14, ?15, ?16, ?17, ?18, ?19, ?20, ?21, ?22, ?23, ?24, ?25,
+        ?26, ?27, ?28, ?29, ?30, ?31
       )`,
     ).bind(
       record.id,
@@ -91,6 +94,12 @@ export async function onRequestPost({ request, env }) {
       JSON.stringify(record.desiredSupport),
       record.referralSource,
       record.marketingConsent,
+      record.applicationsSubmitted,
+      record.firstInterviews,
+      record.finalRounds,
+      record.offersReceived,
+      record.schedulingConstraints,
+      record.communityCommitment,
     ).run();
   } catch (databaseError) {
     await env.RESUMES_BUCKET.delete(resumeKey);

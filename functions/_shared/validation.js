@@ -1,5 +1,5 @@
-export const applicationOpenAt = '2026-07-22T00:00:00-04:00';
-export const applicationCloseAt = '2026-08-02T23:59:59-04:00';
+export const applicationOpenAt = '2026-07-24T00:00:00-04:00';
+export const applicationCloseAt = '2026-07-30T23:59:59-04:00';
 export const maxResumeBytes = 5 * 1024 * 1024;
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -15,8 +15,6 @@ const requiredTextFields = [
   'currentExperience',
   'recruitingHistory',
   'threeMonthGoal',
-  'primaryObstacle',
-  'worthwhileChange',
   'feedbackPriority',
   'programFit',
   'referralSource',
@@ -31,6 +29,7 @@ const requiredConfirmations = [
   'understandNoGuarantee',
   'understandSelection',
   'understandIndependence',
+  'communityCommitment',
 ];
 
 export function getApplicationState(now = new Date()) {
@@ -50,9 +49,62 @@ export function validateApplication(formData, now = new Date()) {
     }
   }
 
-  const email = String(formData.get('email'));
+  const email = String(formData.get('email')).trim();
   if (!emailPattern.test(email)) {
     return 'Enter a valid email address.';
+  }
+
+  const graduationYear = Number(String(formData.get('graduationYear')).trim());
+  if (!Number.isInteger(graduationYear) || graduationYear < 2026 || graduationYear > 2032) {
+    return 'Enter an expected graduation year between 2026 and 2032.';
+  }
+
+  const lengthLimits = {
+    fullName: 120,
+    email: 254,
+    school: 200,
+    major: 200,
+    timeZone: 80,
+    linkedInUrl: 500,
+    portfolioUrl: 500,
+    currentExperience: 200,
+    recruitingHistory: 2000,
+    threeMonthGoal: 1500,
+    feedbackPriority: 1200,
+    programFit: 1500,
+    schedulingConstraints: 800,
+    referralSource: 120,
+  };
+
+  for (const [field, maxLength] of Object.entries(lengthLimits)) {
+    if (String(formData.get(field) || '').trim().length > maxLength) {
+      return `${field} is too long.`;
+    }
+  }
+
+  const minimumLengths = {
+    recruitingHistory: 30,
+    threeMonthGoal: 30,
+    feedbackPriority: 15,
+    programFit: 30,
+  };
+
+  for (const [field, minLength] of Object.entries(minimumLengths)) {
+    if (String(formData.get(field) || '').trim().length < minLength) {
+      return `${field} needs a little more detail.`;
+    }
+  }
+
+  for (const field of [
+    'applicationsSubmitted',
+    'firstInterviews',
+    'finalRounds',
+    'offersReceived',
+  ]) {
+    const value = String(formData.get(field) || '').trim();
+    if (!/^\d+$/.test(value) || Number(value) > 5000) {
+      return 'Enter a whole number between 0 and 5,000 for each recruiting-funnel field.';
+    }
   }
 
   for (const field of ['linkedInUrl', 'portfolioUrl']) {
@@ -119,15 +171,21 @@ export function applicationRecord(formData, id, resumeKey, now = new Date()) {
     opportunities: formData.getAll('opportunities'),
     companyEnvironments: formData.getAll('companyEnvironments'),
     currentExperience: String(formData.get('currentExperience')).trim(),
+    applicationsSubmitted: Number(formData.get('applicationsSubmitted')),
+    firstInterviews: Number(formData.get('firstInterviews')),
+    finalRounds: Number(formData.get('finalRounds')),
+    offersReceived: Number(formData.get('offersReceived')),
     recruitingHistory: String(formData.get('recruitingHistory')).trim(),
     threeMonthGoal: String(formData.get('threeMonthGoal')).trim(),
-    primaryObstacle: String(formData.get('primaryObstacle')).trim(),
-    worthwhileChange: String(formData.get('worthwhileChange')).trim(),
+    primaryObstacle: String(formData.get('recruitingHistory')).trim(),
+    worthwhileChange: String(formData.get('threeMonthGoal')).trim(),
     feedbackPriority: String(formData.get('feedbackPriority')).trim(),
     programFit: String(formData.get('programFit')).trim(),
+    schedulingConstraints: String(formData.get('schedulingConstraints') || '').trim(),
     desiredSupport: formData.getAll('desiredSupport'),
     referralSource: String(formData.get('referralSource')).trim(),
     marketingConsent: formData.get('marketingConsent') === 'yes' ? 1 : 0,
+    communityCommitment: 1,
   };
 }
 

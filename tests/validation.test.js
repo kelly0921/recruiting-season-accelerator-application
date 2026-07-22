@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 import {
+  applicationRecord,
   futureInterestRecord,
   getApplicationState,
   maxResumeBytes,
@@ -31,12 +32,15 @@ function validApplication() {
     timeZone: 'Eastern Time',
     linkedInUrl: 'https://linkedin.com/in/example',
     currentExperience: 'Applied before but received few responses',
-    recruitingHistory: 'Applied to internships and revised my resume.',
-    threeMonthGoal: 'Earn stronger interview conversion.',
-    primaryObstacle: 'Unclear positioning.',
-    worthwhileChange: 'A focused recruiting system.',
-    feedbackPriority: 'Resume positioning.',
-    programFit: 'I am ready to act on direct feedback.',
+    applicationsSubmitted: '85',
+    firstInterviews: '5',
+    finalRounds: '2',
+    offersReceived: '0',
+    recruitingHistory: 'I applied to internships, revised my resume, and saw limited interview conversion.',
+    threeMonthGoal: 'Earn stronger interview conversion and leave with a focused recruiting system.',
+    feedbackPriority: 'I want specific feedback on my resume positioning.',
+    programFit: 'I am ready to act on direct feedback and test a more focused approach.',
+    schedulingConstraints: 'Weekday evenings are easiest for me.',
     referralSource: "Kelly's LinkedIn post",
   };
   Object.entries(values).forEach(([key, value]) => data.set(key, value));
@@ -52,6 +56,7 @@ function validApplication() {
     'understandNoGuarantee',
     'understandSelection',
     'understandIndependence',
+    'communityCommitment',
   ].forEach((key) => data.set(key, 'yes'));
   data.set('resume', testFile());
   return data;
@@ -71,10 +76,10 @@ function validFutureInterest() {
 }
 
 test('application dates enforce the 2026 ET window', () => {
-  assert.equal(getApplicationState(new Date('2026-07-21T23:00:00-04:00')), 'opening-soon');
-  assert.equal(getApplicationState(new Date('2026-07-22T00:00:00-04:00')), 'open');
-  assert.equal(getApplicationState(new Date('2026-08-02T23:59:59-04:00')), 'open');
-  assert.equal(getApplicationState(new Date('2026-08-03T00:00:00-04:00')), 'closed');
+  assert.equal(getApplicationState(new Date('2026-07-23T23:00:00-04:00')), 'opening-soon');
+  assert.equal(getApplicationState(new Date('2026-07-24T00:00:00-04:00')), 'open');
+  assert.equal(getApplicationState(new Date('2026-07-30T23:59:59-04:00')), 'open');
+  assert.equal(getApplicationState(new Date('2026-07-31T00:00:00-04:00')), 'closed');
 });
 
 test('the pre-launch application can be browsed without field validation', () => {
@@ -85,9 +90,38 @@ test('the pre-launch application can be browsed without field validation', () =>
 
 test('a complete application passes server validation', () => {
   assert.equal(
-    validateApplication(validApplication(), new Date('2026-07-25T12:00:00-04:00')),
+    validateApplication(validApplication(), new Date('2026-07-26T12:00:00-04:00')),
     '',
   );
+});
+
+test('recruiting funnel metrics and community participation are required', () => {
+  const invalidMetrics = validApplication();
+  invalidMetrics.set('firstInterviews', '-1');
+  assert.match(
+    validateApplication(invalidMetrics, new Date('2026-07-26T12:00:00-04:00')),
+    /whole number/,
+  );
+
+  const missingCommunity = validApplication();
+  missingCommunity.delete('communityCommitment');
+  assert.match(
+    validateApplication(missingCommunity, new Date('2026-07-26T12:00:00-04:00')),
+    /required availability/,
+  );
+});
+
+test('application records preserve the structured funnel snapshot', () => {
+  const record = applicationRecord(
+    validApplication(),
+    'application-test-id',
+    'founding-cohort-2026/application-test-id.pdf',
+  );
+  assert.equal(record.applicationsSubmitted, 85);
+  assert.equal(record.firstInterviews, 5);
+  assert.equal(record.finalRounds, 2);
+  assert.equal(record.offersReceived, 0);
+  assert.equal(record.communityCommitment, 1);
 });
 
 test('support choices are limited to three', () => {
@@ -96,7 +130,7 @@ test('support choices are limited to three', () => {
   data.append('desiredSupport', 'Career direction');
   data.append('desiredSupport', 'Recruiting accountability');
   assert.match(
-    validateApplication(data, new Date('2026-07-25T12:00:00-04:00')),
+    validateApplication(data, new Date('2026-07-26T12:00:00-04:00')),
     /between one and three/,
   );
 });
@@ -111,7 +145,7 @@ test('resume uploads must be PDFs no larger than 5 MB', () => {
     ),
   );
   assert.match(
-    validateApplication(wrongType, new Date('2026-07-25T12:00:00-04:00')),
+    validateApplication(wrongType, new Date('2026-07-26T12:00:00-04:00')),
     /PDF/,
   );
 
@@ -121,7 +155,7 @@ test('resume uploads must be PDFs no larger than 5 MB', () => {
     testFile('resume.pdf', 'application/pdf', maxResumeBytes + 1),
   );
   assert.match(
-    validateApplication(tooLarge, new Date('2026-07-25T12:00:00-04:00')),
+    validateApplication(tooLarge, new Date('2026-07-26T12:00:00-04:00')),
     /5 MB/,
   );
 });

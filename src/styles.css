@@ -2714,6 +2714,20 @@ body {
   min-width: 230px;
 }
 
+.funnel-fieldset {
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 22px 0;
+}
+
+.funnel-fieldset .field-help {
+  margin: 0;
+}
+
+.funnel-grid input {
+  font-variant-numeric: tabular-nums;
+}
+
 @media (max-width: 620px) {
   .interest-card .form-actions {
     align-items: stretch;

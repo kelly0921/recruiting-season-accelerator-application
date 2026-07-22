@@ -7,6 +7,7 @@ Recruiting Season Accelerator founding cohort.
 
 - A responsive program-details landing page
 - A coordinated, accessible five-step React application
+- Structured recruiting-funnel metrics and cohort-fit questions
 - A lightweight future-cohort interest form
 - Program FAQ, Participant Terms, Privacy Notice, and Refund Policy routes
 - Cloudflare Pages Function submission handling
@@ -49,7 +50,7 @@ Use:
 
 | Setting | Value |
 | --- | --- |
-| Project name | `kelly-recruiting-accelerator-apply` |
+| Project name | `recruiting-accelerator-apply` |
 | Production branch | `main` |
 | Framework preset | React (Vite) |
 | Build command | `npm run build` |
@@ -63,9 +64,8 @@ Create and attach these under the Pages project's **Settings → Bindings**:
 1. **D1 database**
    - Create a database such as `rsa-applications`
    - Binding name: `APPLICATIONS_DB`
-   - Run `migrations/0001_create_applications.sql` and
-     `migrations/0002_create_future_cohort_interest.sql` against the production
-     database
+   - Run all SQL files in `migrations/` in numerical order against the production
+     database, including `0003_refine_application_selection.sql`
    - The future-interest endpoint also creates its table safely if the second
      migration has not yet been run
 
@@ -89,6 +89,18 @@ need working submissions. Restrict production submissions to the production
 hostname in the Turnstile widget.
 
 Deploy again after adding bindings or environment variables.
+
+For the complete production setup and pre-LinkedIn verification sequence, follow
+[`docs/cloudflare-launch-checklist.md`](docs/cloudflare-launch-checklist.md).
+
+## Founding-cohort timeline
+
+- Applications open July 24, 2026
+- Applications are reviewed on a rolling basis
+- Applications close July 30 at 11:59 PM ET or earlier if all eight seats fill
+- Final decisions are planned by July 31
+- The August 1 kickoff is tentative and proceeds only if the cohort is confirmed
+- The price is $99; scholarship seats are not available for the founding cohort
 
 ## Future-cohort interest form
 

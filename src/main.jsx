@@ -274,8 +274,9 @@ function ApplicationPage() {
           <p className="eyebrow">Application Received</p>
           <h1>Thank You for Applying.</h1>
           <p>
-            Kelly will review applications after the August 2 deadline. Decisions will
-            be shared August 3–5 using the email address you provided.
+            Kelly reviews applications on a rolling basis. Final decisions are planned
+            by July 31 using the email address you provided. The August 1 kickoff remains
+            tentative until the cohort is confirmed.
           </p>
           {message ? <p className="reference">{message}</p> : null}
           <a className="button" href={programUrl}>Return to Program Details</a>
@@ -317,9 +318,9 @@ function ApplicationPage() {
           </p>
 
           <dl className="program-facts">
-            <div><dt>Time</dt><dd>7–10 minutes</dd></div>
-            <div><dt>Deadline</dt><dd>August 2 · 11:59 PM ET</dd></div>
-            <div><dt>Program</dt><dd>Week of August 10</dd></div>
+            <div><dt>Time</dt><dd>About 10–12 minutes</dd></div>
+            <div><dt>Deadline</dt><dd>July 30 · 11:59 PM ET</dd></div>
+            <div><dt>Program</dt><dd>Tentative August 1 kickoff</dd></div>
             <div><dt>Price</dt><dd>$99 if accepted</dd></div>
           </dl>
 
@@ -352,7 +353,7 @@ function ApplicationPage() {
 
           {state === 'opening-soon' ? (
             <div className="opening-note" role="status">
-              <strong>Applications Open July 22.</strong>
+              <strong>Applications Open July 24.</strong>
               You can browse all five steps without entering information. Required-field
               checks and submission will activate when the application window opens.
             </div>
@@ -417,32 +418,78 @@ function ApplicationPage() {
                   {experienceOptions.map((option) => <option key={option}>{option}</option>)}
                 </select>
               </label>
+
+              <fieldset className="field-group funnel-fieldset">
+                <legend>Recruiting Funnel Snapshot</legend>
+                <p className="field-help">
+                  Use your current or most recent recruiting cycle. Enter 0 if none.
+                </p>
+                <div className="field-row funnel-grid">
+                  <TextField
+                    label="Applications Submitted"
+                    name="applicationsSubmitted"
+                    type="number"
+                    min="0"
+                    max="5000"
+                  />
+                  <TextField
+                    label="First Interviews or Screens"
+                    name="firstInterviews"
+                    type="number"
+                    min="0"
+                    max="5000"
+                  />
+                  <TextField
+                    label="Final-Round Interviews"
+                    name="finalRounds"
+                    type="number"
+                    min="0"
+                    max="5000"
+                  />
+                  <TextField
+                    label="Offers Received"
+                    name="offersReceived"
+                    type="number"
+                    min="0"
+                    max="5000"
+                  />
+                </div>
+              </fieldset>
+
               <TextArea
-                label="Briefly describe what you have tried so far and what happened."
+                label="What have you tried so far, what results have you seen, and where does the process seem to break down?"
                 name="recruitingHistory"
+                hint="Specific examples are more useful than a general summary."
+                minLength="30"
+                maxLength="2000"
               />
               <TextArea
-                label="What is your most important recruiting or career goal for the next three months?"
+                label="What is your most important three-month goal, and what would need to change during these four weeks for the program to feel worthwhile?"
                 name="threeMonthGoal"
-              />
-              <TextArea
-                label="What do you believe is currently preventing you from reaching it?"
-                name="primaryObstacle"
+                minLength="30"
+                maxLength="1500"
               />
             </div>
 
             <div className={currentStep === 3 ? 'step-panel active' : 'step-panel'} data-step="3">
               <TextArea
-                label="What would need to change during these four weeks for the program to feel worthwhile?"
-                name="worthwhileChange"
-              />
-              <TextArea
                 label="What is the single most important area where you want Kelly’s personal feedback?"
                 name="feedbackPriority"
+                minLength="15"
+                maxLength="1200"
               />
               <TextArea
                 label="Why is this the right program for you at this point in your recruiting journey?"
                 name="programFit"
+                minLength="30"
+                maxLength="1500"
+              />
+              <TextArea
+                label="Scheduling Constraints Kelly Should Know About"
+                name="schedulingConstraints"
+                hint="The exact workshop time will be finalized with accepted participants."
+                maxLength="800"
+                required={false}
               />
               <CheckboxGroup
                 legend="Where would you most like support?"
@@ -464,6 +511,7 @@ function ApplicationPage() {
                   ['understandNoGuarantee', 'I understand that interviews, referrals, internships, and offers are not guaranteed.'],
                   ['understandSelection', 'I understand that applying does not guarantee acceptance.'],
                   ['understandIndependence', 'I understand that this program is independent from Bloomberg and Kelly’s current or former employers.'],
+                  ['communityCommitment', 'I will participate respectfully in the private cohort space and contribute relevant progress updates or resources when I can.'],
                 ].map(([name, label]) => (
                   <label className="confirmation" key={name}>
                     <input type="checkbox" name={name} value="yes" required />
@@ -495,8 +543,10 @@ function ApplicationPage() {
 
               <p className="legal-copy">
                 By submitting, you confirm that the information is accurate and agree
-                that Kelly may use it to evaluate and operate the program. Questions?
-                Email <a href={`mailto:${contactEmail}`}>{contactEmail}</a>.
+                that Kelly may use it to evaluate and operate the program under the{' '}
+                <a href="/privacy">Privacy Notice</a>. Participation is also subject to
+                the <a href="/terms">Participant Terms</a>. Questions? Email{' '}
+                <a href={`mailto:${contactEmail}`}>{contactEmail}</a>.
               </p>
             </div>
 
@@ -518,7 +568,7 @@ function ApplicationPage() {
                   {status === 'submitting'
                     ? 'Submitting…'
                     : state === 'opening-soon'
-                      ? 'Opens July 22'
+                      ? 'Opens July 24'
                       : 'Submit Application'}
                 </button>
               )}
