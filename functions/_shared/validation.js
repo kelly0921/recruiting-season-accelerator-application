@@ -1,3 +1,15 @@
+import {
+  environmentOptions,
+  experienceOptions,
+  opportunityOptions,
+  participantTermsVersion,
+  preferredTimingOptions,
+  recruitingMarketOptions,
+  referralSourceOptions,
+  supportOptions,
+  timeZoneOptions,
+} from '../../shared/applicationOptions.js';
+
 export const applicationOpenAt = '2026-07-24T00:00:00-04:00';
 export const applicationCloseAt = '2026-07-30T23:59:59-04:00';
 export const maxResumeBytes = 5 * 1024 * 1024;
@@ -12,25 +24,30 @@ const requiredTextFields = [
   'graduationYear',
   'timeZone',
   'linkedInUrl',
+  'recruitingMarket',
   'currentExperience',
   'recruitingHistory',
   'threeMonthGoal',
   'feedbackPriority',
   'programFit',
+  'schedulingConstraints',
   'referralSource',
 ];
 
 const requiredConfirmations = [
   'isAdult',
-  'attendWorkshops',
-  'completeWork',
-  'submitFeedback',
-  'understandPrice',
-  'understandNoGuarantee',
-  'understandSelection',
-  'understandIndependence',
-  'communityCommitment',
+  'participationCommitment',
+  'feedbackCommunityCommitment',
+  'programAcknowledgement',
+  'termsAcknowledgement',
 ];
+
+const isAllowed = (value, options) => options.includes(String(value || '').trim());
+
+function allAllowed(values, options) {
+  return values.length === new Set(values).size
+    && values.every((value) => isAllowed(value, options));
+}
 
 export function getApplicationState(now = new Date()) {
   if (now < new Date(applicationOpenAt)) return 'opening-soon';
@@ -67,11 +84,13 @@ export function validateApplication(formData, now = new Date()) {
     timeZone: 80,
     linkedInUrl: 500,
     portfolioUrl: 500,
+    targetList: 500,
+    recruitingMarket: 120,
     currentExperience: 200,
     recruitingHistory: 2000,
     threeMonthGoal: 1500,
     feedbackPriority: 1200,
-    programFit: 1500,
+    programFit: 1200,
     schedulingConstraints: 800,
     referralSource: 120,
   };
@@ -87,6 +106,7 @@ export function validateApplication(formData, now = new Date()) {
     threeMonthGoal: 30,
     feedbackPriority: 15,
     programFit: 30,
+    schedulingConstraints: 10,
   };
 
   for (const [field, minLength] of Object.entries(minimumLengths)) {
@@ -121,16 +141,41 @@ export function validateApplication(formData, now = new Date()) {
     }
   }
 
-  if (!formData.getAll('opportunities').length) {
-    return 'Choose at least one opportunity.';
+  if (!isAllowed(formData.get('timeZone'), timeZoneOptions)) {
+    return 'Choose a valid time zone.';
   }
-  if (!formData.getAll('companyEnvironments').length) {
-    return 'Choose at least one company environment.';
+  if (!isAllowed(formData.get('recruitingMarket'), recruitingMarketOptions)) {
+    return 'Choose a valid recruiting market.';
+  }
+  if (!isAllowed(formData.get('currentExperience'), experienceOptions)) {
+    return 'Choose a valid current-experience option.';
+  }
+  if (!isAllowed(formData.get('referralSource'), referralSourceOptions)) {
+    return 'Choose a valid referral source.';
   }
 
-  const desiredSupport = formData.getAll('desiredSupport');
+  const opportunities = formData.getAll('opportunities').map(String);
+  if (!opportunities.length) {
+    return 'Choose at least one opportunity.';
+  }
+  if (!allAllowed(opportunities, opportunityOptions)) {
+    return 'Choose only valid opportunity options.';
+  }
+
+  const companyEnvironments = formData.getAll('companyEnvironments').map(String);
+  if (!companyEnvironments.length) {
+    return 'Choose at least one company environment.';
+  }
+  if (!allAllowed(companyEnvironments, environmentOptions)) {
+    return 'Choose only valid company-environment options.';
+  }
+
+  const desiredSupport = formData.getAll('desiredSupport').map(String);
   if (!desiredSupport.length || desiredSupport.length > 3) {
     return 'Choose between one and three desired support areas.';
+  }
+  if (!allAllowed(desiredSupport, supportOptions)) {
+    return 'Choose only valid support areas.';
   }
 
   for (const field of requiredConfirmations) {
@@ -153,10 +198,21 @@ export function validateApplication(formData, now = new Date()) {
   return '';
 }
 
+export async function validateResumeSignature(resume) {
+  if (!resume || typeof resume === 'string' || resume.size < 5) {
+    return 'Resume files must be valid PDFs.';
+  }
+
+  const header = new Uint8Array(await resume.slice(0, 5).arrayBuffer());
+  const signature = String.fromCharCode(...header);
+  return signature === '%PDF-' ? '' : 'Resume files must be valid PDFs.';
+}
+
 export function applicationRecord(formData, id, resumeKey, now = new Date()) {
+  const submittedAt = now.toISOString();
   return {
     id,
-    submittedAt: now.toISOString(),
+    submittedAt,
     status: 'New',
     fullName: String(formData.get('fullName')).trim(),
     email: String(formData.get('email')).trim().toLowerCase(),
@@ -170,6 +226,8 @@ export function applicationRecord(formData, id, resumeKey, now = new Date()) {
     resumeOriginalName: formData.get('resume').name,
     opportunities: formData.getAll('opportunities'),
     companyEnvironments: formData.getAll('companyEnvironments'),
+    recruitingMarket: String(formData.get('recruitingMarket')).trim(),
+    targetList: String(formData.get('targetList') || '').trim(),
     currentExperience: String(formData.get('currentExperience')).trim(),
     applicationsSubmitted: Number(formData.get('applicationsSubmitted')),
     firstInterviews: Number(formData.get('firstInterviews')),
@@ -186,6 +244,9 @@ export function applicationRecord(formData, id, resumeKey, now = new Date()) {
     referralSource: String(formData.get('referralSource')).trim(),
     marketingConsent: formData.get('marketingConsent') === 'yes' ? 1 : 0,
     communityCommitment: 1,
+    adultConfirmed: 1,
+    acknowledgementsAcceptedAt: submittedAt,
+    termsVersion: participantTermsVersion,
   };
 }
 
@@ -207,8 +268,11 @@ export function validateFutureInterest(formData) {
   }
 
   const graduationYear = String(formData.get('graduationYear')).trim();
-  if (!/^\d{4}$/.test(graduationYear)) {
-    return 'Enter a valid four-digit graduation year.';
+  const graduationYearNumber = Number(graduationYear);
+  if (!Number.isInteger(graduationYearNumber)
+    || graduationYearNumber < 2026
+    || graduationYearNumber > 2035) {
+    return 'Enter an expected graduation year between 2026 and 2035.';
   }
 
   const lengthLimits = {
@@ -225,6 +289,15 @@ export function validateFutureInterest(formData) {
     if (String(formData.get(field) || '').trim().length > maxLength) {
       return `${field} is too long.`;
     }
+  }
+
+  if (!isAllowed(formData.get('opportunityInterest'), opportunityOptions)) {
+    return 'Choose a valid opportunity interest.';
+  }
+
+  const preferredTiming = String(formData.get('preferredTiming') || '').trim();
+  if (preferredTiming && !isAllowed(preferredTiming, preferredTimingOptions)) {
+    return 'Choose a valid preferred cohort timing.';
   }
 
   if (formData.get('announcementConsent') !== 'yes') {

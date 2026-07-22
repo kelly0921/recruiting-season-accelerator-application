@@ -8,6 +8,16 @@ import {
   program,
 } from './program.js';
 import { ProgramFooter, ProgramHeader } from './siteChrome.jsx';
+import {
+  environmentOptions,
+  experienceOptions,
+  opportunityOptions,
+  preferredTimingOptions,
+  recruitingMarketOptions,
+  referralSourceOptions,
+  supportOptions,
+  timeZoneOptions,
+} from '../shared/applicationOptions.js';
 
 const programUrl = '/';
 const contactEmail = program.contactEmail;
@@ -18,53 +28,6 @@ const steps = [
   { id: 'experience', label: 'Experience' },
   { id: 'support', label: 'Support' },
   { id: 'commitment', label: 'Commitment' },
-];
-
-const opportunityOptions = [
-  'Software Engineering Internship',
-  'New-Grad Software Engineering Role',
-  'Product Management or Adjacent Exploration',
-  'Data or Another Technical-Adjacent Role',
-  'Fellowship, Research, or Technical Program',
-  'Still Deciding',
-  'Other',
-];
-
-const environmentOptions = [
-  'Big Tech',
-  'Fintech',
-  'Payments',
-  'Banks or Financial Institutions',
-  'Technology-Forward Financial Firms',
-  'Mature Private Technology Companies',
-  'High-Growth Startups',
-  'Early-Stage Startups',
-  'Open to Multiple Environments',
-  'Unsure',
-];
-
-const supportOptions = [
-  'Resume Positioning',
-  'Application Strategy',
-  'Target-Company Selection',
-  'LinkedIn Profile',
-  'Networking and Mentorship',
-  'Career Direction',
-  'SWE Versus PM Exploration',
-  'Project or Experience Planning',
-  'Behavioral Interview Preparation',
-  'Interview-Conversion Strategy',
-  'Recruiting Accountability',
-  'Offer Evaluation Preparation',
-];
-
-const experienceOptions = [
-  'Preparing for my first serious recruiting cycle',
-  'Applied before but received few responses',
-  'Received interviews but have not converted them into offers',
-  'Previously completed an internship and am targeting the next opportunity',
-  'Recruiting for a new-grad role',
-  'Deciding which roles or companies to pursue',
 ];
 
 function CheckboxGroup({ legend, name, options, help, max }) {
@@ -375,11 +338,7 @@ function ApplicationPage() {
                   <span>Time Zone</span>
                   <select name="timeZone" required defaultValue="">
                     <option value="" disabled>Select Your Time Zone</option>
-                    <option>Eastern Time</option>
-                    <option>Central Time</option>
-                    <option>Mountain Time</option>
-                    <option>Pacific Time</option>
-                    <option>Outside the United States</option>
+                    {timeZoneOptions.map((option) => <option key={option}>{option}</option>)}
                   </select>
                 </label>
               </div>
@@ -408,6 +367,20 @@ function ApplicationPage() {
                 options={environmentOptions}
                 help="Choose all that apply."
               />
+              <label className="field">
+                <span>Where are you primarily recruiting?</span>
+                <select name="recruitingMarket" required defaultValue="">
+                  <option value="" disabled>Select One</option>
+                  {recruitingMarketOptions.map((option) => <option key={option}>{option}</option>)}
+                </select>
+              </label>
+              <TextArea
+                label="Which roles, companies, or programs are currently at the top of your list?"
+                name="targetList"
+                hint="Optional. List up to five; a short answer is enough."
+                maxLength="500"
+                required={false}
+              />
             </div>
 
             <div className={currentStep === 2 ? 'step-panel active' : 'step-panel'} data-step="2">
@@ -422,7 +395,9 @@ function ApplicationPage() {
               <fieldset className="field-group funnel-fieldset">
                 <legend>Recruiting Funnel Snapshot</legend>
                 <p className="field-help">
-                  Use your current or most recent recruiting cycle. Enter 0 if none.
+                  Use your current or most recent recruiting cycle. Estimates are okay.
+                  Count recruiter or interview screens, not automated online assessments.
+                  Enter 0 if none.
                 </p>
                 <div className="field-row funnel-grid">
                   <TextField
@@ -479,17 +454,17 @@ function ApplicationPage() {
                 maxLength="1200"
               />
               <TextArea
-                label="Why is this the right program for you at this point in your recruiting journey?"
+                label="Describe a time you changed your approach after receiving feedback or seeing disappointing results. What did you change, and what did you learn?"
                 name="programFit"
                 minLength="30"
-                maxLength="1500"
+                maxLength="1200"
               />
               <TextArea
-                label="Scheduling Constraints Kelly Should Know About"
+                label="Which days and time windows could you usually attend a weekly 60-minute Zoom workshop?"
                 name="schedulingConstraints"
-                hint="The exact workshop time will be finalized with accepted participants."
+                hint="Include any dates you already know you cannot attend. The final time will be confirmed before payment."
+                minLength="10"
                 maxLength="800"
-                required={false}
               />
               <CheckboxGroup
                 legend="Where would you most like support?"
@@ -504,33 +479,36 @@ function ApplicationPage() {
               <fieldset className="commitments">
                 <legend>Availability and Commitment</legend>
                 {[
-                  ['attendWorkshops', 'I can attend at least three of the four weekly live workshops.'],
-                  ['completeWork', 'I can complete approximately one to two hours of focused work outside each workshop.'],
-                  ['submitFeedback', 'I am willing to submit weekly progress and resource feedback.'],
-                  ['understandPrice', 'I understand that the program is paid and costs $99.'],
-                  ['understandNoGuarantee', 'I understand that interviews, referrals, internships, and offers are not guaranteed.'],
-                  ['understandSelection', 'I understand that applying does not guarantee acceptance.'],
-                  ['understandIndependence', 'I understand that this program is independent from Bloomberg and Kelly’s current or former employers.'],
-                  ['communityCommitment', 'I will participate respectfully in the private cohort space and contribute relevant progress updates or resources when I can.'],
+                  ['participationCommitment', 'If the final schedule fits one of the windows I provided, I can attend at least three workshops and complete one to two hours of focused work each week.'],
+                  ['feedbackCommunityCommitment', 'I will submit weekly progress and resource feedback, participate respectfully, and contribute relevant updates or resources when I can.'],
+                  ['programAcknowledgement', 'I understand that the program costs $99, applying does not guarantee acceptance, and participation does not guarantee interviews, referrals, internships, or offers.'],
                 ].map(([name, label]) => (
                   <label className="confirmation" key={name}>
                     <input type="checkbox" name={name} value="yes" required />
                     <span>{label}</span>
                   </label>
                 ))}
+                <label className="confirmation">
+                  <input type="checkbox" name="termsAcknowledgement" value="yes" required />
+                  <span>
+                    I have read and agree to the{' '}
+                    <a href="/terms" target="_blank" rel="noreferrer" aria-label="Participant Terms (opens in a new tab)">
+                      Participant Terms
+                    </a>{' '}
+                    and acknowledge the{' '}
+                    <a href="/privacy" target="_blank" rel="noreferrer" aria-label="Privacy Notice (opens in a new tab)">
+                      Privacy Notice
+                    </a>, including that this program is independent from Kelly’s current
+                    and former employers.
+                  </span>
+                </label>
               </fieldset>
 
               <label className="field">
                 <span>How did you hear about the program?</span>
                 <select name="referralSource" required defaultValue="">
                   <option value="" disabled>Select One</option>
-                  <option>Kelly&apos;s LinkedIn post</option>
-                  <option>Direct message from Kelly</option>
-                  <option>Friend or participant referral</option>
-                  <option>University or student organization</option>
-                  <option>ApplyFirst</option>
-                  <option>The Unspoken Playbook</option>
-                  <option>Other</option>
+                  {referralSourceOptions.map((option) => <option key={option}>{option}</option>)}
                 </select>
               </label>
 
@@ -732,10 +710,7 @@ function FutureInterestPage() {
               <span>Preferred Cohort Timing <em>Optional</em></span>
               <select name="preferredTiming" defaultValue="">
                 <option value="">No Preference</option>
-                <option>Next Available Cohort</option>
-                <option>Within 3–6 Months</option>
-                <option>Within 6–12 Months</option>
-                <option>Not Sure Yet</option>
+                {preferredTimingOptions.map((option) => <option key={option}>{option}</option>)}
               </select>
             </label>
 

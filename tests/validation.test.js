@@ -8,6 +8,7 @@ import {
   maxResumeBytes,
   validateApplication,
   validateFutureInterest,
+  validateResumeSignature,
 } from '../functions/_shared/validation.js';
 import { applicationStepRequiresValidation } from '../src/program.js';
 
@@ -19,7 +20,13 @@ const testFile = (
   name = 'resume.pdf',
   type = 'application/pdf',
   size = 1024,
-) => new File([new Uint8Array(size)], name, { type });
+) => {
+  const bytes = new Uint8Array(size);
+  if (size >= 5 && name.endsWith('.pdf') && type === 'application/pdf') {
+    bytes.set(new TextEncoder().encode('%PDF-'));
+  }
+  return new File([bytes], name, { type });
+};
 
 function validApplication() {
   const data = new FormData();
@@ -31,6 +38,8 @@ function validApplication() {
     graduationYear: '2027',
     timeZone: 'Eastern Time',
     linkedInUrl: 'https://linkedin.com/in/example',
+    recruitingMarket: 'Primarily U.S.-Based Roles',
+    targetList: 'Stripe SWE internship, Bloomberg SWE internship, and fintech programs.',
     currentExperience: 'Applied before but received few responses',
     applicationsSubmitted: '85',
     firstInterviews: '5',
@@ -39,24 +48,20 @@ function validApplication() {
     recruitingHistory: 'I applied to internships, revised my resume, and saw limited interview conversion.',
     threeMonthGoal: 'Earn stronger interview conversion and leave with a focused recruiting system.',
     feedbackPriority: 'I want specific feedback on my resume positioning.',
-    programFit: 'I am ready to act on direct feedback and test a more focused approach.',
+    programFit: 'After weak response rates, I narrowed my target list and rewrote my project bullets around outcomes.',
     schedulingConstraints: 'Weekday evenings are easiest for me.',
     referralSource: "Kelly's LinkedIn post",
   };
   Object.entries(values).forEach(([key, value]) => data.set(key, value));
-  data.append('opportunities', 'Software engineering internship');
+  data.append('opportunities', 'Software Engineering Internship');
   data.append('companyEnvironments', 'Fintech');
-  data.append('desiredSupport', 'Resume positioning');
+  data.append('desiredSupport', 'Resume Positioning');
   [
     'isAdult',
-    'attendWorkshops',
-    'completeWork',
-    'submitFeedback',
-    'understandPrice',
-    'understandNoGuarantee',
-    'understandSelection',
-    'understandIndependence',
-    'communityCommitment',
+    'participationCommitment',
+    'feedbackCommunityCommitment',
+    'programAcknowledgement',
+    'termsAcknowledgement',
   ].forEach((key) => data.set(key, 'yes'));
   data.set('resume', testFile());
   return data;
@@ -95,7 +100,7 @@ test('a complete application passes server validation', () => {
   );
 });
 
-test('recruiting funnel metrics and community participation are required', () => {
+test('recruiting funnel metrics and consolidated commitments are required', () => {
   const invalidMetrics = validApplication();
   invalidMetrics.set('firstInterviews', '-1');
   assert.match(
@@ -104,7 +109,7 @@ test('recruiting funnel metrics and community participation are required', () =>
   );
 
   const missingCommunity = validApplication();
-  missingCommunity.delete('communityCommitment');
+  missingCommunity.delete('feedbackCommunityCommitment');
   assert.match(
     validateApplication(missingCommunity, new Date('2026-07-26T12:00:00-04:00')),
     /required availability/,
@@ -122,13 +127,34 @@ test('application records preserve the structured funnel snapshot', () => {
   assert.equal(record.finalRounds, 2);
   assert.equal(record.offersReceived, 0);
   assert.equal(record.communityCommitment, 1);
+  assert.equal(record.recruitingMarket, 'Primarily U.S.-Based Roles');
+  assert.match(record.targetList, /Stripe/);
+  assert.equal(record.adultConfirmed, 1);
+  assert.equal(record.termsVersion, '2026-founding-cohort-v1');
+  assert.equal(record.acknowledgementsAcceptedAt, record.submittedAt);
+});
+
+test('application option values are checked against server-side allowlists', () => {
+  const invalidMarket = validApplication();
+  invalidMarket.set('recruitingMarket', 'Anywhere with guaranteed sponsorship');
+  assert.match(
+    validateApplication(invalidMarket, new Date('2026-07-26T12:00:00-04:00')),
+    /valid recruiting market/,
+  );
+
+  const invalidSupport = validApplication();
+  invalidSupport.set('desiredSupport', 'Guaranteed referral');
+  assert.match(
+    validateApplication(invalidSupport, new Date('2026-07-26T12:00:00-04:00')),
+    /valid support areas/,
+  );
 });
 
 test('support choices are limited to three', () => {
   const data = validApplication();
-  data.append('desiredSupport', 'Application strategy');
-  data.append('desiredSupport', 'Career direction');
-  data.append('desiredSupport', 'Recruiting accountability');
+  data.append('desiredSupport', 'Application Strategy');
+  data.append('desiredSupport', 'Career Direction');
+  data.append('desiredSupport', 'Recruiting Accountability');
   assert.match(
     validateApplication(data, new Date('2026-07-26T12:00:00-04:00')),
     /between one and three/,
@@ -160,6 +186,17 @@ test('resume uploads must be PDFs no larger than 5 MB', () => {
   );
 });
 
+test('resume uploads must contain a PDF file signature', async () => {
+  assert.equal(await validateResumeSignature(testFile()), '');
+
+  const disguisedFile = new File(
+    [new TextEncoder().encode('not a real PDF')],
+    'resume.pdf',
+    { type: 'application/pdf' },
+  );
+  assert.match(await validateResumeSignature(disguisedFile), /valid PDFs/);
+});
+
 test('a complete future cohort interest form passes validation', () => {
   assert.equal(validateFutureInterest(validFutureInterest()), '');
 });
@@ -172,6 +209,14 @@ test('future cohort interest requires a valid email and explicit announcement co
   const missingConsent = validFutureInterest();
   missingConsent.delete('announcementConsent');
   assert.match(validateFutureInterest(missingConsent), /future cohort announcements/);
+
+  const invalidGraduationYear = validFutureInterest();
+  invalidGraduationYear.set('graduationYear', '9999');
+  assert.match(validateFutureInterest(invalidGraduationYear), /between 2026 and 2035/);
+
+  const invalidOpportunity = validFutureInterest();
+  invalidOpportunity.set('opportunityInterest', 'Guaranteed job placement');
+  assert.match(validateFutureInterest(invalidOpportunity), /valid opportunity interest/);
 });
 
 test('future cohort records normalize email and preserve only the intended fields', () => {

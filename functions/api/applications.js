@@ -1,6 +1,7 @@
 import {
   applicationRecord,
   validateApplication,
+  validateResumeSignature,
 } from '../_shared/validation.js';
 import { verifyTurnstile } from '../_shared/turnstile.js';
 
@@ -33,6 +34,10 @@ export async function onRequestPost({ request, env }) {
   const error = validateApplication(formData);
   if (error) return json({ error }, 400);
 
+  const resume = formData.get('resume');
+  const resumeSignatureError = await validateResumeSignature(resume);
+  if (resumeSignatureError) return json({ error: resumeSignatureError }, 400);
+
   const turnstileValid = await verifyTurnstile(
     String(formData.get('cf-turnstile-response') || ''),
     env.TURNSTILE_SECRET_KEY,
@@ -43,7 +48,6 @@ export async function onRequestPost({ request, env }) {
   }
 
   const id = crypto.randomUUID();
-  const resume = formData.get('resume');
   const resumeKey = `founding-cohort-2026/${id}.pdf`;
   await env.RESUMES_BUCKET.put(resumeKey, resume.stream(), {
     httpMetadata: { contentType: 'application/pdf' },
@@ -62,11 +66,12 @@ export async function onRequestPost({ request, env }) {
         primary_obstacle, worthwhile_change, feedback_priority, program_fit,
         desired_support, referral_source, marketing_consent,
         applications_submitted, first_interviews, final_rounds, offers_received,
-        scheduling_constraints, community_commitment
+        scheduling_constraints, community_commitment, recruiting_market,
+        target_list, adult_confirmed, acknowledgements_accepted_at, terms_version
       ) VALUES (
         ?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13,
         ?14, ?15, ?16, ?17, ?18, ?19, ?20, ?21, ?22, ?23, ?24, ?25,
-        ?26, ?27, ?28, ?29, ?30, ?31
+        ?26, ?27, ?28, ?29, ?30, ?31, ?32, ?33, ?34, ?35, ?36
       )`,
     ).bind(
       record.id,
@@ -100,6 +105,11 @@ export async function onRequestPost({ request, env }) {
       record.offersReceived,
       record.schedulingConstraints,
       record.communityCommitment,
+      record.recruitingMarket,
+      record.targetList,
+      record.adultConfirmed,
+      record.acknowledgementsAcceptedAt,
+      record.termsVersion,
     ).run();
   } catch (databaseError) {
     await env.RESUMES_BUCKET.delete(resumeKey);

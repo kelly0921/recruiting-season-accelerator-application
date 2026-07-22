@@ -65,7 +65,10 @@ Create and attach these under the Pages project's **Settings → Bindings**:
    - Create a database such as `rsa-applications`
    - Binding name: `APPLICATIONS_DB`
    - Run all SQL files in `migrations/` in numerical order against the production
-     database, including `0003_refine_application_selection.sql`
+     database, including `0003_refine_application_selection.sql` and
+     `0004_refine_application_fit_and_acknowledgements.sql`
+   - Existing production databases that already have migrations `0001` through
+     `0003` should run only migration `0004` before the updated site is deployed
    - The future-interest endpoint also creates its table safely if the second
      migration has not yet been run
 
@@ -130,6 +133,9 @@ recruiting history, or payment information.
 - Restrict Cloudflare dashboard access to Kelly and explicitly authorized operators.
 - Review applications in D1; retrieve resumes from the private R2 bucket only when
   needed for selection.
+- The application stores recruiting-market and target-list context along with an
+  adult-confirmation flag, acknowledgement timestamp, and terms version. It does
+  not store each presentation-layer commitment checkbox as a separate column.
 - Delete rejected applicant data within 60–90 days unless the applicant separately
   joins an updates list.
 - Do not place applicant names, emails, school information, resume details, or form
