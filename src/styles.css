@@ -207,6 +207,13 @@ a {
   letter-spacing: -0.04em;
 }
 
+.required-fields-note {
+  margin: 10px 0 0;
+  color: #748096;
+  font-size: 0.72rem;
+  line-height: 1.5;
+}
+
 .progress {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -2694,6 +2701,10 @@ body {
 /* Keep the future-cohort form visually aligned with the application without
    making a two-minute interest form feel like another long application. */
 .interest-card .form-heading {
+  margin-bottom: 0;
+}
+
+.interest-card .required-fields-note {
   margin-bottom: 24px;
 }
 

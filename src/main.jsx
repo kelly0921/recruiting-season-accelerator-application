@@ -304,6 +304,7 @@ function ApplicationPage() {
             </div>
             <span>{Math.round(((currentStep + 1) / steps.length) * 100)}%</span>
           </div>
+          <p className="required-fields-note">All fields are required unless marked Optional.</p>
 
           <ol className="progress" aria-label="Application progress">
             {steps.map((step, index) => (
@@ -658,6 +659,7 @@ function FutureInterestPage() {
               <h2 id="interest-heading">Join the Interest List</h2>
             </div>
           </div>
+          <p className="required-fields-note">All fields are required unless marked Optional.</p>
 
           <div className="opening-note" role="note">
             <strong>This Is Not an Application.</strong>
