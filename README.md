@@ -66,9 +66,10 @@ Create and attach these under the Pages project's **Settings → Bindings**:
    - Binding name: `APPLICATIONS_DB`
    - Run all SQL files in `migrations/` in numerical order against the production
      database, including `0003_refine_application_selection.sql` and
-     `0004_refine_application_fit_and_acknowledgements.sql`
+     `0004_refine_application_fit_and_acknowledgements.sql`, followed by
+     `0005_add_conference_interest.sql`
    - Existing production databases that already have migrations `0001` through
-     `0003` should run only migration `0004` before the updated site is deployed
+     `0004` should run only migration `0005` before the updated site is deployed
    - The future-interest endpoint also creates its table safely if the second
      migration has not yet been run
 

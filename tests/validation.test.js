@@ -40,6 +40,8 @@ function validApplication() {
     linkedInUrl: 'https://linkedin.com/in/example',
     recruitingMarket: 'Primarily U.S.-Based Roles',
     targetList: 'Stripe SWE internship, Bloomberg SWE internship, and fintech programs.',
+    conferenceInterest: 'Yes, I’m considering one',
+    conferenceDetails: 'Grace Hopper Celebration, likely in the fall.',
     currentExperience: 'Applied before but received few responses',
     applicationsSubmitted: '85',
     firstInterviews: '5',
@@ -129,6 +131,8 @@ test('application records preserve the structured funnel snapshot', () => {
   assert.equal(record.communityCommitment, 1);
   assert.equal(record.recruitingMarket, 'Primarily U.S.-Based Roles');
   assert.match(record.targetList, /Stripe/);
+  assert.equal(record.conferenceInterest, 'Yes, I’m considering one');
+  assert.match(record.conferenceDetails, /Grace Hopper/);
   assert.equal(record.adultConfirmed, 1);
   assert.equal(record.termsVersion, '2026-founding-cohort-v1');
   assert.equal(record.acknowledgementsAcceptedAt, record.submittedAt);
@@ -147,6 +151,29 @@ test('application option values are checked against server-side allowlists', () 
   assert.match(
     validateApplication(invalidSupport, new Date('2026-07-26T12:00:00-04:00')),
     /valid support areas/,
+  );
+
+  const invalidConferenceInterest = validApplication();
+  invalidConferenceInterest.set('conferenceInterest', 'Only if admission is guaranteed');
+  assert.match(
+    validateApplication(invalidConferenceInterest, new Date('2026-07-26T12:00:00-04:00')),
+    /valid conference-interest option/,
+  );
+});
+
+test('conference interest is required while conference details remain optional', () => {
+  const missingInterest = validApplication();
+  missingInterest.delete('conferenceInterest');
+  assert.match(
+    validateApplication(missingInterest, new Date('2026-07-26T12:00:00-04:00')),
+    /Missing required field: conferenceInterest/,
+  );
+
+  const noDetails = validApplication();
+  noDetails.delete('conferenceDetails');
+  assert.equal(
+    validateApplication(noDetails, new Date('2026-07-26T12:00:00-04:00')),
+    '',
   );
 });
 

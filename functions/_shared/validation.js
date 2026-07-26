@@ -1,4 +1,5 @@
 import {
+  conferenceInterestOptions,
   environmentOptions,
   experienceOptions,
   opportunityOptions,
@@ -25,6 +26,7 @@ const requiredTextFields = [
   'timeZone',
   'linkedInUrl',
   'recruitingMarket',
+  'conferenceInterest',
   'currentExperience',
   'recruitingHistory',
   'threeMonthGoal',
@@ -86,6 +88,8 @@ export function validateApplication(formData, now = new Date()) {
     portfolioUrl: 500,
     targetList: 500,
     recruitingMarket: 120,
+    conferenceInterest: 120,
+    conferenceDetails: 500,
     currentExperience: 200,
     recruitingHistory: 2000,
     threeMonthGoal: 1500,
@@ -146,6 +150,9 @@ export function validateApplication(formData, now = new Date()) {
   }
   if (!isAllowed(formData.get('recruitingMarket'), recruitingMarketOptions)) {
     return 'Choose a valid recruiting market.';
+  }
+  if (!isAllowed(formData.get('conferenceInterest'), conferenceInterestOptions)) {
+    return 'Choose a valid conference-interest option.';
   }
   if (!isAllowed(formData.get('currentExperience'), experienceOptions)) {
     return 'Choose a valid current-experience option.';
@@ -228,6 +235,8 @@ export function applicationRecord(formData, id, resumeKey, now = new Date()) {
     companyEnvironments: formData.getAll('companyEnvironments'),
     recruitingMarket: String(formData.get('recruitingMarket')).trim(),
     targetList: String(formData.get('targetList') || '').trim(),
+    conferenceInterest: String(formData.get('conferenceInterest')).trim(),
+    conferenceDetails: String(formData.get('conferenceDetails') || '').trim(),
     currentExperience: String(formData.get('currentExperience')).trim(),
     applicationsSubmitted: Number(formData.get('applicationsSubmitted')),
     firstInterviews: Number(formData.get('firstInterviews')),

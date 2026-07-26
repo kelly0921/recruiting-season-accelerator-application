@@ -31,6 +31,7 @@ In the Cloudflare dashboard:
    - `migrations/0002_create_future_cohort_interest.sql`
    - `migrations/0003_refine_application_selection.sql`
    - `migrations/0004_refine_application_fit_and_acknowledgements.sql`
+   - `migrations/0005_add_conference_interest.sql`
 5. Open **Workers & Pages → recruiting-accelerator-apply → Settings → Bindings**.
 6. Add a **D1 database binding**:
    - Variable name: `APPLICATIONS_DB`
@@ -40,10 +41,10 @@ In the Cloudflare dashboard:
 The D1 database stores the application answers and future-cohort interest-list
 records. It does not store the resume file itself.
 
-If the database was already configured with migrations `0001` through `0003`,
-run only `0004_refine_application_fit_and_acknowledgements.sql` for the revised
-form. Run it once before deploying the updated code. The existing D1 binding,
-R2 bucket, and Turnstile keys do not need to be replaced.
+If the database was already configured with migrations `0001` through `0004`,
+run only `0005_add_conference_interest.sql` for the revised form. Run it once
+before deploying the updated code. The existing D1 binding, R2 bucket, and
+Turnstile keys do not need to be replaced.
 
 ## 3. Create Private Resume Storage
 
@@ -111,6 +112,8 @@ SELECT
   offers_received,
   recruiting_market,
   target_list,
+  conference_interest,
+  conference_details,
   adult_confirmed,
   acknowledgements_accepted_at,
   terms_version

@@ -67,6 +67,13 @@ export const recruitingMarketOptions = [
   'Not Sure Yet',
 ];
 
+export const conferenceInterestOptions = [
+  'Yes, I’m registered',
+  'Yes, I’m considering one',
+  'Not currently',
+  'Not sure yet',
+];
+
 export const referralSourceOptions = [
   "Kelly's LinkedIn post",
   'Direct message from Kelly',

@@ -9,6 +9,7 @@ import {
 } from './program.js';
 import { ProgramFooter, ProgramHeader } from './siteChrome.jsx';
 import {
+  conferenceInterestOptions,
   environmentOptions,
   experienceOptions,
   opportunityOptions,
@@ -379,6 +380,20 @@ function ApplicationPage() {
                 label="Which roles, companies, or programs are currently at the top of your list?"
                 name="targetList"
                 hint="Optional. List up to five; a short answer is enough."
+                maxLength="500"
+                required={false}
+              />
+              <label className="field">
+                <span>Are you planning to attend a career, technology, or student conference in the next 6–12 months?</span>
+                <select name="conferenceInterest" required defaultValue="">
+                  <option value="" disabled>Select One</option>
+                  {conferenceInterestOptions.map((option) => <option key={option}>{option}</option>)}
+                </select>
+              </label>
+              <TextArea
+                label="Which conference are you considering, and approximately when?"
+                name="conferenceDetails"
+                hint="Share the conference name and approximate date if applicable."
                 maxLength="500"
                 required={false}
               />
