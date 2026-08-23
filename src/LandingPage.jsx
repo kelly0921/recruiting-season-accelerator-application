@@ -59,10 +59,14 @@ export const faqs = [
   },
 ];
 
-function SectionHeading({ eyebrow, title, body, id }) {
+function SectionHeading({ eyebrow, title, body, id, index }) {
   return (
     <header className="landing-section-heading">
-      <p className="eyebrow">{eyebrow}</p>
+      <div className="section-kicker">
+        {index ? <span className="section-index" aria-hidden="true">{index}</span> : null}
+        <p className="eyebrow">{eyebrow}</p>
+        <span className="section-kicker-rule" aria-hidden="true" />
+      </div>
       <h2 id={id}>{title}</h2>
       {body ? <p>{body}</p> : null}
     </header>
@@ -207,6 +211,7 @@ export function LandingPage() {
               title="For Students Who Have Started—but Need Better Results."
               body="Open to current college students age 18+ from every class year."
               id="fit-title"
+              index="01"
             />
             <div className="bottleneck-grid" aria-label="Common recruiting bottlenecks">
               {bottlenecks.map(([number, title, body]) => (
@@ -251,9 +256,10 @@ export function LandingPage() {
               title="One Cohort. Two Phases."
               body="Build the strategy during a four-week intensive, then apply and adjust it through December 15."
               id="program-title"
+              index="02"
             />
             <div className="phase-board">
-              <article className="phase-column phase-intensive">
+              <article className="phase-column phase-intensive" data-phase="01">
                 <header className="phase-header">
                   <span>Phase 1</span>
                   <time>September 14–October 11</time>
@@ -272,7 +278,7 @@ export function LandingPage() {
                 </p>
               </article>
 
-              <article className="phase-column phase-apply">
+              <article className="phase-column phase-apply" data-phase="02">
                 <header className="phase-header">
                   <span>Phase 2</span>
                   <time>October 12–December 15</time>
@@ -313,7 +319,11 @@ export function LandingPage() {
               <img src="/profile.jpg" alt="Kelly Chen" loading="lazy" />
             </div>
             <div>
-              <p className="eyebrow">Your Mentor</p>
+              <div className="section-kicker founder-kicker">
+                <span className="section-index" aria-hidden="true">03</span>
+                <p className="eyebrow">Your Mentor</p>
+                <span className="section-kicker-rule" aria-hidden="true" />
+              </div>
               <h2 id="founder-title">Meet Kelly, Your Mentor.</h2>
               <p>
                 Kelly Chen is a software engineer, product builder, speaker, and community
@@ -340,7 +350,7 @@ export function LandingPage() {
 
         <section className="landing-section timeline-section" id="timeline" aria-labelledby="timeline-title">
           <div className="landing-shell">
-            <SectionHeading eyebrow="Important Dates" title="Key Dates for the Founding Cohort." id="timeline-title" />
+            <SectionHeading eyebrow="Important Dates" title="Key Dates for the Founding Cohort." id="timeline-title" index="04" />
             <ol className="date-timeline">
               <li><span>01</span><div><strong>Applications</strong><time>{program.applicationDates}</time></div></li>
               <li><span>02</span><div><strong>Decisions</strong><time>{program.decisionDates}</time><small>Onboarding due {program.onboardingDueDate}</small></div></li>
@@ -352,7 +362,7 @@ export function LandingPage() {
 
         <section className="landing-section faq-section" id="faq" aria-labelledby="faq-title">
           <div className="landing-shell faq-layout">
-            <SectionHeading eyebrow="Questions" title="Before You Apply." id="faq-title" />
+            <SectionHeading eyebrow="Questions" title="Before You Apply." id="faq-title" index="05" />
             <div className="faq-list">
               {faqs.slice(0, 5).map((item) => (
                 <details key={item.question}>

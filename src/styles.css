@@ -6119,3 +6119,148 @@ textarea {
 .fit-preference-note strong {
   color: var(--navy);
 }
+
+/* Editorial chapter system: more visual rhythm without additional cards. */
+.section-kicker {
+  display: flex;
+  width: min(100%, 430px);
+  align-items: center;
+  gap: 11px;
+  margin: 0 0 15px;
+}
+
+.landing-section-heading .section-kicker .eyebrow,
+.founder-kicker .eyebrow {
+  margin: 0;
+}
+
+.section-index {
+  flex: 0 0 auto;
+  border-right: 1px solid var(--line);
+  color: var(--rose);
+  padding-right: 11px;
+  font-family: var(--serif);
+  font-size: 0.96rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.section-kicker-rule {
+  width: 54px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--blue), rgba(88, 111, 182, 0.12));
+  transform-origin: left center;
+}
+
+.landing-motion-ready .section-kicker-rule {
+  transform: scaleX(0);
+  transition: transform 640ms cubic-bezier(0.2, 0.75, 0.25, 1) 160ms;
+}
+
+.landing-motion-ready .landing-section.is-visible .section-kicker-rule {
+  transform: scaleX(1);
+}
+
+/* Give each chapter a distinct tonal field while staying in one palette. */
+#fit {
+  background:
+    radial-gradient(circle at 94% 10%, rgba(202, 131, 153, 0.055), transparent 22rem),
+    var(--light);
+}
+
+.included-section {
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background:
+    linear-gradient(135deg, rgba(88, 111, 182, 0.05), transparent 34%),
+    var(--paper);
+}
+
+.founder-section {
+  border-bottom: 1px solid var(--line);
+  background:
+    linear-gradient(90deg, rgba(202, 131, 153, 0.04), transparent 36%),
+    var(--paper);
+}
+
+.timeline-section {
+  background:
+    linear-gradient(180deg, rgba(88, 111, 182, 0.035), transparent 70%),
+    var(--paper-soft);
+}
+
+/* Make the two support phases read as a designed progression. */
+.phase-board {
+  overflow: hidden;
+  background: linear-gradient(90deg, rgba(88, 111, 182, 0.026), rgba(202, 131, 153, 0.018));
+}
+
+.phase-column {
+  position: relative;
+  isolation: isolate;
+}
+
+.phase-column::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 0;
+  height: 3px;
+  background: var(--blue);
+  content: "";
+  opacity: 0.78;
+}
+
+.phase-apply::before {
+  background: var(--rose);
+}
+
+.phase-column::after {
+  position: absolute;
+  right: 24px;
+  bottom: -20px;
+  z-index: -1;
+  color: rgba(88, 111, 182, 0.055);
+  content: attr(data-phase);
+  font-family: var(--serif);
+  font-size: 8rem;
+  font-weight: 700;
+  letter-spacing: -0.08em;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.phase-apply::after {
+  color: rgba(202, 131, 153, 0.055);
+}
+
+.phase-column > * {
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 620px) {
+  .section-kicker {
+    gap: 9px;
+    margin-bottom: 12px;
+  }
+
+  .section-kicker-rule {
+    width: 38px;
+  }
+
+  .phase-column::after {
+    right: 12px;
+    bottom: -10px;
+    font-size: 6rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing-motion-ready .section-kicker-rule {
+    transform: none;
+    transition: none;
+  }
+}
