@@ -100,8 +100,8 @@ For the complete production setup and pre-LinkedIn verification sequence, follow
 
 ## Founding-cohort timeline
 
-- Applications opened August 23, 2026
-- Applications close September 1 at 11:59 PM ET
+- Applications open August 24, 2026
+- Applications close August 31 at 11:59 PM ET
 - Decisions are planned for September 3
 - Asynchronous onboarding runs September 3–14
 - The four-week mentorship intensive runs September 14–October 11
@@ -113,8 +113,8 @@ For the complete production setup and pre-LinkedIn verification sequence, follow
 The public `/apply` route is intentionally limited to the Stage 1 selection form.
 It collects:
 
-- Name, email, optional LinkedIn URL, school, academic area, and graduation month/year
-- Fall 2026 class-year and age category
+- Name, email, required LinkedIn URL, school, academic area, and graduation month/year
+- Fall 2026 college year and confirmation that the applicant will be at least 18
 - Roles or paths currently being explored
 - One fall goal, up to two current obstacles, one recent action, and one question for Kelly
 - Current conference stage without detailed conference information

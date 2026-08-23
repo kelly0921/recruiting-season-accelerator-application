@@ -2713,6 +2713,83 @@ body {
   }
 }
 
+/* Keep the expanded hero informative without turning the opening screen into a wall of text. */
+.hero-receive-copy {
+  max-width: 68ch;
+  margin: 18px 0 0;
+  border-left: 3px solid var(--blue);
+  padding-left: 16px;
+  color: var(--copy);
+  font-size: 0.96rem;
+  line-height: 1.65;
+}
+
+/* Clearly separate high-touch mentorship from beta-only participation. */
+.price-card .track-option {
+  margin-top: 20px;
+  border-top: 1px solid var(--line);
+  padding-top: 18px;
+}
+
+.price-card .track-option > div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.price-card .track-option > div span {
+  color: var(--navy);
+  font-size: 0.92rem;
+  font-weight: 800;
+}
+
+.price-card .track-option > div strong {
+  color: var(--blue);
+  font-size: 0.9rem;
+  max-width: 100%;
+  white-space: normal;
+}
+
+.price-card .track-option ul {
+  display: grid;
+  gap: 8px;
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.price-card .track-option li {
+  position: relative;
+  margin: 0;
+  padding-left: 18px;
+  color: var(--copy);
+  font-size: 0.84rem;
+  line-height: 1.5;
+}
+
+.price-card .track-option li::before {
+  position: absolute;
+  top: 0.62em;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--blue);
+  content: "";
+}
+
+@media (max-width: 620px) {
+  .hero-receive-copy {
+    font-size: 0.9rem;
+  }
+
+  .price-card .track-option > div {
+    display: grid;
+    gap: 4px;
+  }
+}
+
 /* Keep the future-cohort form visually aligned with the application without
    making a two-minute interest form feel like another long application. */
 .interest-card .form-heading {
@@ -5211,9 +5288,9 @@ textarea {
 /* Turn the hero headline into a clear setup-and-payoff lockup. */
 .program-hero-copy h1 {
   display: grid;
-  max-width: 820px;
+  max-width: 100%;
   gap: 12px;
-  font-size: clamp(3.15rem, 5vw, 4rem);
+  font-size: clamp(3rem, 4.4vw, 3.6rem);
   line-height: 0.94;
 }
 
@@ -5238,7 +5315,8 @@ textarea {
   font-weight: 850;
   letter-spacing: -0.055em;
   line-height: 0.94;
-  white-space: nowrap;
+  max-width: 100%;
+  white-space: normal;
 }
 
 .program-hero-copy h1 em > span {
@@ -5256,13 +5334,6 @@ textarea {
   content: "";
   transform: rotate(-0.7deg);
   transform-origin: left center;
-}
-
-@media (max-width: 900px) {
-  .program-hero-copy h1 em {
-    max-width: 14ch;
-    white-space: normal;
-  }
 }
 
 @media (max-width: 620px) {

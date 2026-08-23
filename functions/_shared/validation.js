@@ -9,8 +9,8 @@ import {
   rolePathOptions,
 } from '../../shared/applicationOptions.js';
 
-export const applicationOpenAt = '2026-08-23T00:00:00-04:00';
-export const applicationCloseAt = '2026-09-01T23:59:59-04:00';
+export const applicationOpenAt = '2026-08-24T00:00:00-04:00';
+export const applicationCloseAt = '2026-08-31T23:59:59-04:00';
 export const maxResumeBytes = 5 * 1024 * 1024;
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -22,6 +22,7 @@ const requiredTextFields = [
   'major',
   'graduationDate',
   'academicStage',
+  'linkedInUrl',
   'fallGoal',
   'recentAction',
   'kellyQuestion',
@@ -30,6 +31,7 @@ const requiredTextFields = [
 ];
 
 const requiredConfirmations = [
+  'isAdult',
   'groupSessionCommitment',
   'individualSessionCommitment',
   'weeklyWorkCommitment',
@@ -117,7 +119,7 @@ export function validateApplication(formData, now = new Date()) {
   }
 
   if (!isAllowed(formData.get('academicStage'), academicStageOptions)) {
-    return 'Choose a valid Fall 2026 class-year and age option.';
+    return 'Choose a valid Fall 2026 college-year option.';
   }
   if (!isAllowed(formData.get('conferenceInterest'), conferenceInterestOptions)) {
     return 'Choose a valid conference-interest option.';
@@ -224,10 +226,7 @@ export function applicationRecord(formData, id, resumeKey, now = new Date()) {
     referralSource: '',
     marketingConsent: 0,
     communityCommitment: 1,
-    adultConfirmed: academicStage === 'Freshman and 18 or Older'
-      || academicStage === 'Sophomore and 18 or Older'
-      ? 1
-      : 0,
+    adultConfirmed: formData.get('isAdult') === 'yes' ? 1 : 0,
     acknowledgementsAcceptedAt: submittedAt,
     termsVersion: participantTermsVersion,
   };

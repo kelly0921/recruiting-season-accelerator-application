@@ -268,13 +268,13 @@ function ApplicationPage() {
           <p className="eyebrow">Founding Cohort Application</p>
           <h1>Tell Us Where You Are—and Where You Want to Go.</h1>
           <p className="intro-copy">
-            Share the goal you want to move forward, what is getting in the way, and
-            how you have already begun taking action.
+            Current college students from every class year may apply. Share the goal
+            you want to move forward and how you have already begun taking action.
           </p>
 
           <dl className="program-facts">
             <div><dt>Time</dt><dd>About 7–10 minutes</dd></div>
-            <div><dt>Deadline</dt><dd>September 1 · 11:59 PM ET</dd></div>
+            <div><dt>Deadline</dt><dd>August 31 · 11:59 PM ET</dd></div>
             <div><dt>Program</dt><dd>September 14–October 11</dd></div>
             <div><dt>Price</dt><dd>Free founding pilot</dd></div>
           </dl>
@@ -309,7 +309,7 @@ function ApplicationPage() {
 
           {state === 'opening-soon' ? (
             <div className="opening-note" role="status">
-              <strong>Applications Open August 23.</strong>
+              <strong>Applications Open August 24.</strong>
               You can browse all three steps without entering information. Required-field
               checks and submission will activate when the application window opens.
             </div>
@@ -334,19 +334,22 @@ function ApplicationPage() {
                   max="2032-12"
                 />
                 <label className="field">
-                  <span>Fall 2026 Class Year and Age</span>
+                  <span>Fall 2026 College Year</span>
                   <select name="academicStage" required defaultValue="">
                     <option value="" disabled>Select One</option>
                     {academicStageOptions.map((option) => <option key={option}>{option}</option>)}
                   </select>
                 </label>
               </div>
+              <label className="confirmation">
+                <input type="checkbox" name="isAdult" value="yes" required />
+                <span>I confirm that I will be at least 18 years old when the program begins.</span>
+              </label>
               <TextField
                 label="LinkedIn Profile URL"
                 name="linkedInUrl"
                 type="url"
                 placeholder="https://www.linkedin.com/in/..."
-                required={false}
               />
               <label className="field">
                 <span>Resume <em>PDF · 5 MB maximum</em></span>
@@ -402,7 +405,7 @@ function ApplicationPage() {
               <fieldset className="commitments">
                 <legend>Participation Expectations</legend>
                 {[
-                  ['groupSessionCommitment', 'I can attend at least three of four live group sessions.'],
+                  ['groupSessionCommitment', 'I can attend at least three of four virtual group sessions. Final times will be selected based on accepted participants’ availability.'],
                   ['individualSessionCommitment', 'I can schedule one 60-minute resume review and one 60-minute strategy session.'],
                   ['weeklyWorkCommitment', 'I can complete approximately one to two hours of total program work each week during the four-week intensive.'],
                   ['applyFirstCommitment', 'I will use ApplyFirst and provide short feedback through November 30.'],
@@ -466,7 +469,7 @@ function ApplicationPage() {
                   {status === 'submitting'
                     ? 'Submitting…'
                     : state === 'opening-soon'
-                      ? 'Opens August 23'
+                      ? 'Opens August 24'
                       : 'Submit Application'}
                 </button>
               )}

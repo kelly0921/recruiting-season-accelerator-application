@@ -1,10 +1,11 @@
-export const participantTermsVersion = '2026-fall-founding-cohort-v2';
+export const participantTermsVersion = '2026-fall-founding-cohort-v3';
 
 export const academicStageOptions = [
-  'Freshman and 18 or Older',
-  'Sophomore and 18 or Older',
-  'Other Class Year',
-  'Under 18',
+  'Freshman',
+  'Sophomore',
+  'Junior',
+  'Senior',
+  'Other Current College Year',
 ];
 
 export const rolePathOptions = [

@@ -36,7 +36,7 @@ function validApplication() {
     school: 'Example University',
     major: 'Computer Science',
     graduationDate: '2029-05',
-    academicStage: 'Sophomore and 18 or Older',
+    academicStage: 'Sophomore',
     linkedInUrl: 'https://linkedin.com/in/example',
     fallGoal: 'This fall, I want to build a focused opportunity pipeline for software engineering internships and early-career programs. I want to identify roles that match my current experience, improve how I prioritize deadlines, and submit thoughtful applications consistently instead of reacting to opportunities after I discover them too late.',
     recentAction: 'During the past month, I created a spreadsheet of internship deadlines, revised two project bullets on my resume, and asked a teaching assistant for feedback. I then used that feedback to clarify the technical decisions I owned and applied to three early programs before their deadlines.',
@@ -48,6 +48,7 @@ function validApplication() {
   data.append('rolesExploring', 'Software Engineering');
   data.append('obstacles', 'I am unsure what to prioritize');
   [
+    'isAdult',
     'groupSessionCommitment',
     'individualSessionCommitment',
     'weeklyWorkCommitment',
@@ -73,10 +74,10 @@ function validFutureInterest() {
 }
 
 test('application dates enforce the Fall 2026 ET window', () => {
-  assert.equal(getApplicationState(new Date('2026-08-22T23:59:59-04:00')), 'opening-soon');
-  assert.equal(getApplicationState(new Date('2026-08-23T00:00:00-04:00')), 'open');
-  assert.equal(getApplicationState(new Date('2026-09-01T23:59:59-04:00')), 'open');
-  assert.equal(getApplicationState(new Date('2026-09-02T00:00:00-04:00')), 'closed');
+  assert.equal(getApplicationState(new Date('2026-08-23T23:59:59-04:00')), 'opening-soon');
+  assert.equal(getApplicationState(new Date('2026-08-24T00:00:00-04:00')), 'open');
+  assert.equal(getApplicationState(new Date('2026-08-31T23:59:59-04:00')), 'open');
+  assert.equal(getApplicationState(new Date('2026-09-01T00:00:00-04:00')), 'closed');
 });
 
 test('the pre-launch application can be browsed without field validation', () => {
@@ -90,9 +91,23 @@ test('a complete application passes server validation', () => {
     validateApplication(validApplication(), new Date('2026-08-26T12:00:00-04:00')),
     '',
   );
+
+  const upperclassApplicant = validApplication();
+  upperclassApplicant.set('academicStage', 'Senior');
+  assert.equal(
+    validateApplication(upperclassApplicant, new Date('2026-08-26T12:00:00-04:00')),
+    '',
+  );
 });
 
 test('all participation commitments are required', () => {
+  const missingAdultConfirmation = validApplication();
+  missingAdultConfirmation.delete('isAdult');
+  assert.match(
+    validateApplication(missingAdultConfirmation, new Date('2026-08-26T12:00:00-04:00')),
+    /required participation/,
+  );
+
   const missingSessionCommitment = validApplication();
   missingSessionCommitment.delete('individualSessionCommitment');
   assert.match(
@@ -116,7 +131,7 @@ test('application records preserve concise stage-one selection fields', () => {
   );
   assert.equal(record.graduationDate, '2029-05');
   assert.equal(record.graduationYear, '2029');
-  assert.equal(record.academicStage, 'Sophomore and 18 or Older');
+  assert.equal(record.academicStage, 'Sophomore');
   assert.deepEqual(record.rolesExploring, ['Software Engineering']);
   assert.deepEqual(record.obstacles, ['I am unsure what to prioritize']);
   assert.match(record.fallGoal, /opportunity pipeline/);
@@ -126,7 +141,7 @@ test('application records preserve concise stage-one selection fields', () => {
   assert.equal(record.conferenceInterest, 'Deciding which conference to pursue');
   assert.equal(record.betaInterest, 'Yes — consider me for an ApplyFirst beta-only spot');
   assert.equal(record.adultConfirmed, 1);
-  assert.equal(record.termsVersion, '2026-fall-founding-cohort-v2');
+  assert.equal(record.termsVersion, '2026-fall-founding-cohort-v3');
   assert.equal(record.acknowledgementsAcceptedAt, record.submittedAt);
 });
 
@@ -135,7 +150,7 @@ test('application option values are checked against server-side allowlists', () 
   invalidStage.set('academicStage', 'Graduate student');
   assert.match(
     validateApplication(invalidStage, new Date('2026-08-26T12:00:00-04:00')),
-    /valid Fall 2026 class-year/,
+    /valid Fall 2026 college-year/,
   );
 
   const invalidRole = validApplication();
@@ -169,7 +184,7 @@ test('extended-beta consideration requires an explicit preference', () => {
   );
 });
 
-test('conference interest is required while LinkedIn remains optional', () => {
+test('conference interest and LinkedIn are required', () => {
   const missingInterest = validApplication();
   missingInterest.delete('conferenceInterest');
   assert.match(
@@ -179,9 +194,9 @@ test('conference interest is required while LinkedIn remains optional', () => {
 
   const noLinkedIn = validApplication();
   noLinkedIn.delete('linkedInUrl');
-  assert.equal(
+  assert.match(
     validateApplication(noLinkedIn, new Date('2026-08-26T12:00:00-04:00')),
-    '',
+    /Missing required field: linkedInUrl/,
   );
 });
 
@@ -291,10 +306,10 @@ test('the Cloudflare microsite contains details, both forms, and policy navigati
     readFile(chromeSourceUrl, 'utf8'),
   ]);
 
-  assert.match(landing, /Early Opportunities Add Up/);
+  assert.match(landing, /Build a Smarter/);
   assert.match(landing, /Live Workshops and Q&As/);
   assert.match(landing, /Individual Strategy Session/);
-  assert.match(landing, /Extended ApplyFirst Beta/);
+  assert.match(landing, /Extended Beta-Only Group/);
   assert.match(landing, /Free Fall 2026 Founding Cohort/);
   assert.match(landing, /Participant Terms/);
   assert.match(application, /path === '\/apply'/);

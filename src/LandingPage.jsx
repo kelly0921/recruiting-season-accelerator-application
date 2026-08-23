@@ -38,7 +38,7 @@ export const faqs = [
   {
     question: 'Who Is the Program Designed For?',
     answer:
-      'Primarily college freshmen and sophomores who will be at least 18 when the program begins and are pursuing software engineering or closely related technical opportunities. Previous internship experience is not required, but applicants should have a basic resume and be ready to take action.',
+      'Current college students from every class year may apply if they will be at least 18 when the program begins. The mentorship cohort will lean toward freshmen and sophomores because they are ApplyFirst’s core audience, while juniors and seniors whose needs fit may also be selected. The program primarily supports software engineering and related technology paths. Previous internship experience is not required, but mentorship applicants need a basic resume and must be ready to act on feedback.',
   },
   {
     question: 'Is This a Coding or Technical Interview Course?',
@@ -48,7 +48,7 @@ export const faqs = [
   {
     question: 'What Is the Weekly Time Commitment and Workshop Schedule?',
     answer:
-      'The intensive runs September 14–October 11. Founding mentees attend four 75-minute group sessions, schedule one 60-minute resume review and one 60-minute strategy session, and complete approximately one to two hours of total program work each week. Participants should attend at least three workshops. Kelly will hold two scheduled asynchronous support windows per week during the intensive, and participants continue lightweight ApplyFirst feedback through November 30.',
+      'The intensive runs September 14–October 11. Founding mentees attend four 75-minute virtual group sessions and complete approximately one to two hours of program work each week, plus one 60-minute resume review and one 60-minute strategy session during the intensive. Participants should attend at least three workshops. Final live times will be selected based on accepted participants’ availability. Kelly will also hold two scheduled asynchronous support windows per week, and participants continue lightweight ApplyFirst feedback through November 30.',
   },
   {
     question: 'Do I Need to Be Attending a Conference?',
@@ -58,12 +58,12 @@ export const faqs = [
   {
     question: 'What Is the Difference Between the Mentorship Cohort and the Extended Beta?',
     answer:
-      `Eight founding mentees receive the four workshops, two individual sessions, resume re-review, personalized 60-day plan, ApplyFirst, and the conference playbook. Up to ${program.betaCapacity} additional beta participants receive ApplyFirst and playbook access, onboarding guidance, and product-feedback prompts through November. They may be invited to the October and November group check-ins when space allows, but are not guaranteed resume reviews, individual mentorship, or weekly workshops.`,
+      `Eight founding mentees receive four workshops, a live resume review, one offline resume re-review, a strategy session, ApplyFirst and conference-playbook access, a personalized 60-day plan, and October and November follow-ups. Up to ${program.betaCapacity} beta-only participants from any college year receive early ApplyFirst access, conference-playbook access when relevant, and short feedback check-ins through November. Beta-only spots do not guarantee workshops, resume review, or one-to-one mentorship.`,
   },
   {
     question: 'What Happens After I Apply?',
     answer:
-      `Applications are open and close September 1 at 11:59 PM ET. Decisions are planned for September 3. Kelly will select ${program.capacity} mentees, ${program.alternateCapacity} alternates, and up to ${program.betaCapacity} extended beta testers. Selected participants complete asynchronous onboarding before September 14.`,
+      `Applications run August 24–31 and close August 31 at 11:59 PM ET. Decisions are planned for September 3. Kelly will select ${program.capacity} mentees, ${program.alternateCapacity} alternates, and up to ${program.betaCapacity} extended beta testers. Selected participants must complete asynchronous onboarding by September 14.`,
   },
   {
     question: 'Why Is the Founding Cohort Free?',
@@ -166,9 +166,9 @@ export function LandingPage() {
         <span>Free Fall 2026 Founding Cohort · {program.capacity} Mentorship Spots</span>
         <strong>
           {state === 'opening-soon'
-            ? 'Applications Open August 23, 2026'
+            ? 'Applications Open August 24, 2026'
             : state === 'open'
-              ? 'Applications Are Open · Close September 1 at 11:59 PM ET'
+              ? 'Applications Are Open · Close August 31 at 11:59 PM ET'
               : 'Founding Cohort Applications Are Closed'}
         </strong>
       </div>
@@ -180,33 +180,39 @@ export function LandingPage() {
             <div className="program-hero-copy">
               <p className="eyebrow">Free Fall 2026 Founding Cohort</p>
               <h1>
-                <span className="hero-setup">Early Opportunities Add Up.</span>
-                <em><span>Build</span> Your Fall Strategy.</em>
+                <span className="hero-setup">Build a Smarter Fall</span>
+                <em><span>Opportunity</span> Strategy.</em>
               </h1>
               <p className="hero-lede">
-                A free mentorship cohort for college freshmen and sophomores who want a
-                more intentional way to find, pursue, and make the most of early-career
-                technology opportunities.
+                Recruiting Season Accelerator is a free Fall 2026 founding mentorship
+                cohort for college students pursuing early-career technology opportunities.
+                It is designed primarily for freshmen and sophomores, but students from
+                every college year may apply.
+              </p>
+              <p className="hero-receive-copy">
+                Eight selected students will receive four live workshops and Q&amp;As, a
+                one-hour resume review, a one-hour strategy session, early access to
+                ApplyFirst, the conference playbook, and a personalized 60-day plan.
               </p>
               <div className="hero-actions">
                 <ApplicationButton />
                 <a className="text-link" href="#program">See What&apos;s Included</a>
               </div>
               <p className="hero-microcopy">
-                Ages 18+ · Eight mentorship spots · Free founding pilot · Apply by September 1 at 11:59 PM ET
+                Ages 18+ · All college years · Free founding pilot · Applications close August 31 at 11:59 PM ET
               </p>
             </div>
 
             <aside className="strategy-card" aria-label="Program strategy">
               <div className="strategy-card-heading">
-                <span>Fall Opportunity Strategy</span>
-                <small>Four-Week Intensive</small>
+                <span>Selected Mentees Receive</span>
+                <small>Eight Mentorship Spots</small>
               </div>
               <ol>
-                <li><span>01</span><div><strong>Discover</strong><small>Find opportunities worth pursuing.</small></div></li>
-                <li><span>02</span><div><strong>Position</strong><small>Show credible evidence from what you have done.</small></div></li>
-                <li><span>03</span><div><strong>Connect</strong><small>Prepare for events and real conversations.</small></div></li>
-                <li><span>04</span><div><strong>Execute</strong><small>Build a system you can continue independently.</small></div></li>
+                <li><span>04</span><div><strong>Live Workshops and Q&amp;As</strong><small>Tailored after the cohort is selected.</small></div></li>
+                <li><span>01</span><div><strong>Resume Review</strong><small>Plus one bounded offline re-review.</small></div></li>
+                <li><span>01</span><div><strong>Strategy Session</strong><small>Focused on your goals and bottleneck.</small></div></li>
+                <li><span>Early</span><div><strong>Tools and Playbook</strong><small>ApplyFirst and conference guidance.</small></div></li>
               </ol>
               <div className="strategy-card-result">
                 <span>Leave With</span>
@@ -237,7 +243,7 @@ export function LandingPage() {
             <SectionHeading
               eyebrow="Who It’s For"
               title="Build Early-Career Momentum Intentionally."
-              body="Designed for freshmen and sophomores who want a clearer system for finding opportunities, building evidence, and deciding what deserves their attention this fall."
+              body="Open to current college students from every class year. The selected mentorship cohort will lean underclassman while making room for juniors and seniors whose goals fit the program."
               id="fit-title"
             />
             <div className="bottleneck-grid">
@@ -254,10 +260,10 @@ export function LandingPage() {
                 <p className="eyebrow">A Strong Fit</p>
                 <h3>You Are Ready to Explore and Take Action.</h3>
                 <ul>
-                  <li>You will be a college freshman or sophomore in Fall 2026 and at least 18 when the program begins.</li>
-                  <li>You are pursuing software engineering or a closely related technical path.</li>
+                  <li>You are a current college student in any class year and will be at least 18 when the program begins.</li>
+                  <li>You are pursuing software engineering or a closely related technology path.</li>
                   <li>You have a basic resume; previous internship experience is not required.</li>
-                  <li>You can commit one to two hours per week and provide candid product feedback through November.</li>
+                  <li>You are willing to act on feedback, test the resources, and provide candid product feedback through November.</li>
                 </ul>
               </article>
               <article>
@@ -272,10 +278,11 @@ export function LandingPage() {
               </article>
             </div>
             <div className="fit-selection-note">
-              <h3>What Kelly Looks For:</h3>
+              <h3>How the Founding Cohort Will Be Balanced:</h3>
               <p>
-                Students who show audience fit, a realistic commitment, recent action toward
-                a career goal, and a question Kelly and the program can meaningfully help solve.
+                Kelly will target at least five freshmen or sophomores among the eight
+                mentorship participants, with up to three juniors or seniors whose needs
+                genuinely fit. Beta-only testers may come from any college year.
               </p>
             </div>
           </div>
@@ -385,17 +392,34 @@ export function LandingPage() {
           <div className="landing-shell pricing-layout">
             <SectionHeading
               eyebrow="Two Ways to Participate"
-              title="Mentorship or Extended Beta."
-              body="One application helps Kelly select a focused mentorship cohort and a broader group of product testers across different opportunity and conference stages."
+              title="Choose the Right Participation Track."
+              body="All current college years may apply. One application is used to select eight high-touch mentorship participants and up to seven beta-only testers."
               id="pricing-title"
             />
             <div className="price-card">
               <span>Fall 2026 Founding Pilot</span>
               <strong>Free</strong>
-              <p>No payment or positive testimonial is required. Participants exchange consistent use and candid feedback for early access and structured support.</p>
-              <div><span>Founding Mentorship Cohort</span><strong>{program.capacity} Students</strong></div>
-              <div><span>Extended ApplyFirst Beta</span><strong>Up to {program.betaCapacity} More</strong></div>
-              <div><span>Feedback Period</span><strong>Through November 30</strong></div>
+              <p>No payment or positive testimonial is required. The two tracks have different levels of support.</p>
+              <section className="track-option mentorship-track">
+                <div><span>Founding Mentorship Cohort</span><strong>{program.capacity} Students</strong></div>
+                <ul>
+                  <li>Four live group workshops and Q&amp;As</li>
+                  <li>One-hour resume review and one offline re-review</li>
+                  <li>One-hour individual strategy session</li>
+                  <li>ApplyFirst and conference playbook access</li>
+                  <li>Personalized 60-day plan</li>
+                  <li>October and November follow-ups</li>
+                </ul>
+              </section>
+              <section className="track-option beta-track">
+                <div><span>Extended Beta-Only Group</span><strong>Up to {program.betaCapacity} Students</strong></div>
+                <ul>
+                  <li>Early ApplyFirst access</li>
+                  <li>Conference playbook access when relevant</li>
+                  <li>Short feedback check-ins through November</li>
+                  <li>No guaranteed workshops, resume review, or one-to-one mentorship</li>
+                </ul>
+              </section>
               <ApplicationButton label="Review the Application" />
             </div>
           </div>
@@ -450,6 +474,7 @@ const policyContent = {
     updated: 'Draft for the 2026 Founding Cohort',
     sections: [
       ['Program and Operator', `Recruiting Season Accelerator is a Fall 2026 educational, mentorship, and product-research pilot operated by Kelly Chen. Questions may be sent to ${program.contactEmail}.`],
+      ['Eligibility', 'Current college students from every class year may apply and must be at least 18 when the program begins. The mentorship cohort will lean toward freshmen and sophomores, while beta-only testers may come from any college year. A basic resume is required for mentorship applicants.'],
       ['Enrollment and Cost', 'The Fall 2026 founding mentorship cohort and extended beta are free. Applying does not guarantee acceptance, and participation requires completing the applicable onboarding and participation expectations.'],
       ['Included Mentorship Support', 'Founding mentees receive four 75-minute group workshops, one 60-minute resume-review session, one 60-minute strategy session, one bounded offline resume re-review, early ApplyFirst and conference-playbook access, a personalized 60-day plan, two scheduled asynchronous support windows per week during the intensive, and scheduled October and November group check-ins. Session examples and exercises may adapt to cohort needs without materially reducing this support.'],
       ['Extended Beta Support', 'Extended beta participants receive early ApplyFirst and conference-playbook access, onboarding guidance, and product-feedback prompts through November. They do not receive guaranteed resume reviews, individual mentorship, weekly workshops, referrals, or unlimited support.'],

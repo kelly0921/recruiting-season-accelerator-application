@@ -8,8 +8,8 @@ configured. Use the checks below to verify them before the public announcement.
 
 The website currently communicates:
 
-- Applications opened August 23, 2026
-- Applications close September 1 at 11:59 PM ET
+- Applications open August 24, 2026
+- Applications close August 31 at 11:59 PM ET
 - Decisions are planned for September 3
 - Asynchronous onboarding runs September 3–14
 - The four-week intensive runs September 14–October 11
@@ -186,7 +186,7 @@ Immediately before posting:
 
 - Open the landing page, `/apply`, `/faq`, and all policy pages.
 - Submit the controlled test described above.
-- Confirm the August 23–September 1 application window, September 3 decision date,
+- Confirm the August 24–31 application window, September 3 decision date,
   September 14 start, eight mentorship spots, extended beta, and free pilot are consistent.
 - Confirm Kelly's portfolio links to the Cloudflare landing page—not the retired
   `chatgpt.site` version.
