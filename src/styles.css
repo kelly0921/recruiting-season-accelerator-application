@@ -6431,5 +6431,10 @@ textarea {
 }
 
 .phase-column::after {
-  display: none;
+  display: block;
+}
+
+.date-timeline li:nth-child(4) {
+  border-color: #e5d2d8;
+  background: #f7eef1;
 }
