@@ -6264,3 +6264,140 @@ textarea {
     transition: none;
   }
 }
+
+/* Shared Kelly Chen brand scale: the portfolio sets the rhythm; the program
+   keeps its quieter editorial palette and underline navigation. */
+:root {
+  font-family: Inter, Manrope, "Plus Jakarta Sans", system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.landing-shell,
+.application-shell {
+  width: min(1160px, calc(100% - 36px));
+}
+
+.program-site .site-header,
+.application-page .site-header {
+  width: 100%;
+  padding-right: max(18px, calc((100vw - 1160px) / 2));
+  padding-left: max(18px, calc((100vw - 1160px) / 2));
+}
+
+.program-site .site-header,
+.application-page .site-header,
+.site-header.compact {
+  min-height: 68px;
+}
+
+.program-site .site-header,
+.application-page .site-header {
+  border-bottom: 1px solid rgba(222, 221, 225, 0.96);
+  background: rgba(250, 248, 244, 0.96);
+  backdrop-filter: blur(18px);
+}
+
+.brand > span {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+}
+
+.program-name {
+  font-size: 0.95rem;
+  font-weight: 850;
+}
+
+.brand-by {
+  font-size: 0.68rem;
+}
+
+.program-nav {
+  gap: clamp(14px, 2vw, 26px);
+}
+
+.program-nav a {
+  font-size: 0.9rem;
+  font-weight: 720;
+}
+
+.header-cta,
+.button,
+.program-hero .button,
+.final-cta .button,
+.price-card .button {
+  min-height: 42px;
+  border-radius: 999px;
+  padding: 10px 15px;
+  font-size: 1rem;
+  font-weight: 780;
+  line-height: 1.15;
+}
+
+.eyebrow,
+.program-hero .eyebrow {
+  font-size: 0.74rem;
+  font-weight: 850;
+  letter-spacing: 0.06em;
+}
+
+.program-hero-copy h1 {
+  font-size: clamp(3.35rem, 5vw, 4.25rem);
+}
+
+.hero-lede {
+  font-size: clamp(1.03rem, 1.8vw, 1.16rem);
+  font-weight: 400;
+  line-height: 1.78;
+}
+
+.landing-section {
+  padding-top: 74px;
+  padding-bottom: 74px;
+}
+
+.landing-section-heading h2,
+.journey-heading h3,
+.founder-layout h2,
+.final-cta h2 {
+  font-size: clamp(1.9rem, 3.5vw, 3rem);
+  font-weight: 740;
+  letter-spacing: -0.035em;
+  line-height: 1.05;
+}
+
+.landing-section-heading > p:last-child {
+  margin-top: 18px;
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+@media (max-width: 620px) {
+  .landing-shell,
+  .application-shell {
+    width: min(100% - 28px, 1160px);
+  }
+
+  .program-site .site-header,
+  .application-page .site-header {
+    width: 100%;
+    padding-right: 14px;
+    padding-left: 14px;
+  }
+
+  .program-hero-copy h1 {
+    font-size: clamp(2.7rem, 12.2vw, 3.45rem);
+  }
+
+  .landing-section {
+    padding-top: 54px;
+    padding-bottom: 54px;
+  }
+
+  .landing-section-heading h2,
+  .journey-heading h3,
+  .founder-layout h2,
+  .final-cta h2 {
+    font-size: clamp(1.85rem, 9vw, 2.55rem);
+  }
+}
