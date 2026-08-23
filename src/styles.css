@@ -2713,6 +2713,382 @@ body {
   }
 }
 
+/* Compact hero summary: complete at a glance without another paragraph. */
+.hero-benefit-list {
+  display: grid;
+  max-width: 670px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 24px;
+  margin: 20px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hero-benefit-list li {
+  position: relative;
+  margin: 0;
+  padding-left: 17px;
+  color: var(--copy);
+  font-size: 0.84rem;
+  font-weight: 720;
+  line-height: 1.45;
+}
+
+.hero-benefit-list li::before {
+  position: absolute;
+  top: 0.63em;
+  left: 0;
+  width: 7px;
+  height: 2px;
+  background: var(--blue);
+  content: "";
+}
+
+/* Restore the earlier eligibility rhythm while keeping the copy concise. */
+.bottleneck-grid {
+  margin-top: 30px;
+}
+
+.bottleneck-grid article,
+.bottleneck-grid article:nth-child(1),
+.bottleneck-grid article:nth-child(2),
+.bottleneck-grid article:nth-child(3),
+.bottleneck-grid article:nth-child(4),
+.bottleneck-grid article:nth-child(2n),
+.bottleneck-grid article:nth-last-child(-n + 2) {
+  min-height: 178px;
+  padding: 24px;
+}
+
+.bottleneck-grid h3 {
+  margin-top: 20px;
+  font-size: 1.02rem;
+}
+
+.bottleneck-grid p {
+  font-size: 0.84rem;
+  line-height: 1.5;
+}
+
+.fit-panel {
+  margin-top: 18px;
+}
+
+.fit-panel article {
+  padding: 26px 28px;
+}
+
+/* A single, rule-based program overview replaces the stacked card treatment. */
+.phase-board {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 38px;
+  border-top: 1px solid rgba(255, 255, 255, 0.22);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.22);
+}
+
+.phase-column {
+  min-width: 0;
+  padding: 34px 38px 34px 0;
+}
+
+.phase-column + .phase-column {
+  border-left: 1px solid rgba(255, 255, 255, 0.22);
+  padding-right: 0;
+  padding-left: 38px;
+}
+
+.phase-header {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: baseline;
+  gap: 7px 16px;
+}
+
+.phase-header > span {
+  color: #c8d1ee;
+  font-size: 0.7rem;
+  font-weight: 850;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.phase-header time {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.76rem;
+  text-align: right;
+}
+
+.phase-header h3 {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: white;
+  font-family: var(--serif);
+  font-size: clamp(1.85rem, 3vw, 2.55rem);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 1.02;
+}
+
+.phase-list {
+  display: grid;
+  margin: 26px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.phase-list li {
+  position: relative;
+  margin: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 11px 0 11px 19px;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 0.85rem;
+  font-weight: 680;
+  line-height: 1.45;
+}
+
+.phase-list li:last-child {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.phase-list li::before {
+  position: absolute;
+  top: 1.08rem;
+  left: 0;
+  width: 7px;
+  height: 2px;
+  background: #aeb9dc;
+  content: "";
+}
+
+.phase-commitment {
+  margin: 20px 0 0;
+  color: rgba(255, 255, 255, 0.63);
+  font-size: 0.78rem;
+  line-height: 1.62;
+}
+
+.phase-commitment strong {
+  display: block;
+  margin-bottom: 3px;
+  color: white;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.workshop-focus {
+  display: grid;
+  grid-template-columns: 170px minmax(0, 1fr);
+  align-items: stretch;
+  gap: 30px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.22);
+  padding: 30px 0;
+}
+
+.workshop-focus-heading {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+}
+
+.workshop-focus-heading span {
+  color: #c8d1ee;
+  font-size: 0.68rem;
+  font-weight: 850;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.workshop-focus-heading strong {
+  color: white;
+  font-size: 0.94rem;
+  line-height: 1.35;
+}
+
+.workshop-focus ol {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.workshop-focus li {
+  min-width: 0;
+  margin: 0;
+  border-left: 1px solid rgba(255, 255, 255, 0.16);
+  padding: 3px 16px;
+}
+
+.workshop-focus li > span,
+.workshop-focus li > strong {
+  display: block;
+}
+
+.workshop-focus li > span {
+  margin-bottom: 8px;
+  color: rgba(255, 255, 255, 0.56);
+  font-size: 0.66rem;
+  line-height: 1.35;
+}
+
+.workshop-focus li > strong {
+  color: white;
+  font-size: 0.78rem;
+  line-height: 1.4;
+}
+
+.support-boundary {
+  max-width: 900px;
+  margin: 18px 0 0;
+  color: rgba(255, 255, 255, 0.56);
+  font-size: 0.72rem;
+  line-height: 1.6;
+}
+
+.support-boundary strong {
+  color: rgba(255, 255, 255, 0.82);
+}
+
+@media (max-width: 900px) {
+  .phase-board {
+    grid-template-columns: 1fr;
+  }
+
+  .phase-column,
+  .phase-column + .phase-column {
+    border-left: 0;
+    padding: 30px 0;
+  }
+
+  .phase-column + .phase-column {
+    border-top: 1px solid rgba(255, 255, 255, 0.22);
+  }
+
+  .workshop-focus {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .workshop-focus ol {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 18px;
+  }
+}
+
+@media (max-width: 620px) {
+  .hero-benefit-list {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .bottleneck-grid article,
+  .bottleneck-grid article:nth-child(1),
+  .bottleneck-grid article:nth-child(2),
+  .bottleneck-grid article:nth-child(3),
+  .bottleneck-grid article:nth-child(4),
+  .bottleneck-grid article:nth-child(2n),
+  .bottleneck-grid article:nth-last-child(-n + 2) {
+    min-height: 0;
+  }
+
+  .phase-header {
+    grid-template-columns: 1fr;
+  }
+
+  .phase-header time,
+  .phase-header h3 {
+    grid-column: 1;
+    text-align: left;
+  }
+
+  .workshop-focus ol {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .workshop-focus li {
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+    border-left: 0;
+    padding: 12px 0;
+  }
+
+  .workshop-focus li > span {
+    margin-bottom: 4px;
+  }
+}
+
+/* The current landing-page palette keeps the program chapter light. */
+.phase-board {
+  border-color: var(--line);
+}
+
+.phase-column + .phase-column {
+  border-color: var(--line);
+}
+
+.phase-header > span {
+  color: var(--blue);
+}
+
+.phase-header time,
+.phase-commitment,
+.workshop-focus li > span,
+.support-boundary {
+  color: var(--muted);
+}
+
+.phase-header h3,
+.phase-commitment strong,
+.workshop-focus-heading strong,
+.workshop-focus li > strong {
+  color: var(--navy);
+}
+
+.phase-list li {
+  border-color: var(--line);
+  color: var(--copy);
+}
+
+.phase-list li:last-child {
+  border-color: var(--line);
+}
+
+.phase-list li::before {
+  background: var(--rose);
+}
+
+.workshop-focus {
+  border-color: var(--line);
+}
+
+.workshop-focus-heading span {
+  color: var(--blue);
+}
+
+.workshop-focus li {
+  border-color: var(--line);
+}
+
+.support-boundary strong {
+  color: var(--copy);
+}
+
+@media (max-width: 900px) {
+  .phase-column + .phase-column {
+    border-color: var(--line);
+  }
+}
+
+@media (max-width: 620px) {
+  .workshop-focus li {
+    border-color: var(--line);
+  }
+}
+
 /* Consolidated content blocks: scan quickly without adding more cards. */
 .fit-essentials {
   display: grid;
@@ -5683,5 +6059,49 @@ textarea {
 
   .journey li p {
     max-width: 620px;
+  }
+}
+
+/* Final responsive overrides for the restored eligibility layout. */
+.bottleneck-grid article,
+.bottleneck-grid article:nth-child(1),
+.bottleneck-grid article:nth-child(2),
+.bottleneck-grid article:nth-child(3),
+.bottleneck-grid article:nth-child(4),
+.bottleneck-grid article:nth-child(2n),
+.bottleneck-grid article:nth-last-child(-n + 2) {
+  min-height: 178px;
+  padding: 24px;
+}
+
+.bottleneck-grid h3 {
+  margin-top: 20px;
+}
+
+@media (max-width: 900px) {
+  .bottleneck-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .fit-panel {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 620px) {
+  .bottleneck-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .bottleneck-grid article,
+  .bottleneck-grid article:nth-child(1),
+  .bottleneck-grid article:nth-child(2),
+  .bottleneck-grid article:nth-child(3),
+  .bottleneck-grid article:nth-child(4),
+  .bottleneck-grid article:nth-child(2n),
+  .bottleneck-grid article:nth-last-child(-n + 2) {
+    min-height: 0;
   }
 }

@@ -2,17 +2,18 @@ import React, { useEffect } from 'react';
 import { applicationAction, applicationState, program } from './program.js';
 import { ProgramFooter, ProgramHeader } from './siteChrome.jsx';
 
-const journey = [
-  ['Week 1 · Sep 14–20', 'Opportunity Strategy', 'Clarify which early-career opportunities deserve attention and begin using ApplyFirst as a fall pipeline.'],
-  ['Week 2 · Sep 21–27', 'Early-Career Positioning', 'Strengthen how projects, coursework, leadership, and work experience support the opportunities you are pursuing.'],
-  ['Week 3 · Sep 28–Oct 4', 'Conferences and Networking', 'Connect conferences, career fairs, company events, and professional relationships to a broader fall strategy.'],
-  ['Week 4 · Oct 5–11', 'Recruiting Execution', 'Prioritize next steps and build a personalized 60-day plan for continuing after the intensive.'],
+const bottlenecks = [
+  ['01', 'Opportunity Discovery', 'You need better places to find high-fit opportunities.'],
+  ['02', 'Prioritization', 'You are active, but unsure what deserves your time.'],
+  ['03', 'Positioning', 'Your experience is stronger than your current story.'],
+  ['04', 'Follow-Through', 'You need a system for applying, learning, and adjusting.'],
 ];
 
-const semesterMilestones = [
-  ['October', 'Progress and ApplyFirst Check-In', 'Review early progress, ApplyFirst usage, and the first adjustments to your 60-day plan.'],
-  ['November', 'Recruiting and Conference Check-In', 'Discuss recruiting patterns, conference experiences, and the next decisions that need context.'],
-  ['December 15', 'Semester Closeout', 'Capture what worked, what changed, and the strategy you will carry into the next recruiting cycle.'],
+const workshopThemes = [
+  ['Week 1 · Sep 14–20', 'Opportunity Strategy'],
+  ['Week 2 · Sep 21–27', 'Early-Career Positioning'],
+  ['Week 3 · Sep 28–Oct 4', 'Conferences and Networking'],
+  ['Week 4 · Oct 5–11', 'Recruiting Execution'],
 ];
 
 export const faqs = [
@@ -165,16 +166,17 @@ export function LandingPage() {
                 <em><span>Opportunity</span> Strategy.</em>
               </h1>
               <p className="hero-lede">
-                Recruiting Season Accelerator is a free Fall 2026 mentorship cohort for
-                college students pursuing early-career technology opportunities. It is
-                designed primarily for freshmen and sophomores; every college year may apply.
+                A free Fall 2026 mentorship cohort for college students pursuing
+                early-career technology opportunities. Open to every college year,
+                with a focus on freshmen and sophomores.
               </p>
-              <p className="hero-receive-copy">
-                Eight selected students receive four live workshops, a one-hour resume review
-                and offline re-review, a one-hour strategy session, ApplyFirst and
-                conference-playbook access, and a personalized 60-day plan—followed by
-                lighter support through December 15.
-              </p>
+              <ul className="hero-benefit-list" aria-label="Program highlights">
+                <li>Four Live Workshops</li>
+                <li>Resume Review and Re-Review</li>
+                <li>One-to-One Strategy Session</li>
+                <li>ApplyFirst and Conference Playbook</li>
+                <li>Personalized 60-Day Plan</li>
+              </ul>
               <div className="hero-actions">
                 <ApplicationButton />
                 <a className="text-link" href="#program">See What&apos;s Included</a>
@@ -211,25 +213,34 @@ export function LandingPage() {
               body="Open to current college students from every class year, with an underclassman-leaning mentorship cohort."
               id="fit-title"
             />
-            <div className="fit-essentials">
+            <div className="bottleneck-grid" aria-label="Common recruiting bottlenecks">
+              {bottlenecks.map(([number, title, body]) => (
+                <article key={title}>
+                  <span>{number}</span>
+                  <h3>{title}</h3>
+                  <p>{body}</p>
+                </article>
+              ))}
+            </div>
+            <div className="fit-panel">
               <article>
                 <p className="eyebrow">Eligibility</p>
                 <h3>You Can Apply If:</h3>
                 <ul>
-                  <li>You are a current college student and will be at least 18 by September 14.</li>
-                  <li>You are pursuing software engineering or a related technology path.</li>
-                  <li>You have a basic resume; prior internship experience is not required.</li>
-                  <li>You do not need to be attending a conference.</li>
+                  <li>Current college student, age 18+ by September 14</li>
+                  <li>Pursuing software engineering or a related technology path</li>
+                  <li>Basic resume ready; no prior internship required</li>
+                  <li>No conference attendance required</li>
                 </ul>
               </article>
               <article>
-                <p className="eyebrow">A Strong Application</p>
-                <h3>You Are Ready to:</h3>
+                <p className="eyebrow">Strong Fit</p>
+                <h3>You Are Ready To:</h3>
                 <ul>
-                  <li>Show a concrete action you have taken in the past 30 days.</li>
-                  <li>Name a specific recruiting bottleneck or decision.</li>
-                  <li>Act on direct, individualized feedback.</li>
-                  <li>Meet the cohort commitment and test the resources consistently.</li>
+                  <li>Share a concrete action from the past 30 days</li>
+                  <li>Name a specific recruiting bottleneck or decision</li>
+                  <li>Act on direct, individualized feedback</li>
+                  <li>Meet the commitment and test the resources consistently</li>
                 </ul>
               </article>
             </div>
@@ -249,61 +260,67 @@ export function LandingPage() {
           <div className="landing-shell">
             <SectionHeading
               eyebrow="What’s Included"
-              title="Start Intensively. Apply It All Semester."
-              body="One cohort, with high-touch support first and a lighter practice-and-feedback cadence afterward."
+              title="One Cohort. Two Phases."
+              body="Build the strategy during a four-week intensive, then apply and adjust it through December 15."
               id="program-title"
             />
-            <div className="journey">
-              <div className="journey-heading">
-                  <p className="eyebrow">Phase 1 · The Four-Week Intensive</p>
-                  <h3>Four Weeks. One Connected Strategy.</h3>
-                  <p className="journey-summary">
-                  September 14–October 11 · Approximately one to two hours per week,
-                  plus two scheduled one-hour individual sessions.
+            <div className="phase-board">
+              <article className="phase-column phase-intensive">
+                <header className="phase-header">
+                  <span>Phase 1</span>
+                  <time>September 14–October 11</time>
+                  <h3>Build the Strategy</h3>
+                </header>
+                <ul className="phase-list">
+                  <li>Four 75-Minute Live Workshops and Q&amp;As</li>
+                  <li>One-Hour Resume Review</li>
+                  <li>One Offline Resume Re-Review</li>
+                  <li>One-Hour Strategy Session</li>
+                  <li>Personalized 60-Day Plan</li>
+                </ul>
+                <p className="phase-commitment">
+                  <strong>Commitment</strong>
+                  Approximately one to two hours per week, plus two scheduled one-hour individual sessions. Attend at least three of four virtual workshops; final times will reflect accepted participants&apos; availability.
                 </p>
-              </div>
-              <ul className="intensive-deliverables" aria-label="Intensive mentorship deliverables">
-                <li>Four 75-Minute Live Workshops and Q&amp;As</li>
-                <li>One-Hour Resume Review</li>
-                <li>One Offline Resume Re-Review</li>
-                <li>One-Hour Strategy Session</li>
-                <li>Personalized 60-Day Plan</li>
-              </ul>
-              <ol>
-                {journey.map(([week, title, body]) => (
-                  <li key={week}>
-                    <span>{week}</span>
-                    <h4>{title}</h4>
-                    <p>{body}</p>
-                  </li>
-                ))}
-              </ol>
-              <small>Attend at least three of four virtual workshops. Final times will be selected around accepted participants&apos; availability; weekly workshops end October 11.</small>
+              </article>
+
+              <article className="phase-column phase-apply">
+                <header className="phase-header">
+                  <span>Phase 2</span>
+                  <time>October 12–December 15</time>
+                  <h3>Apply and Adjust</h3>
+                </header>
+                <ul className="phase-list">
+                  <li>October Progress and ApplyFirst Check-In</li>
+                  <li>November Recruiting and Conference Check-In</li>
+                  <li>December 15 Semester Closeout</li>
+                  <li>Short ApplyFirst Feedback About Every Two Weeks</li>
+                  <li>Continued Cohort-Resource Access</li>
+                </ul>
+                <p className="phase-commitment">
+                  <strong>Commitment</strong>
+                  One monthly group check-in and a short feedback prompt approximately every two weeks. Conference feedback is timed around relevant event dates.
+                </p>
+              </article>
             </div>
 
-            <div className="semester-continuation" aria-labelledby="continuation-title">
-              <div className="continuation-heading">
-                <p className="eyebrow">Phase 2 · October 12–December 15</p>
-                <h3 id="continuation-title">Use the Strategy Through the Fall Semester.</h3>
-                <p>
-                  The cadence becomes lighter so participants have time to use ApplyFirst,
-                  the conference playbook, and their 60-day plans in real situations.
-                </p>
+            <div className="workshop-focus" aria-label="Four-week workshop focus">
+              <div className="workshop-focus-heading">
+                <span>Four-Week Focus</span>
+                <strong>One Connected Strategy</strong>
               </div>
               <ol>
-                {semesterMilestones.map(([month, title, body]) => (
-                  <li key={month}>
-                    <span>{month}</span>
-                    <h4>{title}</h4>
-                    <p>{body}</p>
+                {workshopThemes.map(([week, title]) => (
+                  <li key={week}>
+                    <span>{week}</span>
+                    <strong>{title}</strong>
                   </li>
                 ))}
               </ol>
-              <div className="continuation-cadence">
-                <p><strong>Between Check-Ins</strong> Complete a short ApplyFirst feedback prompt approximately every two weeks. Conference feedback is requested around each participant&apos;s actual event dates when relevant.</p>
-                <p><strong>After the Intensive</strong> Weekly workshops and guaranteed individual sessions end October 11. Continued support does not include unlimited Slack or DM access, extra one-to-one sessions, or repeated resume-review cycles.</p>
-              </div>
             </div>
+            <p className="support-boundary">
+              <strong>Support Boundary:</strong> Weekly workshops and guaranteed individual sessions end October 11. The lighter phase does not include unlimited Slack or DM access, extra one-to-one sessions, or repeated resume-review cycles.
+            </p>
           </div>
         </section>
 
