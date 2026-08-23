@@ -364,13 +364,12 @@ export function LandingPage() {
         </section>
 
         <section className="landing-section timeline-section" id="timeline" aria-labelledby="timeline-title">
-          <div className="landing-shell">
-            <SectionHeading eyebrow="Important Dates" title="Key Dates for the Founding Cohort." id="timeline-title" index="04" />
+          <div className="landing-shell application-timeline-layout">
+            <SectionHeading eyebrow="Application Timeline" title="Three Dates to Know." id="timeline-title" index="04" />
             <ol className="date-timeline">
               <li><span>01</span><div><strong>Applications</strong><time>{program.applicationDates}</time></div></li>
-              <li><span>02</span><div><strong>Decisions</strong><time>{program.decisionDates}</time><small>Onboarding due {program.onboardingDueDate}</small></div></li>
-              <li><span>03</span><div><strong>High-Touch Intensive</strong><time>{program.intensiveDates}</time></div></li>
-              <li><span>04</span><div><strong>Lighter Cohort Phase</strong><time>{program.continuationDates}</time></div></li>
+              <li><span>02</span><div><strong>Decisions</strong><time>{program.decisionDates}</time></div></li>
+              <li><span>03</span><div><strong>Onboarding Due</strong><time>{program.onboardingDueDate}</time></div></li>
             </ol>
           </div>
         </section>
