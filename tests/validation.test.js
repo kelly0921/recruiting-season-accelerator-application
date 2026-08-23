@@ -141,7 +141,7 @@ test('application records preserve concise stage-one selection fields', () => {
   assert.equal(record.conferenceInterest, 'Deciding which conference to pursue');
   assert.equal(record.betaInterest, 'Yes — consider me for an ApplyFirst beta-only spot');
   assert.equal(record.adultConfirmed, 1);
-  assert.equal(record.termsVersion, '2026-fall-founding-cohort-v3');
+  assert.equal(record.termsVersion, '2026-fall-founding-cohort-v4');
   assert.equal(record.acknowledgementsAcceptedAt, record.submittedAt);
 });
 
@@ -309,6 +309,9 @@ test('the Cloudflare microsite contains details, both forms, and policy navigati
   assert.match(landing, /Build a Smarter/);
   assert.match(landing, /Live Workshops and Q&As/);
   assert.match(landing, /Individual Strategy Session/);
+  assert.match(landing, /September 14–December 15/);
+  assert.match(landing, /one monthly group check-in/);
+  assert.match(landing, /unlimited Slack or DM access/);
   assert.match(landing, /Extended Beta-Only Group/);
   assert.match(landing, /Free Fall 2026 Founding Cohort/);
   assert.match(landing, /Participant Terms/);

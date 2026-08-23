@@ -1,4 +1,4 @@
-export const participantTermsVersion = '2026-fall-founding-cohort-v3';
+export const participantTermsVersion = '2026-fall-founding-cohort-v4';
 
 export const academicStageOptions = [
   'Freshman',

@@ -14,8 +14,8 @@ const included = [
   ['1', 'Live Resume Review', 'One 60-minute session to identify the strongest evidence and highest-impact changes in your current resume.'],
   ['1', 'Individual Strategy Session', 'One 60-minute mentorship session focused on your primary bottleneck, priorities, and next steps.'],
   ['1', 'Offline Resume Re-Review', 'One bounded follow-up review after you implement the initial feedback—not an unlimited revision cycle.'],
-  ['Early', 'ApplyFirst and Playbook Access', 'Use ApplyFirst to find and track opportunities, plus a conference playbook for events, funding, preparation, and follow-up.'],
-  ['60', 'Days of Direction', 'Leave with a personalized 60-day plan, then reconnect for an October progress check and November closing session.'],
+  ['Fall', 'ApplyFirst and Playbook Access', 'Continue using ApplyFirst, the conference playbook, and cohort resources through December 15.'],
+  ['60', 'Days of Direction', 'Build a personalized 60-day plan during the intensive, then refine it during the fall check-ins.'],
 ];
 
 const journey = [
@@ -23,6 +23,12 @@ const journey = [
   ['Week 2 · Sep 21–27', 'Early-Career Positioning', 'Strengthen how projects, coursework, leadership, and work experience support the opportunities you are pursuing.'],
   ['Week 3 · Sep 28–Oct 4', 'Conferences and Networking', 'Connect conferences, career fairs, company events, and professional relationships to a broader fall strategy.'],
   ['Week 4 · Oct 5–11', 'Recruiting Execution', 'Prioritize next steps and build a personalized 60-day plan for continuing after the intensive.'],
+];
+
+const semesterMilestones = [
+  ['October', 'Progress and ApplyFirst Check-In', 'Review early progress, ApplyFirst usage, and the first adjustments to your 60-day plan.'],
+  ['November', 'Recruiting and Conference Check-In', 'Discuss recruiting patterns, conference experiences, and the next decisions that need context.'],
+  ['December 15', 'Semester Closeout', 'Capture what worked, what changed, and the strategy you will carry into the next recruiting cycle.'],
 ];
 
 const outcomes = [
@@ -46,9 +52,9 @@ export const faqs = [
       'No. The program focuses on recruiting strategy, positioning, target selection, organization, storytelling, networking, behavioral preparation, and diagnosing low response or conversion patterns.',
   },
   {
-    question: 'What Is the Weekly Time Commitment and Workshop Schedule?',
+    question: 'What Is the Fall-Semester Commitment and Workshop Schedule?',
     answer:
-      'The intensive runs September 14–October 11. Founding mentees attend four 75-minute virtual group sessions and complete approximately one to two hours of program work each week, plus one 60-minute resume review and one 60-minute strategy session during the intensive. Participants should attend at least three workshops. Final live times will be selected based on accepted participants’ availability. Kelly will also hold two scheduled asynchronous support windows per week, and participants continue lightweight ApplyFirst feedback through November 30.',
+      'The fall-semester cohort runs September 14–December 15. From September 14–October 11, the four-week intensive requires approximately one to two hours per week, plus one 60-minute resume review and one 60-minute strategy session. Participants should attend at least three of four virtual workshops; final live times will be selected based on accepted participants’ availability. From October 12–December 15, participants attend one monthly group check-in and complete a short ApplyFirst feedback prompt approximately every two weeks, with conference feedback requested around actual event dates when relevant. Weekly workshops and guaranteed individual sessions end after the intensive.',
   },
   {
     question: 'Do I Need to Be Attending a Conference?',
@@ -58,7 +64,7 @@ export const faqs = [
   {
     question: 'What Is the Difference Between the Mentorship Cohort and the Extended Beta?',
     answer:
-      `Eight founding mentees receive four workshops, a live resume review, one offline resume re-review, a strategy session, ApplyFirst and conference-playbook access, a personalized 60-day plan, and October and November follow-ups. Up to ${program.betaCapacity} beta-only participants from any college year receive early ApplyFirst access, conference-playbook access when relevant, and short feedback check-ins through November. Beta-only spots do not guarantee workshops, resume review, or one-to-one mentorship.`,
+      `Eight founding mentees receive four workshops, a live resume review, one offline resume re-review, a strategy session, ApplyFirst and conference-playbook access, a personalized 60-day plan, monthly October–December check-ins, and continued cohort-resource access through December 15. Up to ${program.betaCapacity} beta-only participants from any college year receive early ApplyFirst access, conference-playbook access when relevant, and short feedback prompts through December 15. Beta-only spots do not guarantee workshops, monthly mentorship check-ins, resume review, or one-to-one mentorship.`,
   },
   {
     question: 'What Happens After I Apply?',
@@ -68,7 +74,7 @@ export const faqs = [
   {
     question: 'Why Is the Founding Cohort Free?',
     answer:
-      'This is a free founding pilot. Kelly provides structured mentorship, personalized feedback, and early product access; participants commit time, use the tools in real situations, and provide candid feedback through November 30. Positive feedback and public testimonials are never required.',
+      'This is a free founding pilot. Kelly provides structured mentorship, personalized feedback, and early product access; participants commit time, use the tools in real situations, and provide candid feedback through December 15. Positive feedback and public testimonials are never required.',
   },
   {
     question: 'Does Applying or Participating Guarantee an Opportunity?',
@@ -192,14 +198,15 @@ export function LandingPage() {
               <p className="hero-receive-copy">
                 Eight selected students will receive four live workshops and Q&amp;As, a
                 one-hour resume review, a one-hour strategy session, early access to
-                ApplyFirst, the conference playbook, and a personalized 60-day plan.
+                ApplyFirst, the conference playbook, and a personalized 60-day plan—then
+                continue with lighter check-ins and resource access through December 15.
               </p>
               <div className="hero-actions">
                 <ApplicationButton />
                 <a className="text-link" href="#program">See What&apos;s Included</a>
               </div>
               <p className="hero-microcopy">
-                Ages 18+ · All college years · Free founding pilot · Applications close August 31 at 11:59 PM ET
+                Fall-semester cohort: September 14–December 15 · Ages 18+ · All college years · Free · Applications close August 31 at 11:59 PM ET
               </p>
             </div>
 
@@ -226,13 +233,13 @@ export function LandingPage() {
           <div className="landing-shell snapshot-layout">
             <div>
               <p className="eyebrow">Program at a Glance</p>
-              <h2 id="snapshot-title">Small Cohort. A Full Fall Strategy.</h2>
-              <p>High-touch mentorship during the four-week intensive, with lightweight product research continuing through November.</p>
+              <h2 id="snapshot-title">One Fall-Semester Cohort. Two Phases.</h2>
+              <p>The cohort runs September 14–December 15: a four-week intensive followed by lighter monthly check-ins and continued ApplyFirst and conference-playbook testing.</p>
             </div>
             <dl className="snapshot-grid">
-              <div><dt>4</dt><dd>Live Workshops</dd><small>75-minute working sessions and Q&As</small></div>
-              <div><dt>2</dt><dd>Individual Sessions</dd><small>One resume review and one strategy session</small></div>
-              <div><dt>{program.capacity}</dt><dd>Founding Mentees</dd><small>Plus up to {program.betaCapacity} extended beta testers</small></div>
+              <div><dt>Sep–Dec</dt><dd>Fall-Semester Cohort</dd><small>September 14 through December 15</small></div>
+              <div><dt>4</dt><dd>High-Touch Weeks</dd><small>Workshops, two individual sessions, and a 60-day plan</small></div>
+              <div><dt>3</dt><dd>Monthly Check-Ins</dd><small>October progress, November recruiting, and December closeout</small></div>
               <div><dt>Free</dt><dd>Founding Pilot</dd><small>Real participation and candid feedback required</small></div>
             </dl>
           </div>
@@ -263,7 +270,7 @@ export function LandingPage() {
                   <li>You are a current college student in any class year and will be at least 18 when the program begins.</li>
                   <li>You are pursuing software engineering or a closely related technology path.</li>
                   <li>You have a basic resume; previous internship experience is not required.</li>
-                  <li>You are willing to act on feedback, test the resources, and provide candid product feedback through November.</li>
+                  <li>You are willing to act on feedback, test the resources, and provide candid product feedback through December 15.</li>
                 </ul>
               </article>
               <article>
@@ -292,8 +299,8 @@ export function LandingPage() {
           <div className="landing-shell">
             <SectionHeading
               eyebrow="What’s Included"
-              title="Everything Works Together."
-              body="Opportunity discovery, positioning, access, and execution work as one system—with personal guidance where context matters most."
+              title="Start Intensively. Apply It All Semester."
+              body="The cohort runs September 14–December 15. High-touch support is concentrated in the first four weeks, followed by a lighter cadence while you use the strategy in real recruiting situations."
               id="program-title"
             />
             <div className="included-grid">
@@ -308,7 +315,7 @@ export function LandingPage() {
 
             <div className="journey">
               <div className="journey-heading">
-                  <p className="eyebrow">The Four-Week Intensive</p>
+                  <p className="eyebrow">Phase 1 · The Four-Week Intensive</p>
                   <h3>Four Weeks. One Connected Strategy.</h3>
                   <p className="journey-summary">
                   The detailed exercises and hot seats will adapt after Kelly reviews the
@@ -324,7 +331,31 @@ export function LandingPage() {
                   </li>
                 ))}
               </ol>
-              <small>Workshop themes may adapt to participant goals, progress, and common cohort needs.</small>
+              <small>Workshop themes may adapt to participant goals, progress, and common cohort needs. Weekly workshops end October 11.</small>
+            </div>
+
+            <div className="semester-continuation" aria-labelledby="continuation-title">
+              <div className="continuation-heading">
+                <p className="eyebrow">Phase 2 · October 12–December 15</p>
+                <h3 id="continuation-title">Use the Strategy Through the Fall Semester.</h3>
+                <p>
+                  The cadence becomes lighter so participants have time to use ApplyFirst,
+                  the conference playbook, and their 60-day plans in real situations.
+                </p>
+              </div>
+              <ol>
+                {semesterMilestones.map(([month, title, body]) => (
+                  <li key={month}>
+                    <span>{month}</span>
+                    <h4>{title}</h4>
+                    <p>{body}</p>
+                  </li>
+                ))}
+              </ol>
+              <div className="continuation-cadence">
+                <p><strong>Between Check-Ins</strong> Complete a short ApplyFirst feedback prompt approximately every two weeks. Conference feedback is requested around each participant&apos;s actual event dates when relevant.</p>
+                <p><strong>After the Intensive</strong> Weekly workshops and guaranteed individual sessions end October 11. Continued support does not include unlimited Slack or DM access, extra one-to-one sessions, or repeated resume-review cycles.</p>
+              </div>
             </div>
           </div>
         </section>
@@ -408,7 +439,10 @@ export function LandingPage() {
                   <li>One-hour individual strategy session</li>
                   <li>ApplyFirst and conference playbook access</li>
                   <li>Personalized 60-day plan</li>
-                  <li>October and November follow-ups</li>
+                  <li>October, November, and December group check-ins</li>
+                  <li>Short ApplyFirst feedback approximately every two weeks</li>
+                  <li>Conference feedback around actual event dates when relevant</li>
+                  <li>Continued cohort-resource access through December 15</li>
                 </ul>
               </section>
               <section className="track-option beta-track">
@@ -416,8 +450,8 @@ export function LandingPage() {
                 <ul>
                   <li>Early ApplyFirst access</li>
                   <li>Conference playbook access when relevant</li>
-                  <li>Short feedback check-ins through November</li>
-                  <li>No guaranteed workshops, resume review, or one-to-one mentorship</li>
+                  <li>Short ApplyFirst feedback prompts through December 15</li>
+                  <li>No guaranteed workshops, monthly mentorship check-ins, resume review, or one-to-one mentorship</li>
                 </ul>
               </section>
               <ApplicationButton label="Review the Application" />
@@ -430,9 +464,9 @@ export function LandingPage() {
             <SectionHeading eyebrow="Important Dates" title="Key Dates for the Founding Cohort." id="timeline-title" />
             <ol className="date-timeline">
               <li><span>01</span><div><strong>Applications</strong><time>{program.applicationDates}</time></div></li>
-              <li><span>02</span><div><strong>Decisions</strong><time>{program.decisionDates}</time></div></li>
-              <li><span>03</span><div><strong>Four-Week Intensive</strong><time>{program.intensiveDates}</time></div></li>
-              <li><span>04</span><div><strong>Fall Research Ends</strong><time>{program.researchEndDate}</time></div></li>
+              <li><span>02</span><div><strong>Decisions</strong><time>{program.decisionDates}</time><small>Onboarding due {program.onboardingDueDate}</small></div></li>
+              <li><span>03</span><div><strong>High-Touch Intensive</strong><time>{program.intensiveDates}</time></div></li>
+              <li><span>04</span><div><strong>Lighter Cohort Phase</strong><time>{program.continuationDates}</time></div></li>
             </ol>
           </div>
         </section>
@@ -476,9 +510,10 @@ const policyContent = {
       ['Program and Operator', `Recruiting Season Accelerator is a Fall 2026 educational, mentorship, and product-research pilot operated by Kelly Chen. Questions may be sent to ${program.contactEmail}.`],
       ['Eligibility', 'Current college students from every class year may apply and must be at least 18 when the program begins. The mentorship cohort will lean toward freshmen and sophomores, while beta-only testers may come from any college year. A basic resume is required for mentorship applicants.'],
       ['Enrollment and Cost', 'The Fall 2026 founding mentorship cohort and extended beta are free. Applying does not guarantee acceptance, and participation requires completing the applicable onboarding and participation expectations.'],
-      ['Included Mentorship Support', 'Founding mentees receive four 75-minute group workshops, one 60-minute resume-review session, one 60-minute strategy session, one bounded offline resume re-review, early ApplyFirst and conference-playbook access, a personalized 60-day plan, two scheduled asynchronous support windows per week during the intensive, and scheduled October and November group check-ins. Session examples and exercises may adapt to cohort needs without materially reducing this support.'],
-      ['Extended Beta Support', 'Extended beta participants receive early ApplyFirst and conference-playbook access, onboarding guidance, and product-feedback prompts through November. They do not receive guaranteed resume reviews, individual mentorship, weekly workshops, referrals, or unlimited support.'],
-      ['Feedback and Conduct', 'Participants agree to use the applicable pilot resources, provide candid feedback through November 30, respect other participants, and protect information shared in the group. Feedback may be positive, neutral, or critical; a testimonial is not required.'],
+      ['Included Mentorship Support', 'The fall-semester cohort runs September 14–December 15. The September 14–October 11 intensive includes four 75-minute group workshops, one 60-minute resume-review session, one 60-minute strategy session, one bounded offline resume re-review, early ApplyFirst and conference-playbook access, and a personalized 60-day plan. From October 12–December 15, founding mentees receive one monthly group check-in, continued cohort-resource access, short ApplyFirst feedback prompts approximately every two weeks, and conference feedback requests around actual event dates when relevant.'],
+      ['Support Boundaries', 'Weekly workshops and guaranteed individual sessions end October 11. The lighter cohort phase does not include guaranteed additional one-to-one sessions, unlimited Slack or direct-message support, unlimited coaching, or repeated resume-review cycles. Workshop examples and exercises may adapt to cohort needs without materially reducing the promised intensive support.'],
+      ['Extended Beta Support', 'Extended beta participants receive early ApplyFirst and conference-playbook access, onboarding guidance, and product-feedback prompts through December 15. They do not receive guaranteed resume reviews, individual mentorship, monthly mentorship check-ins, weekly workshops, referrals, or unlimited support.'],
+      ['Feedback and Conduct', 'Participants agree to use the applicable pilot resources, provide candid feedback through December 15, respect other participants, and protect information shared in the group. Feedback may be positive, neutral, or critical; a testimonial is not required.'],
       ['Participant Responsibility', 'Participants remain responsible for their applications, materials, decisions, attendance, and recruiting outcomes. Materials must be accurate and must not misrepresent experience.'],
       ['No Outcome Guarantee', 'Participation does not guarantee conference acceptance or funding, a referral, interview, internship, job offer, compensation level, or other employment outcome.'],
       ['Independent Program', 'The program is not affiliated with, sponsored by, or endorsed by Bloomberg or any current or former employer. All guidance is Kelly’s own.'],
@@ -502,7 +537,7 @@ const policyContent = {
     updated: 'Draft for the 2026 Founding Cohort',
     sections: [
       ['Founding-Pilot Cost', 'The Fall 2026 founding mentorship cohort and extended beta are free. No payment or payment information is required to apply or participate.'],
-      ['The Exchange', 'Kelly provides early access, structured mentorship, and personalized feedback according to each participation level. Participants commit time, use the resources in real situations, and provide candid feedback through November 30.'],
+      ['The Exchange', 'Kelly provides early access, structured mentorship, and personalized feedback according to each participation level. Participants commit time, use the resources in real situations, and provide candid feedback through December 15.'],
       ['No Positive-Feedback Requirement', 'Feedback may be positive, neutral, or critical. Participation never requires a public testimonial, endorsement, or permission to use a participant’s identity.'],
       ['Missed Participation', 'Repeatedly missing required sessions, onboarding, weekly actions, or feedback may result in removal from the pilot so limited capacity can be used responsibly.'],
       ['Program Changes', 'ApplyFirst, the conference playbook, workshop examples, and research prompts may change during the founding period. Kelly will communicate material changes and will not use the pilot to promise referrals, funding, interviews, or employment outcomes.'],

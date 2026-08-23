@@ -104,8 +104,10 @@ For the complete production setup and pre-LinkedIn verification sequence, follow
 - Applications close August 31 at 11:59 PM ET
 - Decisions are planned for September 3
 - Asynchronous onboarding runs September 3–14
-- The four-week mentorship intensive runs September 14–October 11
-- Lightweight ApplyFirst and conference-playbook research continues through November 30
+- The fall-semester mentorship cohort runs September 14–December 15
+- The high-touch four-week intensive runs September 14–October 11
+- Monthly check-ins, continued resource access, and lightweight ApplyFirst and
+  conference-playbook feedback continue October 12–December 15
 - The Fall 2026 founding mentorship cohort and extended beta are free
 
 ## Two-stage application model
@@ -119,8 +121,9 @@ It collects:
 - One fall goal, up to two current obstacles, one recent action, and one question for Kelly
 - Current conference stage without detailed conference information
 - A required PDF resume
-- Separate confirmations for workshops, individual sessions, weekly work, ApplyFirst
-  feedback, program limitations, and the participant terms
+- Separate confirmations for workshops, intensive-phase work, individual sessions,
+  the October–December check-in and feedback cadence, program limitations, and the
+  participant terms
 - A required preference for beta-only consideration
 
 Detailed availability, ApplyFirst baselines, accommodations, conference logistics,

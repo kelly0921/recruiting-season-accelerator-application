@@ -12,8 +12,9 @@ The website currently communicates:
 - Applications close August 31 at 11:59 PM ET
 - Decisions are planned for September 3
 - Asynchronous onboarding runs September 3–14
-- The four-week intensive runs September 14–October 11
-- Product research and check-ins continue through November 30
+- The fall-semester cohort runs September 14–December 15
+- The high-touch four-week intensive runs September 14–October 11
+- Monthly check-ins and lightweight product feedback continue October 12–December 15
 - Eight students may join the founding mentorship cohort, with two alternates
 - Up to seven additional students may join the extended beta
 - Both participation levels are free

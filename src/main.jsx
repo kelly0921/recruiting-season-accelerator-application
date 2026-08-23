@@ -275,7 +275,7 @@ function ApplicationPage() {
           <dl className="program-facts">
             <div><dt>Time</dt><dd>About 7–10 minutes</dd></div>
             <div><dt>Deadline</dt><dd>August 31 · 11:59 PM ET</dd></div>
-            <div><dt>Program</dt><dd>September 14–October 11</dd></div>
+            <div><dt>Cohort</dt><dd>September 14–December 15</dd></div>
             <div><dt>Price</dt><dd>Free founding pilot</dd></div>
           </dl>
 
@@ -406,9 +406,9 @@ function ApplicationPage() {
                 <legend>Participation Expectations</legend>
                 {[
                   ['groupSessionCommitment', 'I can attend at least three of four virtual group sessions. Final times will be selected based on accepted participants’ availability.'],
-                  ['individualSessionCommitment', 'I can schedule one 60-minute resume review and one 60-minute strategy session.'],
-                  ['weeklyWorkCommitment', 'I can complete approximately one to two hours of total program work each week during the four-week intensive.'],
-                  ['applyFirstCommitment', 'I will use ApplyFirst and provide short feedback through November 30.'],
+                  ['individualSessionCommitment', 'During the intensive, I can schedule one 60-minute resume review and one 60-minute strategy session.'],
+                  ['weeklyWorkCommitment', 'From September 14–October 11, I can commit approximately one to two hours per week to the four-week intensive.'],
+                  ['applyFirstCommitment', 'From October 12–December 15, I can attend one monthly group check-in, complete a short ApplyFirst feedback prompt approximately every two weeks, and provide conference feedback around my event dates when relevant.'],
                   ['programAcknowledgement', 'I understand that applying does not guarantee acceptance and the program does not guarantee referrals, interviews, internships, conference acceptance, funding, or jobs.'],
                 ].map(([name, label]) => (
                   <label className="confirmation" key={name}>

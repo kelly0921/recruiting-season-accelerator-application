@@ -30,7 +30,7 @@ Create a shorter form for up to seven additional ApplyFirst testers. Collect onl
 - Current opportunity-discovery and tracking habits
 - ApplyFirst baseline and account information
 - Conference status and playbook-testing availability when relevant
-- Commitment to short feedback check-ins through November 30
+- Commitment to short feedback prompts through December 15
 - Separate privacy and optional permission preferences
 
 Do not request a resume, individual-session questions, detailed workshop preferences,
