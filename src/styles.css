@@ -6401,3 +6401,35 @@ textarea {
     font-size: clamp(1.85rem, 9vw, 2.55rem);
   }
 }
+
+/* Final heading and phase-panel refinements. */
+@media (min-width: 821px) {
+  .program-hero-copy h1 em {
+    white-space: nowrap;
+  }
+
+  .timeline-section .landing-section-heading {
+    max-width: none;
+  }
+
+  .timeline-section .landing-section-heading h2 {
+    max-width: none;
+    white-space: nowrap;
+  }
+}
+
+.phase-board {
+  background: transparent;
+  box-shadow: none;
+  filter: none;
+}
+
+.phase-column,
+.phase-column::before {
+  box-shadow: none;
+  filter: none;
+}
+
+.phase-column::after {
+  display: none;
+}
