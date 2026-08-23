@@ -1,14 +1,14 @@
 # Cloudflare and LinkedIn Launch Checklist
 
 Use this checklist before announcing Recruiting Season Accelerator publicly.
-The form code is complete, but submissions will not be accepted or stored until
-the Cloudflare bindings and Turnstile variables below are configured.
+The production form, Cloudflare bindings, Turnstile variables, and storage are
+configured. Use the checks below to verify them before the public announcement.
 
 ## 1. Confirm the Public Timeline
 
 The website currently communicates:
 
-- Applications open Tuesday, August 25, 2026
+- Applications opened August 23, 2026
 - Applications close September 1 at 11:59 PM ET
 - Decisions are planned for September 3
 - Asynchronous onboarding runs September 3–14
@@ -186,7 +186,7 @@ Immediately before posting:
 
 - Open the landing page, `/apply`, `/faq`, and all policy pages.
 - Submit the controlled test described above.
-- Confirm the August 25–September 1 application window, September 3 decision date,
+- Confirm the August 23–September 1 application window, September 3 decision date,
   September 14 start, eight mentorship spots, extended beta, and free pilot are consistent.
 - Confirm Kelly's portfolio links to the Cloudflare landing page—not the retired
   `chatgpt.site` version.

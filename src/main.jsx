@@ -309,7 +309,7 @@ function ApplicationPage() {
 
           {state === 'opening-soon' ? (
             <div className="opening-note" role="status">
-              <strong>Applications Open August 25.</strong>
+              <strong>Applications Open August 23.</strong>
               You can browse all three steps without entering information. Required-field
               checks and submission will activate when the application window opens.
             </div>
@@ -466,7 +466,7 @@ function ApplicationPage() {
                   {status === 'submitting'
                     ? 'Submitting…'
                     : state === 'opening-soon'
-                      ? 'Opens August 25'
+                      ? 'Opens August 23'
                       : 'Submit Application'}
                 </button>
               )}

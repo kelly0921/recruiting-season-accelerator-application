@@ -100,7 +100,7 @@ For the complete production setup and pre-LinkedIn verification sequence, follow
 
 ## Founding-cohort timeline
 
-- Applications open August 25, 2026
+- Applications opened August 23, 2026
 - Applications close September 1 at 11:59 PM ET
 - Decisions are planned for September 3
 - Asynchronous onboarding runs September 3–14

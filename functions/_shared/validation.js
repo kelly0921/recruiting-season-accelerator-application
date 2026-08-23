@@ -9,7 +9,7 @@ import {
   rolePathOptions,
 } from '../../shared/applicationOptions.js';
 
-export const applicationOpenAt = '2026-08-25T00:00:00-04:00';
+export const applicationOpenAt = '2026-08-23T00:00:00-04:00';
 export const applicationCloseAt = '2026-09-01T23:59:59-04:00';
 export const maxResumeBytes = 5 * 1024 * 1024;
 

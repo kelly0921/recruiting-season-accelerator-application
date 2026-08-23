@@ -73,8 +73,8 @@ function validFutureInterest() {
 }
 
 test('application dates enforce the Fall 2026 ET window', () => {
-  assert.equal(getApplicationState(new Date('2026-08-24T23:59:59-04:00')), 'opening-soon');
-  assert.equal(getApplicationState(new Date('2026-08-25T00:00:00-04:00')), 'open');
+  assert.equal(getApplicationState(new Date('2026-08-22T23:59:59-04:00')), 'opening-soon');
+  assert.equal(getApplicationState(new Date('2026-08-23T00:00:00-04:00')), 'open');
   assert.equal(getApplicationState(new Date('2026-09-01T23:59:59-04:00')), 'open');
   assert.equal(getApplicationState(new Date('2026-09-02T00:00:00-04:00')), 'closed');
 });
