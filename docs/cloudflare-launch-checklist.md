@@ -35,6 +35,7 @@ In the Cloudflare dashboard:
    - `migrations/0004_refine_application_fit_and_acknowledgements.sql`
    - `migrations/0005_add_conference_interest.sql`
    - `migrations/0006_add_beta_interest.sql`
+   - `migrations/0007_create_stage_one_application_fields.sql`
 5. Open **Workers & Pages → recruiting-accelerator-apply → Settings → Bindings**.
 6. Add a **D1 database binding**:
    - Variable name: `APPLICATIONS_DB`
@@ -44,10 +45,11 @@ In the Cloudflare dashboard:
 The D1 database stores the application answers and future-cohort interest-list
 records. It does not store the resume file itself.
 
-If the database was already configured with migrations `0001` through `0005`,
-run only `0006_add_beta_interest.sql` for the revised form. Run it once
-before deploying the updated code. The existing D1 binding, R2 bucket, and
-Turnstile keys do not need to be replaced.
+The production database bound to the current Pages site was updated through
+`0007_create_stage_one_application_fields.sql` and verified on August 23, 2026.
+Do not rerun that migration there. Run it once only when updating another database
+that already has migrations `0001` through `0006`. The existing D1 binding, R2
+bucket, and Turnstile keys do not need to be replaced.
 
 ## 3. Create Private Resume Storage
 
@@ -109,14 +111,14 @@ SELECT
   status,
   full_name,
   email,
-  applications_submitted,
-  first_interviews,
-  final_rounds,
-  offers_received,
-  recruiting_market,
-  target_list,
+  graduation_date,
+  academic_stage,
+  roles_exploring,
+  fall_goal,
+  obstacles,
+  recent_action,
+  kelly_question,
   conference_interest,
-  conference_details,
   beta_interest,
   adult_confirmed,
   acknowledgements_accepted_at,
@@ -173,6 +175,10 @@ Do not publish these on the landing page or in the LinkedIn post:
 Send scheduling and onboarding information only after acceptance. Do not request
 payment information; the Fall 2026 founding mentorship cohort and extended beta
 are free.
+
+Create the two private post-decision forms described in
+[`post-acceptance-forms.md`](post-acceptance-forms.md) before decisions are sent.
+Do not add those detailed questions back to the public Stage 1 application.
 
 ## 9. Final LinkedIn Preflight
 

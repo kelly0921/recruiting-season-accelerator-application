@@ -9,16 +9,13 @@ import {
 } from './program.js';
 import { ProgramFooter, ProgramHeader } from './siteChrome.jsx';
 import {
+  academicStageOptions,
   betaInterestOptions,
   conferenceInterestOptions,
-  environmentOptions,
-  experienceOptions,
+  obstacleOptions,
   opportunityOptions,
   preferredTimingOptions,
-  recruitingMarketOptions,
-  referralSourceOptions,
-  supportOptions,
-  timeZoneOptions,
+  rolePathOptions,
 } from '../shared/applicationOptions.js';
 
 const programUrl = '/';
@@ -26,9 +23,7 @@ const contactEmail = program.contactEmail;
 
 const steps = [
   { id: 'about', label: 'About You' },
-  { id: 'direction', label: 'Direction' },
-  { id: 'experience', label: 'Experience' },
-  { id: 'support', label: 'Support' },
+  { id: 'goals', label: 'Goals and Fit' },
   { id: 'commitment', label: 'Commitment' },
 ];
 
@@ -137,7 +132,7 @@ function ApplicationPage() {
   const [status, setStatus] = useState('idle');
   const [message, setMessage] = useState('');
   const [turnstileToken, setTurnstileToken] = useState('');
-  const [supportCount, setSupportCount] = useState(0);
+  const [obstacleCount, setObstacleCount] = useState(0);
   const formRef = useRef(null);
   const state = useMemo(() => applicationState(), []);
   const canSubmit = state === 'open' && Boolean(import.meta.env.VITE_TURNSTILE_SITE_KEY);
@@ -154,21 +149,16 @@ function ApplicationPage() {
     }
 
     if (currentStep === 1) {
-      const opportunities = panel.querySelectorAll(
-        'input[name="opportunities"]:checked',
+      const roles = panel.querySelectorAll(
+        'input[name="rolesExploring"]:checked',
       ).length;
-      const environments = panel.querySelectorAll(
-        'input[name="companyEnvironments"]:checked',
+      const obstacles = panel.querySelectorAll(
+        'input[name="obstacles"]:checked',
       ).length;
-      if (!opportunities || !environments) {
-        setMessage('Choose at least one opportunity and one company environment.');
+      if (!roles || !obstacles) {
+        setMessage('Choose at least one role or path and one current obstacle.');
         return false;
       }
-    }
-
-    if (currentStep === 3 && supportCount === 0) {
-      setMessage('Choose at least one area where you would like support.');
-      return false;
     }
 
     setMessage('');
@@ -183,15 +173,15 @@ function ApplicationPage() {
   };
 
   const handleChoices = (event) => {
-    if (event.target.name !== 'desiredSupport') return;
+    if (event.target.name !== 'obstacles') return;
     const checked = formRef.current.querySelectorAll(
-      'input[name="desiredSupport"]:checked',
+      'input[name="obstacles"]:checked',
     );
-    if (checked.length > 3) {
+    if (checked.length > 2) {
       event.target.checked = false;
-      setMessage('Choose up to three support areas.');
+      setMessage('Choose up to two current obstacles.');
     } else {
-      setSupportCount(checked.length);
+      setObstacleCount(checked.length);
       setMessage('');
     }
   };
@@ -239,9 +229,9 @@ function ApplicationPage() {
           <p className="eyebrow">Application Received</p>
           <h1>Thank You for Applying.</h1>
           <p>
-            Kelly plans to send decisions on September 3 using the email address you
-            provided. Accepted mentees complete asynchronous onboarding before the
-            four-week intensive begins September 14.
+            Kelly plans to send mentorship, alternate, and extended-beta decisions on
+            September 3 using the email address you provided. Selected participants
+            will receive the appropriate private onboarding steps before September 14.
           </p>
           {message ? <p className="reference">{message}</p> : null}
           <a className="button" href={programUrl}>Return to Program Details</a>
@@ -278,12 +268,12 @@ function ApplicationPage() {
           <p className="eyebrow">Founding Cohort Application</p>
           <h1>Tell Us Where You Are—and Where You Want to Go.</h1>
           <p className="intro-copy">
-            Help Kelly understand your goals, where recruiting feels stuck, and whether
-            this four-week program is the right fit.
+            Share the goal you want to move forward, what is getting in the way, and
+            how you have already begun taking action.
           </p>
 
           <dl className="program-facts">
-            <div><dt>Time</dt><dd>About 10–12 minutes</dd></div>
+            <div><dt>Time</dt><dd>About 7–10 minutes</dd></div>
             <div><dt>Deadline</dt><dd>September 1 · 11:59 PM ET</dd></div>
             <div><dt>Program</dt><dd>September 14–October 11</dd></div>
             <div><dt>Price</dt><dd>Free founding pilot</dd></div>
@@ -320,7 +310,7 @@ function ApplicationPage() {
           {state === 'opening-soon' ? (
             <div className="opening-note" role="status">
               <strong>Applications Open August 25.</strong>
-              You can browse all five steps without entering information. Required-field
+              You can browse all three steps without entering information. Required-field
               checks and submission will activate when the application window opens.
             </div>
           ) : null}
@@ -333,56 +323,71 @@ function ApplicationPage() {
               </div>
               <div className="field-row">
                 <TextField label="School" name="school" autoComplete="organization" />
-                <TextField label="Major or Program" name="major" />
+                <TextField label="Academic Area or Program" name="major" />
               </div>
               <div className="field-row">
-                <TextField label="Expected Graduation Year" name="graduationYear" type="number" min="2026" max="2032" />
+                <TextField
+                  label="Expected Graduation Month and Year"
+                  name="graduationDate"
+                  type="month"
+                  min="2026-08"
+                  max="2032-12"
+                />
                 <label className="field">
-                  <span>Time Zone</span>
-                  <select name="timeZone" required defaultValue="">
-                    <option value="" disabled>Select Your Time Zone</option>
-                    {timeZoneOptions.map((option) => <option key={option}>{option}</option>)}
+                  <span>Fall 2026 Class Year and Age</span>
+                  <select name="academicStage" required defaultValue="">
+                    <option value="" disabled>Select One</option>
+                    {academicStageOptions.map((option) => <option key={option}>{option}</option>)}
                   </select>
                 </label>
               </div>
-              <TextField label="LinkedIn Profile URL" name="linkedInUrl" type="url" placeholder="https://www.linkedin.com/in/..." />
-              <TextField label="Portfolio or GitHub URL" name="portfolioUrl" type="url" required={false} />
+              <TextField
+                label="LinkedIn Profile URL"
+                name="linkedInUrl"
+                type="url"
+                placeholder="https://www.linkedin.com/in/..."
+                required={false}
+              />
               <label className="field">
                 <span>Resume <em>PDF · 5 MB maximum</em></span>
                 <input type="file" name="resume" accept=".pdf,application/pdf" required />
-              </label>
-              <label className="confirmation">
-                <input type="checkbox" name="isAdult" value="yes" required />
-                <span>I confirm that I am at least 18 years old.</span>
               </label>
             </div>
 
             <div className={currentStep === 1 ? 'step-panel active' : 'step-panel'} data-step="1">
               <CheckboxGroup
-                legend="Which opportunities are you pursuing?"
-                name="opportunities"
-                options={opportunityOptions}
+                legend="Which roles or paths are you currently exploring?"
+                name="rolesExploring"
+                options={rolePathOptions}
                 help="Choose all that apply."
+              />
+              <TextArea
+                label="What is the most important career or opportunity goal you want to make progress on this fall?"
+                name="fallGoal"
+                hint="Aim for approximately 50–100 words."
+                minLength="80"
+                maxLength="1200"
               />
               <CheckboxGroup
-                legend="Which company environments interest you?"
-                name="companyEnvironments"
-                options={environmentOptions}
-                help="Choose all that apply."
+                legend="What is currently making that goal difficult?"
+                name="obstacles"
+                options={obstacleOptions}
+                help={`Choose up to two. ${obstacleCount}/2 selected.`}
+                max="2"
               />
-              <label className="field">
-                <span>Where are you primarily recruiting?</span>
-                <select name="recruitingMarket" required defaultValue="">
-                  <option value="" disabled>Select One</option>
-                  {recruitingMarketOptions.map((option) => <option key={option}>{option}</option>)}
-                </select>
-              </label>
               <TextArea
-                label="Which roles, companies, or programs are currently at the top of your list?"
-                name="targetList"
-                hint="Optional. List up to five; a short answer is enough."
-                maxLength="500"
-                required={false}
+                label="Tell us about one concrete action you have taken toward a career goal during the past 30 days."
+                name="recentAction"
+                hint="Aim for approximately 50–100 words."
+                minLength="80"
+                maxLength="1200"
+              />
+              <TextArea
+                label="What is one question or decision you most want Kelly’s help with?"
+                name="kellyQuestion"
+                hint="Aim for approximately 50–100 words."
+                minLength="80"
+                maxLength="1200"
               />
               <label className="field">
                 <span>Which statement best describes your current conference plans?</span>
@@ -391,114 +396,17 @@ function ApplicationPage() {
                   {conferenceInterestOptions.map((option) => <option key={option}>{option}</option>)}
                 </select>
               </label>
-              <TextArea
-                label="Which conference are you considering, and approximately when?"
-                name="conferenceDetails"
-                hint="Share the conference name and approximate date if you already have one in mind."
-                maxLength="500"
-                required={false}
-              />
             </div>
 
             <div className={currentStep === 2 ? 'step-panel active' : 'step-panel'} data-step="2">
-              <label className="field">
-                <span>Which best describes your current experience?</span>
-                <select name="currentExperience" required defaultValue="">
-                  <option value="" disabled>Select One</option>
-                  {experienceOptions.map((option) => <option key={option}>{option}</option>)}
-                </select>
-              </label>
-
-              <fieldset className="field-group funnel-fieldset">
-                <legend>Recruiting Funnel Snapshot</legend>
-                <p className="field-help">
-                  Use your current or most recent recruiting cycle. Estimates are okay.
-                  Count recruiter or interview screens, not automated online assessments.
-                  Enter 0 if none.
-                </p>
-                <div className="field-row funnel-grid">
-                  <TextField
-                    label="Applications Submitted"
-                    name="applicationsSubmitted"
-                    type="number"
-                    min="0"
-                    max="5000"
-                  />
-                  <TextField
-                    label="First Interviews or Screens"
-                    name="firstInterviews"
-                    type="number"
-                    min="0"
-                    max="5000"
-                  />
-                  <TextField
-                    label="Final-Round Interviews"
-                    name="finalRounds"
-                    type="number"
-                    min="0"
-                    max="5000"
-                  />
-                  <TextField
-                    label="Offers Received"
-                    name="offersReceived"
-                    type="number"
-                    min="0"
-                    max="5000"
-                  />
-                </div>
-              </fieldset>
-
-              <TextArea
-                label="What have you tried so far, what results have you seen, and where does the process seem to break down?"
-                name="recruitingHistory"
-                hint="Specific examples are more useful than a general summary."
-                minLength="30"
-                maxLength="2000"
-              />
-              <TextArea
-                label="What is your most important three-month goal, and what would need to change during these four weeks for the program to feel worthwhile?"
-                name="threeMonthGoal"
-                minLength="30"
-                maxLength="1500"
-              />
-            </div>
-
-            <div className={currentStep === 3 ? 'step-panel active' : 'step-panel'} data-step="3">
-              <TextArea
-                label="What is the single most important area where you want Kelly’s personal feedback?"
-                name="feedbackPriority"
-                minLength="15"
-                maxLength="1200"
-              />
-              <TextArea
-                label="Describe a time you changed your approach after receiving feedback or seeing disappointing results. What did you change, and what did you learn?"
-                name="programFit"
-                minLength="30"
-                maxLength="1200"
-              />
-              <TextArea
-                label="Which days and time windows could you usually attend a weekly 75-minute Zoom workshop?"
-                name="schedulingConstraints"
-                hint="Include any dates you already know you cannot attend. The final schedule will be confirmed during selection and onboarding."
-                minLength="10"
-                maxLength="800"
-              />
-              <CheckboxGroup
-                legend="Where would you most like support?"
-                name="desiredSupport"
-                options={supportOptions}
-                help={`Choose up to three. ${supportCount}/3 selected.`}
-                max="3"
-              />
-            </div>
-
-            <div className={currentStep === 4 ? 'step-panel active' : 'step-panel'} data-step="4">
               <fieldset className="commitments">
-                <legend>Availability and Commitment</legend>
+                <legend>Participation Expectations</legend>
                 {[
-                  ['participationCommitment', 'If the final schedule fits one of the windows I provided, I can attend at least three of four workshops, schedule both one-hour individual sessions, and complete approximately one to two hours of program work each week.'],
-                  ['feedbackCommunityCommitment', 'I will use ApplyFirst, provide short feedback through November 30, participate respectfully, and contribute relevant updates or resources when I can.'],
-                  ['programAcknowledgement', 'I understand that this is a free founding pilot, applying does not guarantee acceptance, and participation does not guarantee funding, referrals, interviews, internships, conference acceptance, or offers.'],
+                  ['groupSessionCommitment', 'I can attend at least three of four live group sessions.'],
+                  ['individualSessionCommitment', 'I can schedule one 60-minute resume review and one 60-minute strategy session.'],
+                  ['weeklyWorkCommitment', 'I can complete approximately one to two hours of total program work each week during the four-week intensive.'],
+                  ['applyFirstCommitment', 'I will use ApplyFirst and provide short feedback through November 30.'],
+                  ['programAcknowledgement', 'I understand that applying does not guarantee acceptance and the program does not guarantee referrals, interviews, internships, conference acceptance, funding, or jobs.'],
                 ].map(([name, label]) => (
                   <label className="confirmation" key={name}>
                     <input type="checkbox" name={name} value="yes" required />
@@ -527,19 +435,6 @@ function ApplicationPage() {
                   <option value="" disabled>Select One</option>
                   {betaInterestOptions.map((option) => <option key={option}>{option}</option>)}
                 </select>
-              </label>
-
-              <label className="field">
-                <span>How did you hear about the program?</span>
-                <select name="referralSource" required defaultValue="">
-                  <option value="" disabled>Select One</option>
-                  {referralSourceOptions.map((option) => <option key={option}>{option}</option>)}
-                </select>
-              </label>
-
-              <label className="confirmation optional-consent">
-                <input type="checkbox" name="marketingConsent" value="yes" />
-                <span>I would like to receive future ApplyFirst resource and cohort announcements. <em>Optional</em></span>
               </label>
 
               <Turnstile onToken={setTurnstileToken} />

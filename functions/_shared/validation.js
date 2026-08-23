@@ -1,15 +1,12 @@
 import {
+  academicStageOptions,
   betaInterestOptions,
   conferenceInterestOptions,
-  environmentOptions,
-  experienceOptions,
+  obstacleOptions,
   opportunityOptions,
   participantTermsVersion,
   preferredTimingOptions,
-  recruitingMarketOptions,
-  referralSourceOptions,
-  supportOptions,
-  timeZoneOptions,
+  rolePathOptions,
 } from '../../shared/applicationOptions.js';
 
 export const applicationOpenAt = '2026-08-25T00:00:00-04:00';
@@ -23,25 +20,20 @@ const requiredTextFields = [
   'email',
   'school',
   'major',
-  'graduationYear',
-  'timeZone',
-  'linkedInUrl',
-  'recruitingMarket',
+  'graduationDate',
+  'academicStage',
+  'fallGoal',
+  'recentAction',
+  'kellyQuestion',
   'conferenceInterest',
-  'currentExperience',
-  'recruitingHistory',
-  'threeMonthGoal',
-  'feedbackPriority',
-  'programFit',
-  'schedulingConstraints',
   'betaInterest',
-  'referralSource',
 ];
 
 const requiredConfirmations = [
-  'isAdult',
-  'participationCommitment',
-  'feedbackCommunityCommitment',
+  'groupSessionCommitment',
+  'individualSessionCommitment',
+  'weeklyWorkCommitment',
+  'applyFirstCommitment',
   'programAcknowledgement',
   'termsAcknowledgement',
 ];
@@ -75,9 +67,13 @@ export function validateApplication(formData, now = new Date()) {
     return 'Enter a valid email address.';
   }
 
-  const graduationYear = Number(String(formData.get('graduationYear')).trim());
-  if (!Number.isInteger(graduationYear) || graduationYear < 2026 || graduationYear > 2032) {
-    return 'Enter an expected graduation year between 2026 and 2032.';
+  const graduationDate = String(formData.get('graduationDate')).trim();
+  if (!/^\d{4}-(0[1-9]|1[0-2])$/.test(graduationDate)) {
+    return 'Enter your expected graduation month and year.';
+  }
+  const graduationYear = Number(graduationDate.slice(0, 4));
+  if (graduationYear < 2026 || graduationYear > 2032) {
+    return 'Enter an expected graduation date between 2026 and 2032.';
   }
 
   const lengthLimits = {
@@ -85,21 +81,14 @@ export function validateApplication(formData, now = new Date()) {
     email: 254,
     school: 200,
     major: 200,
-    timeZone: 80,
+    graduationDate: 7,
+    academicStage: 80,
     linkedInUrl: 500,
-    portfolioUrl: 500,
-    targetList: 500,
-    recruitingMarket: 120,
+    fallGoal: 1200,
+    recentAction: 1200,
+    kellyQuestion: 1200,
     conferenceInterest: 120,
-    conferenceDetails: 500,
-    currentExperience: 200,
-    recruitingHistory: 2000,
-    threeMonthGoal: 1500,
-    feedbackPriority: 1200,
-    programFit: 1200,
-    schedulingConstraints: 800,
     betaInterest: 120,
-    referralSource: 120,
   };
 
   for (const [field, maxLength] of Object.entries(lengthLimits)) {
@@ -108,51 +97,27 @@ export function validateApplication(formData, now = new Date()) {
     }
   }
 
-  const minimumLengths = {
-    recruitingHistory: 30,
-    threeMonthGoal: 30,
-    feedbackPriority: 15,
-    programFit: 30,
-    schedulingConstraints: 10,
-  };
-
-  for (const [field, minLength] of Object.entries(minimumLengths)) {
-    if (String(formData.get(field) || '').trim().length < minLength) {
-      return `${field} needs a little more detail.`;
+  for (const field of ['fallGoal', 'recentAction', 'kellyQuestion']) {
+    const wordCount = String(formData.get(field) || '').trim().split(/\s+/).filter(Boolean).length;
+    if (wordCount < 20 || wordCount > 150) {
+      return `${field} should be a short paragraph. Aim for approximately 50–100 words.`;
     }
   }
 
-  for (const field of [
-    'applicationsSubmitted',
-    'firstInterviews',
-    'finalRounds',
-    'offersReceived',
-  ]) {
-    const value = String(formData.get(field) || '').trim();
-    if (!/^\d+$/.test(value) || Number(value) > 5000) {
-      return 'Enter a whole number between 0 and 5,000 for each recruiting-funnel field.';
-    }
-  }
-
-  for (const field of ['linkedInUrl', 'portfolioUrl']) {
-    const value = String(formData.get(field) || '').trim();
-    if (value) {
-      try {
-        const url = new URL(value);
-        if (url.protocol !== 'https:' && url.protocol !== 'http:') {
-          return `${field} must be a valid web address.`;
-        }
-      } catch {
-        return `${field} must be a valid web address.`;
+  const linkedInUrl = String(formData.get('linkedInUrl') || '').trim();
+  if (linkedInUrl) {
+    try {
+      const url = new URL(linkedInUrl);
+      if (url.protocol !== 'https:' && url.protocol !== 'http:') {
+        return 'linkedInUrl must be a valid web address.';
       }
+    } catch {
+      return 'linkedInUrl must be a valid web address.';
     }
   }
 
-  if (!isAllowed(formData.get('timeZone'), timeZoneOptions)) {
-    return 'Choose a valid time zone.';
-  }
-  if (!isAllowed(formData.get('recruitingMarket'), recruitingMarketOptions)) {
-    return 'Choose a valid recruiting market.';
+  if (!isAllowed(formData.get('academicStage'), academicStageOptions)) {
+    return 'Choose a valid Fall 2026 class-year and age option.';
   }
   if (!isAllowed(formData.get('conferenceInterest'), conferenceInterestOptions)) {
     return 'Choose a valid conference-interest option.';
@@ -160,40 +125,25 @@ export function validateApplication(formData, now = new Date()) {
   if (!isAllowed(formData.get('betaInterest'), betaInterestOptions)) {
     return 'Choose a valid extended-beta preference.';
   }
-  if (!isAllowed(formData.get('currentExperience'), experienceOptions)) {
-    return 'Choose a valid current-experience option.';
+  const rolesExploring = formData.getAll('rolesExploring').map(String);
+  if (!rolesExploring.length) {
+    return 'Choose at least one role or path.';
   }
-  if (!isAllowed(formData.get('referralSource'), referralSourceOptions)) {
-    return 'Choose a valid referral source.';
-  }
-
-  const opportunities = formData.getAll('opportunities').map(String);
-  if (!opportunities.length) {
-    return 'Choose at least one opportunity.';
-  }
-  if (!allAllowed(opportunities, opportunityOptions)) {
-    return 'Choose only valid opportunity options.';
+  if (!allAllowed(rolesExploring, rolePathOptions)) {
+    return 'Choose only valid role or path options.';
   }
 
-  const companyEnvironments = formData.getAll('companyEnvironments').map(String);
-  if (!companyEnvironments.length) {
-    return 'Choose at least one company environment.';
+  const obstacles = formData.getAll('obstacles').map(String);
+  if (!obstacles.length || obstacles.length > 2) {
+    return 'Choose one or two current obstacles.';
   }
-  if (!allAllowed(companyEnvironments, environmentOptions)) {
-    return 'Choose only valid company-environment options.';
-  }
-
-  const desiredSupport = formData.getAll('desiredSupport').map(String);
-  if (!desiredSupport.length || desiredSupport.length > 3) {
-    return 'Choose between one and three desired support areas.';
-  }
-  if (!allAllowed(desiredSupport, supportOptions)) {
-    return 'Choose only valid support areas.';
+  if (!allAllowed(obstacles, obstacleOptions)) {
+    return 'Choose only valid obstacle options.';
   }
 
   for (const field of requiredConfirmations) {
     if (formData.get(field) !== 'yes') {
-      return 'Complete all required availability and program confirmations.';
+      return 'Complete all required participation and program confirmations.';
     }
   }
 
@@ -223,6 +173,13 @@ export async function validateResumeSignature(resume) {
 
 export function applicationRecord(formData, id, resumeKey, now = new Date()) {
   const submittedAt = now.toISOString();
+  const graduationDate = String(formData.get('graduationDate')).trim();
+  const academicStage = String(formData.get('academicStage')).trim();
+  const rolesExploring = formData.getAll('rolesExploring');
+  const obstacles = formData.getAll('obstacles');
+  const fallGoal = String(formData.get('fallGoal')).trim();
+  const recentAction = String(formData.get('recentAction')).trim();
+  const kellyQuestion = String(formData.get('kellyQuestion')).trim();
   return {
     id,
     submittedAt,
@@ -231,36 +188,46 @@ export function applicationRecord(formData, id, resumeKey, now = new Date()) {
     email: String(formData.get('email')).trim().toLowerCase(),
     school: String(formData.get('school')).trim(),
     major: String(formData.get('major')).trim(),
-    graduationYear: String(formData.get('graduationYear')).trim(),
-    timeZone: String(formData.get('timeZone')).trim(),
-    linkedInUrl: String(formData.get('linkedInUrl')).trim(),
-    portfolioUrl: String(formData.get('portfolioUrl') || '').trim(),
+    graduationDate,
+    graduationYear: graduationDate.slice(0, 4),
+    academicStage,
+    timeZone: '',
+    linkedInUrl: String(formData.get('linkedInUrl') || '').trim(),
+    portfolioUrl: '',
     resumeKey,
     resumeOriginalName: formData.get('resume').name,
-    opportunities: formData.getAll('opportunities'),
-    companyEnvironments: formData.getAll('companyEnvironments'),
-    recruitingMarket: String(formData.get('recruitingMarket')).trim(),
-    targetList: String(formData.get('targetList') || '').trim(),
+    rolesExploring,
+    opportunities: rolesExploring,
+    companyEnvironments: [],
+    recruitingMarket: '',
+    targetList: '',
     conferenceInterest: String(formData.get('conferenceInterest')).trim(),
-    conferenceDetails: String(formData.get('conferenceDetails') || '').trim(),
-    currentExperience: String(formData.get('currentExperience')).trim(),
-    applicationsSubmitted: Number(formData.get('applicationsSubmitted')),
-    firstInterviews: Number(formData.get('firstInterviews')),
-    finalRounds: Number(formData.get('finalRounds')),
-    offersReceived: Number(formData.get('offersReceived')),
-    recruitingHistory: String(formData.get('recruitingHistory')).trim(),
-    threeMonthGoal: String(formData.get('threeMonthGoal')).trim(),
-    primaryObstacle: String(formData.get('recruitingHistory')).trim(),
-    worthwhileChange: String(formData.get('threeMonthGoal')).trim(),
-    feedbackPriority: String(formData.get('feedbackPriority')).trim(),
-    programFit: String(formData.get('programFit')).trim(),
-    schedulingConstraints: String(formData.get('schedulingConstraints') || '').trim(),
+    conferenceDetails: '',
+    fallGoal,
+    obstacles,
+    recentAction,
+    kellyQuestion,
+    currentExperience: academicStage,
+    applicationsSubmitted: 0,
+    firstInterviews: 0,
+    finalRounds: 0,
+    offersReceived: 0,
+    recruitingHistory: recentAction,
+    threeMonthGoal: fallGoal,
+    primaryObstacle: obstacles.join('; '),
+    worthwhileChange: kellyQuestion,
+    feedbackPriority: kellyQuestion,
+    programFit: recentAction,
+    schedulingConstraints: '',
     betaInterest: String(formData.get('betaInterest')).trim(),
-    desiredSupport: formData.getAll('desiredSupport'),
-    referralSource: String(formData.get('referralSource')).trim(),
-    marketingConsent: formData.get('marketingConsent') === 'yes' ? 1 : 0,
+    desiredSupport: obstacles,
+    referralSource: '',
+    marketingConsent: 0,
     communityCommitment: 1,
-    adultConfirmed: 1,
+    adultConfirmed: academicStage === 'Freshman and 18 or Older'
+      || academicStage === 'Sophomore and 18 or Older'
+      ? 1
+      : 0,
     acknowledgementsAcceptedAt: submittedAt,
     termsVersion: participantTermsVersion,
   };

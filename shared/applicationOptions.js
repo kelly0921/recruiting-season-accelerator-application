@@ -1,5 +1,38 @@
 export const participantTermsVersion = '2026-fall-founding-cohort-v2';
 
+export const academicStageOptions = [
+  'Freshman and 18 or Older',
+  'Sophomore and 18 or Older',
+  'Other Class Year',
+  'Under 18',
+];
+
+export const rolePathOptions = [
+  'Software Engineering',
+  'Data or Machine Learning',
+  'Product Management',
+  'Cybersecurity',
+  'Fintech or Financial Technology',
+  'Adjacent Technical Role',
+  'Still Exploring',
+  'Other',
+];
+
+export const obstacleOptions = [
+  'I do not know which opportunities exist',
+  'I find opportunities too late',
+  'I am unsure what to prioritize',
+  'My resume does not represent me well',
+  'I need stronger experience or projects',
+  'I struggle to stay consistent',
+  'I do not know how to network',
+  'I need conference guidance or funding',
+  'I am applying but not receiving responses',
+  'I need interview preparation',
+  'I am still deciding what path fits me',
+  'Other',
+];
+
 export const opportunityOptions = [
   'Software Engineering Internship',
   'New-Grad Software Engineering Role',

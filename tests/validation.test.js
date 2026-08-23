@@ -35,34 +35,23 @@ function validApplication() {
     email: 'applicant@example.com',
     school: 'Example University',
     major: 'Computer Science',
-    graduationYear: '2027',
-    timeZone: 'Eastern Time',
+    graduationDate: '2029-05',
+    academicStage: 'Sophomore and 18 or Older',
     linkedInUrl: 'https://linkedin.com/in/example',
-    recruitingMarket: 'Primarily U.S.-Based Roles',
-    targetList: 'Stripe SWE internship, Bloomberg SWE internship, and fintech programs.',
+    fallGoal: 'This fall, I want to build a focused opportunity pipeline for software engineering internships and early-career programs. I want to identify roles that match my current experience, improve how I prioritize deadlines, and submit thoughtful applications consistently instead of reacting to opportunities after I discover them too late.',
+    recentAction: 'During the past month, I created a spreadsheet of internship deadlines, revised two project bullets on my resume, and asked a teaching assistant for feedback. I then used that feedback to clarify the technical decisions I owned and applied to three early programs before their deadlines.',
+    kellyQuestion: 'I want Kelly’s help deciding whether my biggest constraint is the way I position my existing projects or the opportunities I choose. I would like an outside perspective on which change is most likely to improve my results and what evidence I should build next.',
     conferenceInterest: 'Deciding which conference to pursue',
-    conferenceDetails: 'Grace Hopper Celebration, likely in the fall.',
-    currentExperience: 'Applied before but received few responses',
-    applicationsSubmitted: '85',
-    firstInterviews: '5',
-    finalRounds: '2',
-    offersReceived: '0',
-    recruitingHistory: 'I applied to internships, revised my resume, and saw limited interview conversion.',
-    threeMonthGoal: 'Earn stronger interview conversion and leave with a focused recruiting system.',
-    feedbackPriority: 'I want specific feedback on my resume positioning.',
-    programFit: 'After weak response rates, I narrowed my target list and rewrote my project bullets around outcomes.',
-    schedulingConstraints: 'Weekday evenings are easiest for me.',
     betaInterest: 'Yes — consider me for an ApplyFirst beta-only spot',
-    referralSource: "Kelly's LinkedIn post",
   };
   Object.entries(values).forEach(([key, value]) => data.set(key, value));
-  data.append('opportunities', 'Software Engineering Internship');
-  data.append('companyEnvironments', 'Fintech');
-  data.append('desiredSupport', 'Resume Positioning');
+  data.append('rolesExploring', 'Software Engineering');
+  data.append('obstacles', 'I am unsure what to prioritize');
   [
-    'isAdult',
-    'participationCommitment',
-    'feedbackCommunityCommitment',
+    'groupSessionCommitment',
+    'individualSessionCommitment',
+    'weeklyWorkCommitment',
+    'applyFirstCommitment',
     'programAcknowledgement',
     'termsAcknowledgement',
   ].forEach((key) => data.set(key, 'yes'));
@@ -103,37 +92,38 @@ test('a complete application passes server validation', () => {
   );
 });
 
-test('recruiting funnel metrics and consolidated commitments are required', () => {
-  const invalidMetrics = validApplication();
-  invalidMetrics.set('firstInterviews', '-1');
+test('all participation commitments are required', () => {
+  const missingSessionCommitment = validApplication();
+  missingSessionCommitment.delete('individualSessionCommitment');
   assert.match(
-    validateApplication(invalidMetrics, new Date('2026-08-26T12:00:00-04:00')),
-    /whole number/,
+    validateApplication(missingSessionCommitment, new Date('2026-08-26T12:00:00-04:00')),
+    /required participation/,
   );
 
-  const missingCommunity = validApplication();
-  missingCommunity.delete('feedbackCommunityCommitment');
+  const missingFeedbackCommitment = validApplication();
+  missingFeedbackCommitment.delete('applyFirstCommitment');
   assert.match(
-    validateApplication(missingCommunity, new Date('2026-08-26T12:00:00-04:00')),
-    /required availability/,
+    validateApplication(missingFeedbackCommitment, new Date('2026-08-26T12:00:00-04:00')),
+    /required participation/,
   );
 });
 
-test('application records preserve the structured funnel snapshot', () => {
+test('application records preserve concise stage-one selection fields', () => {
   const record = applicationRecord(
     validApplication(),
     'application-test-id',
     'founding-cohort-2026/application-test-id.pdf',
   );
-  assert.equal(record.applicationsSubmitted, 85);
-  assert.equal(record.firstInterviews, 5);
-  assert.equal(record.finalRounds, 2);
-  assert.equal(record.offersReceived, 0);
+  assert.equal(record.graduationDate, '2029-05');
+  assert.equal(record.graduationYear, '2029');
+  assert.equal(record.academicStage, 'Sophomore and 18 or Older');
+  assert.deepEqual(record.rolesExploring, ['Software Engineering']);
+  assert.deepEqual(record.obstacles, ['I am unsure what to prioritize']);
+  assert.match(record.fallGoal, /opportunity pipeline/);
+  assert.match(record.recentAction, /spreadsheet of internship deadlines/);
+  assert.match(record.kellyQuestion, /biggest constraint/);
   assert.equal(record.communityCommitment, 1);
-  assert.equal(record.recruitingMarket, 'Primarily U.S.-Based Roles');
-  assert.match(record.targetList, /Stripe/);
   assert.equal(record.conferenceInterest, 'Deciding which conference to pursue');
-  assert.match(record.conferenceDetails, /Grace Hopper/);
   assert.equal(record.betaInterest, 'Yes — consider me for an ApplyFirst beta-only spot');
   assert.equal(record.adultConfirmed, 1);
   assert.equal(record.termsVersion, '2026-fall-founding-cohort-v2');
@@ -141,18 +131,18 @@ test('application records preserve the structured funnel snapshot', () => {
 });
 
 test('application option values are checked against server-side allowlists', () => {
-  const invalidMarket = validApplication();
-  invalidMarket.set('recruitingMarket', 'Anywhere with guaranteed sponsorship');
+  const invalidStage = validApplication();
+  invalidStage.set('academicStage', 'Graduate student');
   assert.match(
-    validateApplication(invalidMarket, new Date('2026-08-26T12:00:00-04:00')),
-    /valid recruiting market/,
+    validateApplication(invalidStage, new Date('2026-08-26T12:00:00-04:00')),
+    /valid Fall 2026 class-year/,
   );
 
-  const invalidSupport = validApplication();
-  invalidSupport.set('desiredSupport', 'Guaranteed referral');
+  const invalidRole = validApplication();
+  invalidRole.set('rolesExploring', 'Guaranteed job placement');
   assert.match(
-    validateApplication(invalidSupport, new Date('2026-08-26T12:00:00-04:00')),
-    /valid support areas/,
+    validateApplication(invalidRole, new Date('2026-08-26T12:00:00-04:00')),
+    /valid role or path options/,
   );
 
   const invalidConferenceInterest = validApplication();
@@ -179,7 +169,7 @@ test('extended-beta consideration requires an explicit preference', () => {
   );
 });
 
-test('conference interest is required while conference details remain optional', () => {
+test('conference interest is required while LinkedIn remains optional', () => {
   const missingInterest = validApplication();
   missingInterest.delete('conferenceInterest');
   assert.match(
@@ -187,22 +177,37 @@ test('conference interest is required while conference details remain optional',
     /Missing required field: conferenceInterest/,
   );
 
-  const noDetails = validApplication();
-  noDetails.delete('conferenceDetails');
+  const noLinkedIn = validApplication();
+  noLinkedIn.delete('linkedInUrl');
   assert.equal(
-    validateApplication(noDetails, new Date('2026-08-26T12:00:00-04:00')),
+    validateApplication(noLinkedIn, new Date('2026-08-26T12:00:00-04:00')),
     '',
   );
 });
 
-test('support choices are limited to three', () => {
+test('applicants choose no more than two current obstacles', () => {
   const data = validApplication();
-  data.append('desiredSupport', 'Application Strategy');
-  data.append('desiredSupport', 'Career Direction');
-  data.append('desiredSupport', 'Recruiting Accountability');
+  data.append('obstacles', 'I find opportunities too late');
+  data.append('obstacles', 'I do not know how to network');
   assert.match(
     validateApplication(data, new Date('2026-08-26T12:00:00-04:00')),
-    /between one and three/,
+    /one or two current obstacles/,
+  );
+});
+
+test('the three written responses require enough substance without becoming essays', () => {
+  const tooShort = validApplication();
+  tooShort.set('recentAction', 'I updated my resume yesterday.');
+  assert.match(
+    validateApplication(tooShort, new Date('2026-08-26T12:00:00-04:00')),
+    /approximately 50–100 words/,
+  );
+
+  const tooLong = validApplication();
+  tooLong.set('fallGoal', Array.from({ length: 151 }, () => 'goal').join(' '));
+  assert.match(
+    validateApplication(tooLong, new Date('2026-08-26T12:00:00-04:00')),
+    /approximately 50–100 words/,
   );
 });
 

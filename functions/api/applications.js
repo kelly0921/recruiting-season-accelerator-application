@@ -68,12 +68,14 @@ export async function onRequestPost({ request, env }) {
         applications_submitted, first_interviews, final_rounds, offers_received,
         scheduling_constraints, community_commitment, recruiting_market,
         target_list, adult_confirmed, acknowledgements_accepted_at, terms_version,
-        conference_interest, conference_details, beta_interest
+        conference_interest, conference_details, beta_interest,
+        graduation_date, academic_stage, roles_exploring, fall_goal, obstacles,
+        recent_action, kelly_question
       ) VALUES (
         ?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13,
         ?14, ?15, ?16, ?17, ?18, ?19, ?20, ?21, ?22, ?23, ?24, ?25,
         ?26, ?27, ?28, ?29, ?30, ?31, ?32, ?33, ?34, ?35, ?36, ?37,
-        ?38, ?39
+        ?38, ?39, ?40, ?41, ?42, ?43, ?44, ?45, ?46
       )`,
     ).bind(
       record.id,
@@ -115,6 +117,13 @@ export async function onRequestPost({ request, env }) {
       record.conferenceInterest,
       record.conferenceDetails,
       record.betaInterest,
+      record.graduationDate,
+      record.academicStage,
+      JSON.stringify(record.rolesExploring),
+      record.fallGoal,
+      JSON.stringify(record.obstacles),
+      record.recentAction,
+      record.kellyQuestion,
     ).run();
   } catch (databaseError) {
     await env.RESUMES_BUCKET.delete(resumeKey);

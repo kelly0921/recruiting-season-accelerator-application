@@ -6,8 +6,8 @@ Recruiting Season Accelerator founding mentorship cohort and extended product be
 ## What this repository contains
 
 - A responsive program-details landing page
-- A coordinated, accessible five-step React application
-- Structured recruiting-funnel metrics and cohort-fit questions
+- A coordinated, accessible three-step React application designed for 7–10 minutes
+- Concise cohort-fit, action-orientation, and commitment questions
 - A lightweight future-cohort interest form
 - Program FAQ, Participant Terms, Privacy Notice, and Cost Policy routes
 - Cloudflare Pages Function submission handling
@@ -67,9 +67,10 @@ Create and attach these under the Pages project's **Settings → Bindings**:
    - Run all SQL files in `migrations/` in numerical order against the production
      database, including `0003_refine_application_selection.sql` and
      `0004_refine_application_fit_and_acknowledgements.sql`, followed by
-     `0005_add_conference_interest.sql` and `0006_add_beta_interest.sql`
-   - Existing production databases that already have migrations `0001` through
-     `0005` should run only migration `0006` before the updated site is deployed
+     `0005_add_conference_interest.sql`, `0006_add_beta_interest.sql`, and
+     `0007_create_stage_one_application_fields.sql`
+   - The production database for the current Pages site was updated through
+     migration `0007` on August 23, 2026. Do not rerun it there.
    - The future-interest endpoint also creates its table safely if the second
      migration has not yet been run
 
@@ -107,6 +108,26 @@ For the complete production setup and pre-LinkedIn verification sequence, follow
 - Lightweight ApplyFirst and conference-playbook research continues through November 30
 - The Fall 2026 founding mentorship cohort and extended beta are free
 
+## Two-stage application model
+
+The public `/apply` route is intentionally limited to the Stage 1 selection form.
+It collects:
+
+- Name, email, optional LinkedIn URL, school, academic area, and graduation month/year
+- Fall 2026 class-year and age category
+- Roles or paths currently being explored
+- One fall goal, up to two current obstacles, one recent action, and one question for Kelly
+- Current conference stage without detailed conference information
+- A required PDF resume
+- Separate confirmations for workshops, individual sessions, weekly work, ApplyFirst
+  feedback, program limitations, and the participant terms
+- A required preference for beta-only consideration
+
+Detailed availability, ApplyFirst baselines, accommodations, conference logistics,
+workshop preferences, and optional permissions are not part of the public application.
+They belong in private post-acceptance onboarding. See
+[`docs/post-acceptance-forms.md`](docs/post-acceptance-forms.md).
+
 ## Future-cohort interest form
 
 The native form is available at `/interest`. It intentionally stays out of the
@@ -135,9 +156,9 @@ recruiting history, or payment information.
 - Restrict Cloudflare dashboard access to Kelly and explicitly authorized operators.
 - Review applications in D1; retrieve resumes from the private R2 bucket only when
   needed for selection.
-- The application stores recruiting-market and target-list context along with an
-  adult-confirmation flag, acknowledgement timestamp, and terms version. It does
-  not store each presentation-layer commitment checkbox as a separate column.
+- The application stores the concise Stage 1 selection fields along with an
+  eligibility-derived adult flag, acknowledgement timestamp, and terms version.
+  It does not store each presentation-layer commitment checkbox as a separate column.
 - Delete rejected applicant data within 60–90 days unless the applicant separately
   joins an updates list.
 - Do not place applicant names, emails, school information, resume details, or form
