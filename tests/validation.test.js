@@ -290,7 +290,7 @@ test('the Cloudflare microsite contains details, both forms, and policy navigati
     readFile(chromeSourceUrl, 'utf8'),
   ]);
 
-  assert.match(landing, /Build a Smarter/);
+  assert.match(landing, /Find the Real/);
   assert.match(landing, /75-Minute Live Workshops and Q&amp;As/);
   assert.match(landing, /One-Hour Strategy Session/);
   assert.match(landing, /September 14–December 15/);
