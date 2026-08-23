@@ -174,21 +174,21 @@ export function LandingPage() {
         <section className="program-hero">
           <div className="landing-shell hero-layout">
             <div className="program-hero-copy">
-              <p className="eyebrow">Free Founding Mentorship Cohort · Fall 2026</p>
+              <p className="eyebrow">Free Fall 2026 Founding Cohort</p>
               <h1>
-                <span className="hero-setup">You&apos;re Doing the Work.</span>
-                <em><span>Find the Real</span> Bottleneck.</em>
+                <span className="hero-setup">Build a Smarter Fall</span>
+                <em><span>Opportunity</span> Strategy.</em>
               </h1>
               <p className="hero-lede">
-                For college students pursuing early-career technology opportunities
-                who are putting in the effort but not seeing the results. Get tailored
-                feedback and a focused 60-day plan—not generic advice.
+                A free Fall 2026 mentorship cohort for college students pursuing
+                early-career technology opportunities. Current students from every
+                college year may apply.
               </p>
               <ul className="hero-benefit-list" aria-label="Program highlights">
-                <li>4 Live Strategy Workshops</li>
-                <li>1:1 Resume + Strategy Sessions</li>
-                <li>Offline Resume Re-Review</li>
-                <li>ApplyFirst + Conference Playbook</li>
+                <li>Four Live Workshops</li>
+                <li>Resume Review and Re-Review</li>
+                <li>One-to-One Strategy Session</li>
+                <li>ApplyFirst and Conference Playbook</li>
                 <li>Personalized 60-Day Plan</li>
               </ul>
               <div className="hero-actions">
