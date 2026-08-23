@@ -2713,6 +2713,158 @@ body {
   }
 }
 
+/* Consolidated content blocks: scan quickly without adding more cards. */
+.fit-essentials {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 38px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.fit-essentials article {
+  min-width: 0;
+  padding: 30px 34px 32px;
+}
+
+.fit-essentials article + article {
+  border-left: 1px solid var(--line);
+}
+
+.fit-essentials h3 {
+  margin: 7px 0 18px;
+  color: var(--navy);
+  font-size: 1.28rem;
+  letter-spacing: -0.025em;
+}
+
+.fit-essentials ul {
+  display: grid;
+  gap: 11px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fit-essentials li {
+  position: relative;
+  padding-left: 17px;
+  color: var(--copy);
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+.fit-essentials li::before {
+  position: absolute;
+  top: 0.7em;
+  left: 0;
+  width: 8px;
+  height: 2px;
+  background: var(--blue);
+  content: "";
+}
+
+.scope-note {
+  margin: 18px 0 0;
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.6;
+}
+
+.scope-note strong {
+  color: var(--navy);
+}
+
+.included-section .journey {
+  margin-top: 36px;
+  padding-top: 36px;
+}
+
+.intensive-deliverables {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  margin: 30px 0 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 0;
+  list-style: none;
+}
+
+.intensive-deliverables li {
+  display: flex;
+  min-height: 76px;
+  align-items: center;
+  border-left: 1px solid var(--line);
+  padding: 15px 18px;
+  color: var(--navy);
+  font-size: 0.76rem;
+  font-weight: 760;
+  line-height: 1.4;
+}
+
+.intensive-deliverables li:first-child {
+  border-left: 0;
+}
+
+.journey .intensive-deliverables li::before {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .fit-essentials {
+    grid-template-columns: 1fr;
+  }
+
+  .fit-essentials article {
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  .fit-essentials article + article {
+    border-top: 1px solid var(--line);
+    border-left: 0;
+  }
+
+  .intensive-deliverables {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .intensive-deliverables li,
+  .intensive-deliverables li:first-child {
+    border-top: 1px solid var(--line);
+    border-left: 0;
+  }
+
+  .intensive-deliverables li:nth-child(odd) {
+    border-right: 1px solid var(--line);
+  }
+
+  .intensive-deliverables li:nth-child(-n + 2) {
+    border-top: 0;
+  }
+}
+
+@media (max-width: 560px) {
+  .intensive-deliverables {
+    grid-template-columns: 1fr;
+  }
+
+  .intensive-deliverables li,
+  .intensive-deliverables li:first-child,
+  .intensive-deliverables li:nth-child(odd),
+  .intensive-deliverables li:nth-child(-n + 2) {
+    min-height: 0;
+    border-top: 1px solid var(--line);
+    border-right: 0;
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  .intensive-deliverables li:first-child {
+    border-top: 0;
+  }
+}
+
 /* Present the mentorship as one fall-semester cohort with two distinct support phases. */
 .semester-continuation {
   margin-top: 72px;

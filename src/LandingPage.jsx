@@ -2,22 +2,6 @@ import React, { useEffect } from 'react';
 import { applicationAction, applicationState, program } from './program.js';
 import { ProgramFooter, ProgramHeader } from './siteChrome.jsx';
 
-const bottlenecks = [
-  ['Opportunity Discovery', 'You know opportunities exist, but you often find them too late or do not know where to look.'],
-  ['Prioritization', 'Internships, programs, conferences, and projects all compete for attention—without a clear order.'],
-  ['Positioning', 'You have projects, coursework, leadership, or work experience, but your resume does not show the full value.'],
-  ['Access and Follow-Through', 'You want to make events and new connections useful without defaulting to generic networking advice.'],
-];
-
-const included = [
-  ['4', 'Live Workshops and Q&As', 'Four 75-minute working sessions tailored to the cohort, with frameworks, guided exercises, and focused hot seats.'],
-  ['1', 'Live Resume Review', 'One 60-minute session to identify the strongest evidence and highest-impact changes in your current resume.'],
-  ['1', 'Individual Strategy Session', 'One 60-minute mentorship session focused on your primary bottleneck, priorities, and next steps.'],
-  ['1', 'Offline Resume Re-Review', 'One bounded follow-up review after you implement the initial feedback—not an unlimited revision cycle.'],
-  ['Fall', 'ApplyFirst and Playbook Access', 'Continue using ApplyFirst, the conference playbook, and cohort resources through December 15.'],
-  ['60', 'Days of Direction', 'Build a personalized 60-day plan during the intensive, then refine it during the fall check-ins.'],
-];
-
 const journey = [
   ['Week 1 · Sep 14–20', 'Opportunity Strategy', 'Clarify which early-career opportunities deserve attention and begin using ApplyFirst as a fall pipeline.'],
   ['Week 2 · Sep 21–27', 'Early-Career Positioning', 'Strengthen how projects, coursework, leadership, and work experience support the opportunities you are pursuing.'],
@@ -31,40 +15,31 @@ const semesterMilestones = [
   ['December 15', 'Semester Closeout', 'Capture what worked, what changed, and the strategy you will carry into the next recruiting cycle.'],
 ];
 
-const outcomes = [
-  'A Personalized Fall Opportunity Strategy',
-  'Resume Feedback With One Bounded Re-Review',
-  'Early ApplyFirst and Conference Playbook Access',
-  'Guidance for Conferences or Other Recruiting Events When Relevant',
-  'A Personalized 60-Day Action Plan',
-  'Clearer Priorities and Next Steps',
-];
-
 export const faqs = [
   {
     question: 'Who Is the Program Designed For?',
     answer:
-      'Current college students from every class year may apply if they will be at least 18 when the program begins. The mentorship cohort will lean toward freshmen and sophomores because they are ApplyFirst’s core audience, while juniors and seniors whose needs fit may also be selected. The program primarily supports software engineering and related technology paths. Previous internship experience is not required, but mentorship applicants need a basic resume and must be ready to act on feedback.',
+      'Current college students age 18+ from every class year may apply. The eight-person mentorship cohort will target at least five freshmen or sophomores and may include up to three juniors or seniors whose needs fit. Applicants should be pursuing software engineering or a related technology path, have a basic resume, and be ready to act on feedback; prior internship experience is not required.',
   },
   {
     question: 'Is This a Coding or Technical Interview Course?',
     answer:
-      'No. The program focuses on recruiting strategy, positioning, target selection, organization, storytelling, networking, behavioral preparation, and diagnosing low response or conversion patterns.',
+      'No. It focuses on opportunity strategy, positioning, organization, networking, and diagnosing why current recruiting efforts are not producing results.',
   },
   {
     question: 'What Is the Fall-Semester Commitment and Workshop Schedule?',
     answer:
-      'The fall-semester cohort runs September 14–December 15. From September 14–October 11, the four-week intensive requires approximately one to two hours per week, plus one 60-minute resume review and one 60-minute strategy session. Participants should attend at least three of four virtual workshops; final live times will be selected based on accepted participants’ availability. From October 12–December 15, participants attend one monthly group check-in and complete a short ApplyFirst feedback prompt approximately every two weeks, with conference feedback requested around actual event dates when relevant. Weekly workshops and guaranteed individual sessions end after the intensive.',
+      'The cohort runs September 14–December 15. The September 14–October 11 intensive requires approximately one to two hours per week, two one-hour individual sessions, and attendance at three of four virtual workshops. From October 12–December 15, the commitment is one monthly group check-in plus a short feedback prompt approximately every two weeks. Final workshop times will be selected around accepted participants’ availability.',
   },
   {
     question: 'Do I Need to Be Attending a Conference?',
     answer:
-      'No. The cohort will intentionally include students who are registered, applying or seeking funding, deciding which event to pursue, and not attending one this fall. The same playbook can support career fairs, hackathons, company programs, and other recruiting events.',
+      'No. Conference attendance is optional. The playbook can also support career fairs, hackathons, company programs, and other recruiting events.',
   },
   {
     question: 'What Is the Difference Between the Mentorship Cohort and the Extended Beta?',
     answer:
-      `Eight founding mentees receive four workshops, a live resume review, one offline resume re-review, a strategy session, ApplyFirst and conference-playbook access, a personalized 60-day plan, monthly October–December check-ins, and continued cohort-resource access through December 15. Up to ${program.betaCapacity} beta-only participants from any college year receive early ApplyFirst access, conference-playbook access when relevant, and short feedback prompts through December 15. Beta-only spots do not guarantee workshops, monthly mentorship check-ins, resume review, or one-to-one mentorship.`,
+      `Eight founding mentees receive the complete fall-semester mentorship experience. Up to ${program.betaCapacity} beta-only participants receive ApplyFirst and relevant conference-playbook access with short feedback prompts, but no guaranteed workshops, monthly mentorship check-ins, resume review, or one-to-one mentorship.`,
   },
   {
     question: 'What Happens After I Apply?',
@@ -74,7 +49,7 @@ export const faqs = [
   {
     question: 'Why Is the Founding Cohort Free?',
     answer:
-      'This is a free founding pilot. Kelly provides structured mentorship, personalized feedback, and early product access; participants commit time, use the tools in real situations, and provide candid feedback through December 15. Positive feedback and public testimonials are never required.',
+      'This is a founding pilot. Participants receive the stated support in exchange for consistent participation and candid product feedback—not positive feedback or a testimonial.',
   },
   {
     question: 'Does Applying or Participating Guarantee an Opportunity?',
@@ -190,16 +165,15 @@ export function LandingPage() {
                 <em><span>Opportunity</span> Strategy.</em>
               </h1>
               <p className="hero-lede">
-                Recruiting Season Accelerator is a free Fall 2026 founding mentorship
-                cohort for college students pursuing early-career technology opportunities.
-                It is designed primarily for freshmen and sophomores, but students from
-                every college year may apply.
+                Recruiting Season Accelerator is a free Fall 2026 mentorship cohort for
+                college students pursuing early-career technology opportunities. It is
+                designed primarily for freshmen and sophomores; every college year may apply.
               </p>
               <p className="hero-receive-copy">
-                Eight selected students will receive four live workshops and Q&amp;As, a
-                one-hour resume review, a one-hour strategy session, early access to
-                ApplyFirst, the conference playbook, and a personalized 60-day plan—then
-                continue with lighter check-ins and resource access through December 15.
+                Eight selected students receive four live workshops, a one-hour resume review
+                and offline re-review, a one-hour strategy session, ApplyFirst and
+                conference-playbook access, and a personalized 60-day plan—followed by
+                lighter support through December 15.
               </p>
               <div className="hero-actions">
                 <ApplicationButton />
@@ -212,14 +186,14 @@ export function LandingPage() {
 
             <aside className="strategy-card" aria-label="Program strategy">
               <div className="strategy-card-heading">
-                <span>Selected Mentees Receive</span>
-                <small>Eight Mentorship Spots</small>
+                <span>Fall-Semester Cohort</span>
+                <small>September 14–December 15</small>
               </div>
               <ol>
-                <li><span>04</span><div><strong>Live Workshops and Q&amp;As</strong><small>Tailored after the cohort is selected.</small></div></li>
-                <li><span>01</span><div><strong>Resume Review</strong><small>Plus one bounded offline re-review.</small></div></li>
-                <li><span>01</span><div><strong>Strategy Session</strong><small>Focused on your goals and bottleneck.</small></div></li>
-                <li><span>Early</span><div><strong>Tools and Playbook</strong><small>ApplyFirst and conference guidance.</small></div></li>
+                <li><span>01</span><div><strong>Intensive</strong><small>Four high-touch weeks from September 14–October 11.</small></div></li>
+                <li><span>02</span><div><strong>Apply and Adjust</strong><small>Lighter monthly support through December 15.</small></div></li>
+                <li><span>08</span><div><strong>Founding Mentees</strong><small>A focused cohort selected for fit and readiness.</small></div></li>
+                <li><span>$0</span><div><strong>Free Founding Pilot</strong><small>Consistent participation and candid feedback required.</small></div></li>
               </ol>
               <div className="strategy-card-result">
                 <span>Leave With</span>
@@ -229,69 +203,45 @@ export function LandingPage() {
           </div>
         </section>
 
-        <section className="snapshot" aria-labelledby="snapshot-title">
-          <div className="landing-shell snapshot-layout">
-            <div>
-              <p className="eyebrow">Program at a Glance</p>
-              <h2 id="snapshot-title">One Fall-Semester Cohort. Two Phases.</h2>
-              <p>The cohort runs September 14–December 15: a four-week intensive followed by lighter monthly check-ins and continued ApplyFirst and conference-playbook testing.</p>
-            </div>
-            <dl className="snapshot-grid">
-              <div><dt>Sep–Dec</dt><dd>Fall-Semester Cohort</dd><small>September 14 through December 15</small></div>
-              <div><dt>4</dt><dd>High-Touch Weeks</dd><small>Workshops, two individual sessions, and a 60-day plan</small></div>
-              <div><dt>3</dt><dd>Monthly Check-Ins</dd><small>October progress, November recruiting, and December closeout</small></div>
-              <div><dt>Free</dt><dd>Founding Pilot</dd><small>Real participation and candid feedback required</small></div>
-            </dl>
-          </div>
-        </section>
-
         <section className="landing-section" id="fit" aria-labelledby="fit-title">
           <div className="landing-shell">
             <SectionHeading
               eyebrow="Who It’s For"
-              title="Build Early-Career Momentum Intentionally."
-              body="Open to current college students from every class year. The selected mentorship cohort will lean underclassman while making room for juniors and seniors whose goals fit the program."
+              title="For Students Who Have Started—but Need Better Results."
+              body="Open to current college students from every class year, with an underclassman-leaning mentorship cohort."
               id="fit-title"
             />
-            <div className="bottleneck-grid">
-              {bottlenecks.map(([title, body], index) => (
-                <article key={title}>
-                  <span>0{index + 1}</span>
-                  <h3>{title}</h3>
-                  <p>{body}</p>
-                </article>
-              ))}
-            </div>
-            <div className="fit-panel">
+            <div className="fit-essentials">
               <article>
-                <p className="eyebrow">A Strong Fit</p>
-                <h3>You Are Ready to Explore and Take Action.</h3>
+                <p className="eyebrow">Eligibility</p>
+                <h3>You Can Apply If:</h3>
                 <ul>
-                  <li>You are a current college student in any class year and will be at least 18 when the program begins.</li>
-                  <li>You are pursuing software engineering or a closely related technology path.</li>
-                  <li>You have a basic resume; previous internship experience is not required.</li>
-                  <li>You are willing to act on feedback, test the resources, and provide candid product feedback through December 15.</li>
+                  <li>You are a current college student and will be at least 18 by September 14.</li>
+                  <li>You are pursuing software engineering or a related technology path.</li>
+                  <li>You have a basic resume; prior internship experience is not required.</li>
+                  <li>You do not need to be attending a conference.</li>
                 </ul>
               </article>
               <article>
-                <p className="eyebrow">Not the Right Format</p>
-                <h3>This Is Not a Coding Course or Referral Service.</h3>
+                <p className="eyebrow">A Strong Application</p>
+                <h3>You Are Ready to:</h3>
                 <ul>
-                  <li>No LeetCode curriculum or daily application management</li>
-                  <li>No guaranteed referrals, interviews, internships, or offers</li>
-                  <li>No immigration, legal, tax, or financial advice</li>
-                  <li>No unlimited coaching or done-for-you application materials</li>
+                  <li>Show a concrete action you have taken in the past 30 days.</li>
+                  <li>Name a specific recruiting bottleneck or decision.</li>
+                  <li>Act on direct, individualized feedback.</li>
+                  <li>Meet the cohort commitment and test the resources consistently.</li>
                 </ul>
               </article>
             </div>
             <div className="fit-selection-note">
-              <h3>How the Founding Cohort Will Be Balanced:</h3>
+              <h3>Selection Balance</h3>
               <p>
-                Kelly will target at least five freshmen or sophomores among the eight
-                mentorship participants, with up to three juniors or seniors whose needs
-                genuinely fit. Beta-only testers may come from any college year.
+                Kelly will target at least five freshmen or sophomores among the eight mentees,
+                with up to three juniors or seniors whose needs fit. Beta-only testers may come
+                from any college year.
               </p>
             </div>
+            <p className="scope-note"><strong>Scope:</strong> Recruiting strategy—not technical-interview tutoring, referrals, job guarantees, unlimited private mentorship, or repeated resume-review cycles.</p>
           </div>
         </section>
 
@@ -300,28 +250,25 @@ export function LandingPage() {
             <SectionHeading
               eyebrow="What’s Included"
               title="Start Intensively. Apply It All Semester."
-              body="The cohort runs September 14–December 15. High-touch support is concentrated in the first four weeks, followed by a lighter cadence while you use the strategy in real recruiting situations."
+              body="One cohort, with high-touch support first and a lighter practice-and-feedback cadence afterward."
               id="program-title"
             />
-            <div className="included-grid">
-              {included.map(([mark, title, body]) => (
-                <article key={title}>
-                  <span>{mark}</span>
-                  <h3>{title}</h3>
-                  <p>{body}</p>
-                </article>
-              ))}
-            </div>
-
             <div className="journey">
               <div className="journey-heading">
                   <p className="eyebrow">Phase 1 · The Four-Week Intensive</p>
                   <h3>Four Weeks. One Connected Strategy.</h3>
                   <p className="journey-summary">
-                  The detailed exercises and hot seats will adapt after Kelly reviews the
-                  selected cohort, while the overall progression stays consistent.
+                  September 14–October 11 · Approximately one to two hours per week,
+                  plus two scheduled one-hour individual sessions.
                 </p>
               </div>
+              <ul className="intensive-deliverables" aria-label="Intensive mentorship deliverables">
+                <li>Four Live Workshops and Q&amp;As</li>
+                <li>One-Hour Resume Review</li>
+                <li>One Offline Resume Re-Review</li>
+                <li>One-Hour Strategy Session</li>
+                <li>Personalized 60-Day Plan</li>
+              </ul>
               <ol>
                 {journey.map(([week, title, body]) => (
                   <li key={week}>
@@ -331,7 +278,7 @@ export function LandingPage() {
                   </li>
                 ))}
               </ol>
-              <small>Workshop themes may adapt to participant goals, progress, and common cohort needs. Weekly workshops end October 11.</small>
+              <small>Workshop exercises may adapt to the selected cohort. Weekly workshops end October 11.</small>
             </div>
 
             <div className="semester-continuation" aria-labelledby="continuation-title">
@@ -360,33 +307,6 @@ export function LandingPage() {
           </div>
         </section>
 
-        <section className="landing-section outcome-section" aria-labelledby="outcomes-title">
-          <div className="landing-shell outcome-layout">
-            <SectionHeading
-              eyebrow="Leave With Direction"
-              title="Leave Knowing What to Do Next."
-              id="outcomes-title"
-            />
-            <aside className="sample-output" aria-label="Illustrative recruiting plan">
-              <p className="eyebrow">Sample Output</p>
-              <h3>A 60-Day Opportunity Sprint</h3>
-              <ol>
-                <li><span>Weeks 1–2</span><strong>Act on Priority Opportunities</strong></li>
-                <li><span>Weeks 3–4</span><strong>Build Evidence and Relationships</strong></li>
-                <li><span>Weeks 5–8</span><strong>Review Progress and Adjust</strong></li>
-              </ol>
-              <small>Illustrative format; each participant&apos;s plan is personalized.</small>
-            </aside>
-            <ul className="outcome-list">
-              {outcomes.map((outcome) => <li key={outcome}>{outcome}</li>)}
-            </ul>
-            <p className="outcome-disclaimer">
-              Educational resources, strategy, feedback, and accountability are provided.
-              Participation does not guarantee any employment outcome.
-            </p>
-          </div>
-        </section>
-
         <section className="landing-section founder-section" aria-labelledby="founder-title">
           <div className="landing-shell founder-layout">
             <div className="founder-portrait">
@@ -397,11 +317,10 @@ export function LandingPage() {
               <h2 id="founder-title">Meet Kelly, Your Mentor.</h2>
               <p>
                 Kelly Chen is a software engineer, product builder, speaker, and community
-                leader whose experience spans Visa, JPMorgan Chase, Bloomberg, early-career
-                programs, conferences, hackathons, and student mentorship. She found and
-                pursued opportunities early in college and ultimately found her full-time role
-                through a conference. That range helps her tailor advice to a student&apos;s real
-                context—not offer employer access.
+                leader with experience across Visa, JPMorgan Chase, Bloomberg, conferences,
+                hackathons, and student mentorship. She pursued opportunities early in college
+                and found her full-time role through a conference. That range helps her diagnose
+                each student&apos;s real bottleneck instead of repeating generic recruiting advice.
               </p>
               <div className="experience-row" aria-label="Experience informing the program">
                 <strong>Visa</strong><strong>JPMorgan Chase</strong><strong>Bloomberg</strong>
@@ -424,7 +343,7 @@ export function LandingPage() {
             <SectionHeading
               eyebrow="Two Ways to Participate"
               title="Choose the Right Participation Track."
-              body="All current college years may apply. One application is used to select eight high-touch mentorship participants and up to seven beta-only testers."
+              body="One application is used for both tracks."
               id="pricing-title"
             />
             <div className="price-card">
@@ -434,23 +353,16 @@ export function LandingPage() {
               <section className="track-option mentorship-track">
                 <div><span>Founding Mentorship Cohort</span><strong>{program.capacity} Students</strong></div>
                 <ul>
-                  <li>Four live group workshops and Q&amp;As</li>
-                  <li>One-hour resume review and one offline re-review</li>
-                  <li>One-hour individual strategy session</li>
-                  <li>ApplyFirst and conference playbook access</li>
-                  <li>Personalized 60-day plan</li>
-                  <li>October, November, and December group check-ins</li>
-                  <li>Short ApplyFirst feedback approximately every two weeks</li>
-                  <li>Conference feedback around actual event dates when relevant</li>
-                  <li>Continued cohort-resource access through December 15</li>
+                  <li>The complete two-phase mentorship experience described above</li>
+                  <li>Four workshops, two individual sessions, one resume re-review, and a 60-day plan</li>
+                  <li>Monthly check-ins, continued resources, and lightweight feedback through December 15</li>
                 </ul>
               </section>
               <section className="track-option beta-track">
                 <div><span>Extended Beta-Only Group</span><strong>Up to {program.betaCapacity} Students</strong></div>
                 <ul>
-                  <li>Early ApplyFirst access</li>
-                  <li>Conference playbook access when relevant</li>
-                  <li>Short ApplyFirst feedback prompts through December 15</li>
+                  <li>Early ApplyFirst and relevant conference-playbook access</li>
+                  <li>Short product-feedback prompts through December 15</li>
                   <li>No guaranteed workshops, monthly mentorship check-ins, resume review, or one-to-one mentorship</li>
                 </ul>
               </section>
