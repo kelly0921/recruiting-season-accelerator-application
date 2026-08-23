@@ -10,7 +10,6 @@ import {
 import { ProgramFooter, ProgramHeader } from './siteChrome.jsx';
 import {
   academicStageOptions,
-  betaInterestOptions,
   conferenceInterestOptions,
   obstacleOptions,
   opportunityOptions,
@@ -229,9 +228,9 @@ function ApplicationPage() {
           <p className="eyebrow">Application Received</p>
           <h1>Thank You for Applying.</h1>
           <p>
-            Kelly plans to send mentorship, alternate, and extended-beta decisions on
-            September 3 using the email address you provided. Selected participants
-            will receive the appropriate private onboarding steps before September 14.
+            Kelly plans to send mentorship and alternate decisions on September 3 using
+            the email address you provided. Selected participants will receive private
+            onboarding steps before September 14.
           </p>
           {message ? <p className="reference">{message}</p> : null}
           <a className="button" href={programUrl}>Return to Program Details</a>
@@ -394,6 +393,7 @@ function ApplicationPage() {
               />
               <label className="field">
                 <span>Which statement best describes your current conference plans?</span>
+                <small className="field-help">Conference attendance is not required, but interest or acceptance helps Kelly understand program fit. This does not register you for conference materials.</small>
                 <select name="conferenceInterest" required defaultValue="">
                   <option value="" disabled>Select One</option>
                   {conferenceInterestOptions.map((option) => <option key={option}>{option}</option>)}
@@ -431,14 +431,6 @@ function ApplicationPage() {
                   </span>
                 </label>
               </fieldset>
-
-              <label className="field">
-                <span>If you are not selected for one of the eight mentorship spots, would you like to be considered for an ApplyFirst beta-only spot?</span>
-                <select name="betaInterest" required defaultValue="">
-                  <option value="" disabled>Select One</option>
-                  {betaInterestOptions.map((option) => <option key={option}>{option}</option>)}
-                </select>
-              </label>
 
               <Turnstile onToken={setTurnstileToken} />
 

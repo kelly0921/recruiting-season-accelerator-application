@@ -20,7 +20,7 @@ export const faqs = [
   {
     question: 'Who Is the Program Designed For?',
     answer:
-      'Current college students age 18+ from every class year may apply. The eight-person mentorship cohort will target at least five freshmen or sophomores and may include up to three juniors or seniors whose needs fit. Applicants should be pursuing software engineering or a related technology path, have a basic resume, and be ready to act on feedback; prior internship experience is not required.',
+      'Current college students age 18+ from every class year may apply. Applicants should be pursuing software engineering or a related technology path, have a basic resume, and be ready to act on feedback; prior internship experience is not required.',
   },
   {
     question: 'Is This a Coding or Technical Interview Course?',
@@ -35,17 +35,12 @@ export const faqs = [
   {
     question: 'Do I Need to Be Attending a Conference?',
     answer:
-      'No. Conference attendance is optional. The playbook can also support career fairs, hackathons, company programs, and other recruiting events.',
-  },
-  {
-    question: 'What Is the Difference Between the Mentorship Cohort and the Extended Beta?',
-    answer:
-      `Eight founding mentees receive the complete fall-semester mentorship experience. Up to ${program.betaCapacity} beta-only participants receive ApplyFirst and relevant conference-playbook access with short feedback prompts, but no guaranteed workshops, monthly mentorship check-ins, resume review, or one-to-one mentorship.`,
+      'No. Conference attendance is not required, but the cohort is especially relevant for students who want to attend or have already been accepted to a fall conference. The application asks about conference plans only to understand mentorship fit; access for people outside the mentorship cohort will use a separate sign-up form.',
   },
   {
     question: 'What Happens After I Apply?',
     answer:
-      `Applications run August 24–31 and close August 31 at 11:59 PM ET. Decisions are planned for September 3. Kelly will select ${program.capacity} mentees, ${program.alternateCapacity} alternates, and up to ${program.betaCapacity} extended beta testers. Selected participants must complete asynchronous onboarding by September 14.`,
+      `Applications run August 24–31 and close August 31 at 11:59 PM ET. Decisions are planned for September 3. Kelly will select ${program.capacity} mentees and ${program.alternateCapacity} alternates. Selected participants must complete asynchronous onboarding by September 14.`,
   },
   {
     question: 'Why Is the Founding Cohort Free?',
@@ -167,8 +162,8 @@ export function LandingPage() {
               </h1>
               <p className="hero-lede">
                 A free Fall 2026 mentorship cohort for college students pursuing
-                early-career technology opportunities. Open to every college year,
-                with a focus on freshmen and sophomores.
+                early-career technology opportunities. Current students from every
+                college year may apply.
               </p>
               <ul className="hero-benefit-list" aria-label="Program highlights">
                 <li>Four Live Workshops</li>
@@ -210,7 +205,7 @@ export function LandingPage() {
             <SectionHeading
               eyebrow="Who It’s For"
               title="For Students Who Have Started—but Need Better Results."
-              body="Open to current college students from every class year, with an underclassman-leaning mentorship cohort."
+              body="Open to current college students age 18+ from every class year."
               id="fit-title"
             />
             <div className="bottleneck-grid" aria-label="Common recruiting bottlenecks">
@@ -230,13 +225,13 @@ export function LandingPage() {
                   <li>Current college student, age 18+ by September 14</li>
                   <li>Pursuing software engineering or a related technology path</li>
                   <li>Basic resume ready; no prior internship required</li>
-                  <li>No conference attendance required</li>
                 </ul>
               </article>
               <article>
                 <p className="eyebrow">Strong Fit</p>
                 <h3>You Are Ready To:</h3>
                 <ul>
+                  <li>Explore a fall conference—or prepare for one you have been accepted to</li>
                   <li>Share a concrete action from the past 30 days</li>
                   <li>Name a specific recruiting bottleneck or decision</li>
                   <li>Act on direct, individualized feedback</li>
@@ -244,14 +239,7 @@ export function LandingPage() {
                 </ul>
               </article>
             </div>
-            <div className="fit-selection-note">
-              <h3>Selection Balance</h3>
-              <p>
-                Kelly will target at least five freshmen or sophomores among the eight mentees,
-                with up to three juniors or seniors whose needs fit. Beta-only testers may come
-                from any college year.
-              </p>
-            </div>
+            <p className="fit-preference-note"><strong>Conference Interest Is a Plus, Not a Requirement.</strong> The mentorship application asks about your current plans so Kelly can understand your goals and tailor the cohort—not to register you for conference materials.</p>
             <p className="scope-note"><strong>Scope:</strong> Recruiting strategy—not technical-interview tutoring, referrals, job guarantees, unlimited private mentorship, or repeated resume-review cycles.</p>
           </div>
         </section>
@@ -350,37 +338,6 @@ export function LandingPage() {
           </div>
         </section>
 
-        <section className="landing-section pricing-section" aria-labelledby="pricing-title">
-          <div className="landing-shell pricing-layout">
-            <SectionHeading
-              eyebrow="Participation Options"
-              title="One Application. Two Possible Placements."
-              body="Both options are free for the Fall 2026 founding pilot."
-              id="pricing-title"
-            />
-            <div className="track-comparison">
-              <article className="track-row mentorship-track">
-                <header>
-                  <span>Founding Mentorship Cohort</span>
-                  <strong>{program.capacity} Students</strong>
-                </header>
-                <p>The complete fall-semester mentorship experience described above.</p>
-              </article>
-              <article className="track-row beta-track">
-                <header>
-                  <span>Extended Beta-Only Group</span>
-                  <strong>Up to {program.betaCapacity} Students</strong>
-                </header>
-                <p>ApplyFirst and relevant conference-playbook access, plus short feedback prompts through December 15. No guaranteed workshops, reviews, or one-to-one mentorship.</p>
-              </article>
-              <footer className="track-comparison-footer">
-                <p>No payment or positive testimonial is required.</p>
-                <ApplicationButton label="Review the Application" />
-              </footer>
-            </div>
-          </div>
-        </section>
-
         <section className="landing-section timeline-section" id="timeline" aria-labelledby="timeline-title">
           <div className="landing-shell">
             <SectionHeading eyebrow="Important Dates" title="Key Dates for the Founding Cohort." id="timeline-title" />
@@ -430,11 +387,10 @@ const policyContent = {
     updated: 'Draft for the 2026 Founding Cohort',
     sections: [
       ['Program and Operator', `Recruiting Season Accelerator is a Fall 2026 educational, mentorship, and product-research pilot operated by Kelly Chen. Questions may be sent to ${program.contactEmail}.`],
-      ['Eligibility', 'Current college students from every class year may apply and must be at least 18 when the program begins. The mentorship cohort will lean toward freshmen and sophomores, while beta-only testers may come from any college year. A basic resume is required for mentorship applicants.'],
-      ['Enrollment and Cost', 'The Fall 2026 founding mentorship cohort and extended beta are free. Applying does not guarantee acceptance, and participation requires completing the applicable onboarding and participation expectations.'],
+      ['Eligibility', 'Current college students from every class year may apply and must be at least 18 when the program begins. A basic resume is required. Conference attendance is not required.'],
+      ['Enrollment and Cost', 'The Fall 2026 founding mentorship cohort is free. Applying does not guarantee acceptance, and participation requires completing the onboarding and participation expectations.'],
       ['Included Mentorship Support', 'The fall-semester cohort runs September 14–December 15. The September 14–October 11 intensive includes four 75-minute group workshops, one 60-minute resume-review session, one 60-minute strategy session, one bounded offline resume re-review, early ApplyFirst and conference-playbook access, and a personalized 60-day plan. From October 12–December 15, founding mentees receive one monthly group check-in, continued cohort-resource access, short ApplyFirst feedback prompts approximately every two weeks, and conference feedback requests around actual event dates when relevant.'],
       ['Support Boundaries', 'Weekly workshops and guaranteed individual sessions end October 11. The lighter cohort phase does not include guaranteed additional one-to-one sessions, unlimited Slack or direct-message support, unlimited coaching, or repeated resume-review cycles. Workshop examples and exercises may adapt to cohort needs without materially reducing the promised intensive support.'],
-      ['Extended Beta Support', 'Extended beta participants receive early ApplyFirst and conference-playbook access, onboarding guidance, and product-feedback prompts through December 15. They do not receive guaranteed resume reviews, individual mentorship, monthly mentorship check-ins, weekly workshops, referrals, or unlimited support.'],
       ['Feedback and Conduct', 'Participants agree to use the applicable pilot resources, provide candid feedback through December 15, respect other participants, and protect information shared in the group. Feedback may be positive, neutral, or critical; a testimonial is not required.'],
       ['Participant Responsibility', 'Participants remain responsible for their applications, materials, decisions, attendance, and recruiting outcomes. Materials must be accurate and must not misrepresent experience.'],
       ['No Outcome Guarantee', 'Participation does not guarantee conference acceptance or funding, a referral, interview, internship, job offer, compensation level, or other employment outcome.'],
@@ -447,7 +403,7 @@ const policyContent = {
     updated: 'Draft for the 2026 Founding Cohort',
     sections: [
       ['Information Collected', 'The application may collect contact information, school and graduation details, resume and profile links, early-career goals, recent actions, conference readiness, participation information, and optional feedback or outcome updates. Accepted participants may be asked for additional scheduling, onboarding, product-usage, and program-preference information.'],
-      ['How Information Is Used', 'Information is used to evaluate applications, select and onboard mentorship and beta participants, deliver the program, improve ApplyFirst and the conference playbook, track aggregate pilot learning, plan future cohorts, and send requested cohort announcements.'],
+      ['How Information Is Used', 'Information is used to evaluate applications, select and onboard mentorship participants, deliver the program, improve ApplyFirst and the conference playbook, track aggregate pilot learning, plan future cohorts, and send requested cohort announcements. ApplyFirst beta and conference-material sign-ups outside the mentorship cohort are collected separately.'],
       ['Storage and Service Providers', 'Cloudflare processes application and future-cohort interest records, along with private resume files, for this portal. Other program vendors may process scheduling, video, communication, research, or file information according to their own terms.'],
       ['Your Choices', `Information is not sold. Public use of a name, image, quote, school, employer, or outcome requires separate permission. Correction or deletion requests may be sent to ${program.contactEmail}.`],
       ['Retention', 'Rejected application data should generally be deleted within 60–90 days unless the applicant separately joins an updates list. Accepted-participant working files are minimized and removed or anonymized when no longer needed.'],
@@ -458,8 +414,8 @@ const policyContent = {
     title: 'Cost and Participation Policy',
     updated: 'Draft for the 2026 Founding Cohort',
     sections: [
-      ['Founding-Pilot Cost', 'The Fall 2026 founding mentorship cohort and extended beta are free. No payment or payment information is required to apply or participate.'],
-      ['The Exchange', 'Kelly provides early access, structured mentorship, and personalized feedback according to each participation level. Participants commit time, use the resources in real situations, and provide candid feedback through December 15.'],
+      ['Founding-Pilot Cost', 'The Fall 2026 founding mentorship cohort is free. No payment or payment information is required to apply or participate.'],
+      ['The Exchange', 'Kelly provides early access, structured mentorship, and personalized feedback within the stated program scope. Participants commit time, use the resources in real situations, and provide candid feedback through December 15.'],
       ['No Positive-Feedback Requirement', 'Feedback may be positive, neutral, or critical. Participation never requires a public testimonial, endorsement, or permission to use a participant’s identity.'],
       ['Missed Participation', 'Repeatedly missing required sessions, onboarding, weekly actions, or feedback may result in removal from the pilot so limited capacity can be used responsibly.'],
       ['Program Changes', 'ApplyFirst, the conference playbook, workshop examples, and research prompts may change during the founding period. Kelly will communicate material changes and will not use the pilot to promise referrals, funding, interviews, or employment outcomes.'],

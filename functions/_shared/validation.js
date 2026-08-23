@@ -1,6 +1,5 @@
 import {
   academicStageOptions,
-  betaInterestOptions,
   conferenceInterestOptions,
   obstacleOptions,
   opportunityOptions,
@@ -27,7 +26,6 @@ const requiredTextFields = [
   'recentAction',
   'kellyQuestion',
   'conferenceInterest',
-  'betaInterest',
 ];
 
 const requiredConfirmations = [
@@ -90,7 +88,6 @@ export function validateApplication(formData, now = new Date()) {
     recentAction: 1200,
     kellyQuestion: 1200,
     conferenceInterest: 120,
-    betaInterest: 120,
   };
 
   for (const [field, maxLength] of Object.entries(lengthLimits)) {
@@ -123,9 +120,6 @@ export function validateApplication(formData, now = new Date()) {
   }
   if (!isAllowed(formData.get('conferenceInterest'), conferenceInterestOptions)) {
     return 'Choose a valid conference-interest option.';
-  }
-  if (!isAllowed(formData.get('betaInterest'), betaInterestOptions)) {
-    return 'Choose a valid extended-beta preference.';
   }
   const rolesExploring = formData.getAll('rolesExploring').map(String);
   if (!rolesExploring.length) {
@@ -221,7 +215,6 @@ export function applicationRecord(formData, id, resumeKey, now = new Date()) {
     feedbackPriority: kellyQuestion,
     programFit: recentAction,
     schedulingConstraints: '',
-    betaInterest: String(formData.get('betaInterest')).trim(),
     desiredSupport: obstacles,
     referralSource: '',
     marketingConsent: 0,

@@ -16,8 +16,10 @@ The website currently communicates:
 - The high-touch four-week intensive runs September 14–October 11
 - Monthly check-ins and lightweight product feedback continue October 12–December 15
 - Eight students may join the founding mentorship cohort, with two alternates
-- Up to seven additional students may join the extended beta
-- Both participation levels are free
+- The founding mentorship cohort is free
+
+ApplyFirst beta and conference-material interest outside the mentorship cohort will
+use a separate form. Do not add those sign-ups to the mentorship application.
 
 Before posting on LinkedIn, confirm the group-session dates and times that accepted
 mentees will receive during selection and onboarding.
@@ -174,8 +176,7 @@ Do not publish these on the landing page or in the LinkedIn post:
 - Participant documents or resume links
 
 Send scheduling and onboarding information only after acceptance. Do not request
-payment information; the Fall 2026 founding mentorship cohort and extended beta
-are free.
+payment information; the Fall 2026 founding mentorship cohort is free.
 
 Create the two private post-decision forms described in
 [`post-acceptance-forms.md`](post-acceptance-forms.md) before decisions are sent.
@@ -188,10 +189,11 @@ Immediately before posting:
 - Open the landing page, `/apply`, `/faq`, and all policy pages.
 - Submit the controlled test described above.
 - Confirm the August 24–31 application window, September 3 decision date,
-  September 14 start, eight mentorship spots, extended beta, and free pilot are consistent.
+  September 14 start, eight mentorship spots, and free pilot are consistent.
 - Confirm Kelly's portfolio links to the Cloudflare landing page—not the retired
   `chatgpt.site` version.
 - Check that the LinkedIn post links to
   `https://recruiting-accelerator-apply.pages.dev/`.
-- Clarify that conference attendance is not required.
-- Distinguish the high-touch mentorship cohort from the extended beta benefits.
+- Clarify that conference interest is a positive fit signal, not a requirement.
+- Confirm the mentorship application does not collect separate ApplyFirst beta or
+  conference-material registrations.

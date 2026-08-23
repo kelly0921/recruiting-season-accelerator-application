@@ -1,7 +1,7 @@
 # Recruiting Season Accelerator Application
 
 Unified program microsite and application portal for Kelly Chen's free Fall 2026
-Recruiting Season Accelerator founding mentorship cohort and extended product beta.
+Recruiting Season Accelerator founding mentorship cohort application.
 
 ## What this repository contains
 
@@ -108,7 +108,7 @@ For the complete production setup and pre-LinkedIn verification sequence, follow
 - The high-touch four-week intensive runs September 14–October 11
 - Monthly check-ins, continued resource access, and lightweight ApplyFirst and
   conference-playbook feedback continue October 12–December 15
-- The Fall 2026 founding mentorship cohort and extended beta are free
+- The Fall 2026 founding mentorship cohort is free
 
 ## Two-stage application model
 
@@ -124,12 +124,14 @@ It collects:
 - Separate confirmations for workshops, intensive-phase work, individual sessions,
   the October–December check-in and feedback cadence, program limitations, and the
   participant terms
-- A required preference for beta-only consideration
 
 Detailed availability, ApplyFirst baselines, accommodations, conference logistics,
 workshop preferences, and optional permissions are not part of the public application.
 They belong in private post-acceptance onboarding. See
 [`docs/post-acceptance-forms.md`](docs/post-acceptance-forms.md).
+
+ApplyFirst beta access and conference-material interest outside the mentorship cohort
+use separate sign-up forms and are not collected through `/apply`.
 
 ## Future-cohort interest form
 

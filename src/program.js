@@ -15,8 +15,6 @@ export const program = Object.freeze({
   price: 0,
   capacity: 8,
   alternateCapacity: 2,
-  betaCapacity: 7,
-  totalTesterCapacity: 15,
 });
 
 export function applicationState(now = new Date()) {

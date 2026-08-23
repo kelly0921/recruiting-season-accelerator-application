@@ -42,7 +42,6 @@ function validApplication() {
     recentAction: 'During the past month, I created a spreadsheet of internship deadlines, revised two project bullets on my resume, and asked a teaching assistant for feedback. I then used that feedback to clarify the technical decisions I owned and applied to three early programs before their deadlines.',
     kellyQuestion: 'I want Kelly’s help deciding whether my biggest constraint is the way I position my existing projects or the opportunities I choose. I would like an outside perspective on which change is most likely to improve my results and what evidence I should build next.',
     conferenceInterest: 'Deciding which conference to pursue',
-    betaInterest: 'Yes — consider me for an ApplyFirst beta-only spot',
   };
   Object.entries(values).forEach(([key, value]) => data.set(key, value));
   data.append('rolesExploring', 'Software Engineering');
@@ -139,7 +138,7 @@ test('application records preserve concise stage-one selection fields', () => {
   assert.match(record.kellyQuestion, /biggest constraint/);
   assert.equal(record.communityCommitment, 1);
   assert.equal(record.conferenceInterest, 'Deciding which conference to pursue');
-  assert.equal(record.betaInterest, 'Yes — consider me for an ApplyFirst beta-only spot');
+  assert.equal('betaInterest' in record, false);
   assert.equal(record.adultConfirmed, 1);
   assert.equal(record.termsVersion, '2026-fall-founding-cohort-v4');
   assert.equal(record.acknowledgementsAcceptedAt, record.submittedAt);
@@ -167,21 +166,6 @@ test('application option values are checked against server-side allowlists', () 
     /valid conference-interest option/,
   );
 
-  const invalidBetaInterest = validApplication();
-  invalidBetaInterest.set('betaInterest', 'Automatically enroll me');
-  assert.match(
-    validateApplication(invalidBetaInterest, new Date('2026-08-26T12:00:00-04:00')),
-    /valid extended-beta preference/,
-  );
-});
-
-test('extended-beta consideration requires an explicit preference', () => {
-  const missingBetaInterest = validApplication();
-  missingBetaInterest.delete('betaInterest');
-  assert.match(
-    validateApplication(missingBetaInterest, new Date('2026-08-26T12:00:00-04:00')),
-    /Missing required field: betaInterest/,
-  );
 });
 
 test('conference interest and LinkedIn are required', () => {
@@ -312,8 +296,9 @@ test('the Cloudflare microsite contains details, both forms, and policy navigati
   assert.match(landing, /September 14–December 15/);
   assert.match(landing, /one monthly group check-in/);
   assert.match(landing, /unlimited Slack or DM access/);
-  assert.match(landing, /Extended Beta-Only Group/);
   assert.match(landing, /Free Fall 2026 Founding Cohort/);
+  assert.doesNotMatch(landing, /at least five freshmen or sophomores/);
+  assert.doesNotMatch(application, /name="betaInterest"/);
   assert.match(landing, /Participant Terms/);
   assert.match(application, /path === '\/apply'/);
   assert.match(application, /<ApplicationPage/);

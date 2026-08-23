@@ -109,12 +109,6 @@ export const conferenceInterestOptions = [
   'Not currently interested in conferences',
 ];
 
-export const betaInterestOptions = [
-  'Yes — consider me for an ApplyFirst beta-only spot',
-  'No — mentorship cohort only',
-  'Tell me more first',
-];
-
 export const referralSourceOptions = [
   "Kelly's LinkedIn post",
   'Direct message from Kelly',

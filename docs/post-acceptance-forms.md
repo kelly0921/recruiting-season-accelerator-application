@@ -24,6 +24,9 @@ on agreeing to a testimonial or public identification.
 
 ## Extended Beta Onboarding
 
+Use this only for testers recruited through the separate ApplyFirst beta and
+conference-material interest form—not through the mentorship application.
+
 Create a shorter form for up to seven additional ApplyFirst testers. Collect only:
 
 - Role and opportunity interests

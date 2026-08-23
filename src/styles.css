@@ -6106,82 +6106,16 @@ textarea {
   }
 }
 
-/* Keep participation options concise; program details already live above. */
-.track-comparison {
+.fit-preference-note {
+  width: 100%;
+  margin: 24px 0 0;
   border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-}
-
-.track-row {
-  padding: 22px 0;
-}
-
-.track-row + .track-row {
-  border-top: 1px solid var(--line);
-}
-
-.track-row header {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 18px;
-}
-
-.track-row header span {
-  color: var(--navy);
-  font-size: 0.96rem;
-  font-weight: 820;
-  line-height: 1.35;
-}
-
-.track-row header strong {
-  flex: 0 0 auto;
-  color: var(--blue);
-  font-size: 0.74rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-.track-row p {
-  max-width: 62ch;
-  margin: 9px 0 0;
+  padding-top: 17px;
   color: var(--copy);
   font-size: 0.84rem;
-  line-height: 1.55;
+  line-height: 1.6;
 }
 
-.track-comparison-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 22px;
-  border-top: 1px solid var(--line);
-  padding: 18px 0;
-}
-
-.track-comparison-footer p {
-  margin: 0;
-  color: var(--muted);
-  font-size: 0.72rem;
-  line-height: 1.45;
-}
-
-.track-comparison-footer .button {
-  flex: 0 0 auto;
-  min-height: 42px;
-  padding: 0 17px;
-  font-size: 0.76rem;
-}
-
-@media (max-width: 620px) {
-  .track-row header,
-  .track-comparison-footer {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 7px;
-  }
-
-  .track-comparison-footer {
-    gap: 14px;
-  }
+.fit-preference-note strong {
+  color: var(--navy);
 }
