@@ -207,7 +207,13 @@ function ApplicationPage() {
       const result = await response.json();
       if (!response.ok) throw new Error(result.error || 'Unable to submit your application.');
       setStatus('success');
-      setMessage(result.reference ? `Confirmation: ${result.reference}` : '');
+      if (result.reference) {
+        setMessage(
+          result.confirmationEmailSent
+            ? `Confirmation: ${result.reference} · A receipt was sent to your email.`
+            : `Confirmation: ${result.reference} · Your application is saved, but the receipt email could not be sent. Please keep this number.`,
+        );
+      }
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch (error) {
       setStatus('error');

@@ -14,6 +14,7 @@ Recruiting Season Accelerator founding mentorship cohort application.
 - Cloudflare Turnstile server-side verification
 - D1 application-record storage
 - Private R2 PDF-resume storage
+- Transactional application-receipt email with delivery-status tracking
 - Server-side validation and application-window enforcement
 
 Applicant data, resumes, API secrets, payment links, and private program links must
@@ -68,7 +69,8 @@ Create and attach these under the Pages project's **Settings → Bindings**:
      database, including `0003_refine_application_selection.sql` and
      `0004_refine_application_fit_and_acknowledgements.sql`, followed by
      `0005_add_conference_interest.sql`, `0006_add_beta_interest.sql`, and
-     `0007_create_stage_one_application_fields.sql`
+     `0007_create_stage_one_application_fields.sql`, followed by
+     `0008_add_confirmation_email_tracking.sql`
    - The production database for the current Pages site was updated through
      migration `0007` on August 23, 2026. Do not rerun it there.
    - The future-interest endpoint also creates its table safely if the second
@@ -88,12 +90,22 @@ Add:
 | --- | --- | --- |
 | `VITE_TURNSTILE_SITE_KEY` | Plaintext | Renders the browser widget during the build |
 | `TURNSTILE_SECRET_KEY` | Secret | Verifies tokens inside the Pages Function |
+| `CLOUDFLARE_ACCOUNT_ID` | Secret | Selects the Cloudflare account used for Email Sending |
+| `CLOUDFLARE_EMAIL_API_TOKEN` | Secret | Sends transactional email through the Email Sending REST API |
+| `CONFIRMATION_FROM_EMAIL` | Plaintext | Onboarded sender, such as `mentorship@kellychen.dev` |
+| `CONFIRMATION_REPLY_TO` | Plaintext | Address that receives applicant replies |
 
 Apply `VITE_TURNSTILE_SITE_KEY` to both production and preview builds if previews
 need working submissions. Restrict production submissions to the production
 hostname in the Turnstile widget.
 
 Deploy again after adding bindings or environment variables.
+
+Cloudflare Pages Functions do not currently expose Email Sending as a supported
+Pages binding, so the confirmation uses Cloudflare's server-side Email Sending REST
+API. The API token is available only to the Pages Function and must never use a
+`VITE_` prefix. Follow the email setup and test steps in
+[`docs/cloudflare-launch-checklist.md`](docs/cloudflare-launch-checklist.md).
 
 For the complete production setup and pre-LinkedIn verification sequence, follow
 [`docs/cloudflare-launch-checklist.md`](docs/cloudflare-launch-checklist.md).

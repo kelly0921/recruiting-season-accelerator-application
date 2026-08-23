@@ -3,6 +3,7 @@ import {
   validateApplication,
   validateResumeSignature,
 } from '../_shared/validation.js';
+import { sendApplicationConfirmation } from '../_shared/confirmationEmail.js';
 import { verifyTurnstile } from '../_shared/turnstile.js';
 
 const json = (body, status = 200) =>
@@ -13,6 +14,30 @@ const json = (body, status = 200) =>
       'Cache-Control': 'no-store',
     },
   });
+
+async function recordConfirmationEmailOutcome(env, applicationId, outcome) {
+  try {
+    await env.APPLICATIONS_DB.prepare(
+      `UPDATE applications
+       SET confirmation_email_status = ?1,
+           confirmation_email_sent_at = ?2,
+           confirmation_email_error = ?3,
+           confirmation_email_message_id = ?4
+       WHERE id = ?5`,
+    ).bind(
+      outcome.status,
+      outcome.sent ? new Date().toISOString() : '',
+      String(outcome.error || '').slice(0, 500),
+      String(outcome.messageId || '').slice(0, 200),
+      applicationId,
+    ).run();
+  } catch (error) {
+    console.error('Confirmation email status update failed', {
+      applicationId,
+      message: error.message,
+    });
+  }
+}
 
 export async function onRequestPost({ request, env }) {
   if (!env.APPLICATIONS_DB || !env.RESUMES_BUCKET || !env.TURNSTILE_SECRET_KEY) {
@@ -136,7 +161,36 @@ export async function onRequestPost({ request, env }) {
     return json({ error: 'Your application could not be saved. Please try again.' }, 500);
   }
 
-  return json({ ok: true, reference: id.slice(0, 8).toUpperCase() }, 201);
+  const reference = id.slice(0, 8).toUpperCase();
+  let confirmationEmail;
+
+  try {
+    confirmationEmail = await sendApplicationConfirmation({
+      env,
+      fullName: record.fullName,
+      email: record.email,
+      reference,
+    });
+  } catch (error) {
+    confirmationEmail = {
+      sent: false,
+      status: 'failed',
+      error: error.message,
+      messageId: '',
+    };
+    console.error('Application confirmation email failed', {
+      applicationId: id,
+      message: error.message,
+    });
+  }
+
+  await recordConfirmationEmailOutcome(env, id, confirmationEmail);
+
+  return json({
+    ok: true,
+    reference,
+    confirmationEmailSent: confirmationEmail.sent,
+  }, 201);
 }
 
 export function onRequestGet() {

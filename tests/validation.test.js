@@ -10,6 +10,10 @@ import {
   validateFutureInterest,
   validateResumeSignature,
 } from '../functions/_shared/validation.js';
+import {
+  buildApplicationConfirmationEmail,
+  sendApplicationConfirmation,
+} from '../functions/_shared/confirmationEmail.js';
 import { applicationStepRequiresValidation } from '../src/program.js';
 
 const landingSourceUrl = new URL('../src/LandingPage.jsx', import.meta.url);
@@ -244,6 +248,73 @@ test('resume uploads must contain a PDF file signature', async () => {
     { type: 'application/pdf' },
   );
   assert.match(await validateResumeSignature(disguisedFile), /valid PDFs/);
+});
+
+test('application confirmation email is concise, branded, and safe', () => {
+  const email = buildApplicationConfirmationEmail({
+    fullName: '<Kelly> Applicant',
+    email: 'applicant@example.com',
+    reference: 'ABC12345',
+  });
+
+  assert.equal(email.to, 'applicant@example.com');
+  assert.match(email.subject, /Application/);
+  assert.match(email.text, /ABC12345/);
+  assert.match(email.text, /September 3, 2026/);
+  assert.match(email.text, /not an acceptance decision/);
+  assert.match(email.html, /&lt;Kelly&gt;/);
+  assert.doesNotMatch(email.html, /<Kelly>/);
+});
+
+test('application confirmation uses the Cloudflare Email Sending REST API', async () => {
+  let request;
+  const outcome = await sendApplicationConfirmation({
+    env: {
+      CLOUDFLARE_ACCOUNT_ID: 'account-id',
+      CLOUDFLARE_EMAIL_API_TOKEN: 'secret-token',
+      CONFIRMATION_FROM_EMAIL: 'mentorship@kellychen.dev',
+      CONFIRMATION_REPLY_TO: 'kelly@example.com',
+    },
+    fullName: 'Example Applicant',
+    email: 'applicant@example.com',
+    reference: 'ABC12345',
+    fetchImpl: async (url, options) => {
+      request = { url, options };
+      return new Response(JSON.stringify({
+        success: true,
+        errors: [],
+        result: {
+          delivered: ['applicant@example.com'],
+          queued: [],
+          permanent_bounces: [],
+          message_id: 'message-id',
+        },
+      }), { status: 200, headers: { 'Content-Type': 'application/json' } });
+    },
+  });
+
+  assert.equal(outcome.sent, true);
+  assert.equal(outcome.status, 'delivered');
+  assert.match(request.url, /accounts\/account-id\/email\/sending\/send$/);
+  assert.equal(request.options.headers.Authorization, 'Bearer secret-token');
+  const payload = JSON.parse(request.options.body);
+  assert.equal(payload.from.address, 'mentorship@kellychen.dev');
+  assert.equal(payload.reply_to, 'kelly@example.com');
+  assert.ok(payload.html);
+  assert.ok(payload.text);
+});
+
+test('missing email configuration does not invalidate a saved application', async () => {
+  const outcome = await sendApplicationConfirmation({
+    env: {},
+    fullName: 'Example Applicant',
+    email: 'applicant@example.com',
+    reference: 'ABC12345',
+  });
+
+  assert.equal(outcome.sent, false);
+  assert.equal(outcome.status, 'not_configured');
+  assert.match(outcome.error, /Missing email configuration/);
 });
 
 test('a complete future cohort interest form passes validation', () => {

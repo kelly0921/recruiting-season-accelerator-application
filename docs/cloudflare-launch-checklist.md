@@ -39,6 +39,7 @@ In the Cloudflare dashboard:
    - `migrations/0005_add_conference_interest.sql`
    - `migrations/0006_add_beta_interest.sql`
    - `migrations/0007_create_stage_one_application_fields.sql`
+   - `migrations/0008_add_confirmation_email_tracking.sql`
 5. Open **Workers & Pages → recruiting-accelerator-apply → Settings → Bindings**.
 6. Add a **D1 database binding**:
    - Variable name: `APPLICATIONS_DB`
@@ -50,9 +51,9 @@ records. It does not store the resume file itself.
 
 The production database bound to the current Pages site was updated through
 `0007_create_stage_one_application_fields.sql` and verified on August 23, 2026.
-Do not rerun that migration there. Run it once only when updating another database
-that already has migrations `0001` through `0006`. The existing D1 binding, R2
-bucket, and Turnstile keys do not need to be replaced.
+Do not rerun migrations `0001` through `0007` there. Run migration `0008` once to
+add confirmation-email tracking before testing this feature. The existing D1
+binding, R2 bucket, and Turnstile keys do not need to be replaced.
 
 ## 3. Create Private Resume Storage
 
@@ -86,7 +87,36 @@ stores the corresponding private object key.
 Set both for Production. The site key is intentionally public; the secret key
 must remain encrypted and must never be committed to GitHub.
 
-## 5. Redeploy After Configuration
+## 5. Configure Application Confirmation Email
+
+Cloudflare Email Sending is currently available on the Workers Paid plan and
+requires a domain using Cloudflare DNS. The Pages Function uses the Email Sending
+REST API because Email Sending is not currently listed among the bindings supported
+directly by Pages Functions.
+
+1. Open **Compute → Email Service → Email Sending**.
+2. Select **Onboard Domain** and choose `kellychen.dev`.
+3. Let Cloudflare add the SPF, DKIM, bounce-handling, and DMARC records, then wait
+   until the domain shows as ready.
+4. Open **My Profile → API Tokens → Create Token**.
+5. Create an account-scoped token with **Email Sending: Edit** and restrict it to
+   the Cloudflare account that owns `kellychen.dev`.
+6. Copy the Account ID from the Cloudflare dashboard.
+7. In **Workers & Pages → recruiting-accelerator-apply → Settings → Variables and Secrets**, add these Production values:
+
+| Variable | Type | Value |
+| --- | --- | --- |
+| `CLOUDFLARE_ACCOUNT_ID` | Secret | Your Cloudflare Account ID |
+| `CLOUDFLARE_EMAIL_API_TOKEN` | Secret | The scoped Email Sending token |
+| `CONFIRMATION_FROM_EMAIL` | Plaintext | `mentorship@kellychen.dev` |
+| `CONFIRMATION_REPLY_TO` | Plaintext | `kellychenmeiyi@gmail.com` |
+
+The confirmation includes the applicant's reference number, September 3 decision
+date, and next-step expectations. It does not include application answers or the
+resume. An email failure never deletes or invalidates a saved application; the
+success screen tells the applicant to retain the reference number instead.
+
+## 6. Redeploy After Configuration
 
 `VITE_TURNSTILE_SITE_KEY` is inserted during the frontend build, so adding the
 variable is not enough by itself.
@@ -98,14 +128,15 @@ variable is not enough by itself.
 5. Confirm the Turnstile widget appears and the final submit button is enabled
    during the application window.
 
-## 6. Run One Controlled End-to-End Test
+## 7. Run One Controlled End-to-End Test
 
 Before sharing the LinkedIn post:
 
 1. Submit one application using an email such as
    `kellychenmeiyi+launch-test@gmail.com` and a small test PDF.
 2. Confirm the success screen displays an application reference.
-3. In the D1 console, run:
+3. Confirm the receipt arrives and that Reply goes to `kellychenmeiyi@gmail.com`.
+4. In the D1 console, run:
 
 ```sql
 SELECT
@@ -125,15 +156,19 @@ SELECT
   beta_interest,
   adult_confirmed,
   acknowledgements_accepted_at,
-  terms_version
+  terms_version,
+  confirmation_email_status,
+  confirmation_email_sent_at,
+  confirmation_email_message_id,
+  confirmation_email_error
 FROM applications
 ORDER BY submitted_at DESC;
 ```
 
-4. Confirm the test row appears.
-5. Open the private R2 bucket and confirm the matching PDF exists under the
+5. Confirm the test row appears and the confirmation status is `delivered` or `queued`.
+6. Open the private R2 bucket and confirm the matching PDF exists under the
    `founding-cohort-2026/` prefix.
-6. Test `/interest` once and confirm the record appears with:
+7. Test `/interest` once and confirm the record appears with:
 
 ```sql
 SELECT
@@ -147,17 +182,19 @@ FROM future_cohort_interest
 ORDER BY submitted_at DESC;
 ```
 
-7. Remove the test records and test PDF after verification so they are not
+8. Remove the test records and test PDF after verification so they are not
    confused with real applicants.
 
-## 7. Know How Applications Will Be Reviewed
+## 8. Know How Applications Will Be Reviewed
 
-There is currently no private application dashboard and no automatic email
-notification when someone submits. During the application window:
+There is currently no private application dashboard or separate owner notification
+when someone submits. Applicants receive a transactional receipt. During the
+application window:
 
 - Check the `applications` D1 table at least once each day.
 - Review the associated resume from the private R2 bucket.
 - Update the D1 `status` field manually as applications move through review.
+- Check `confirmation_email_status` for `failed` or `not_configured` receipts.
 - Do not download resumes onto shared or public devices.
 - Do not export applicant data into public analytics or public spreadsheets.
 
@@ -165,7 +202,7 @@ An owner-only review dashboard or submission notification can be added later,
 but it is not required for a small eight-person founding cohort if the D1 table
 is checked consistently.
 
-## 8. Prepare the Private Operational Links
+## 9. Prepare the Private Operational Links
 
 Do not publish these on the landing page or in the LinkedIn post:
 
@@ -182,7 +219,7 @@ Create the two private post-decision forms described in
 [`post-acceptance-forms.md`](post-acceptance-forms.md) before decisions are sent.
 Do not add those detailed questions back to the public Stage 1 application.
 
-## 9. Final LinkedIn Preflight
+## 10. Final LinkedIn Preflight
 
 Immediately before posting:
 
