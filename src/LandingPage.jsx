@@ -30,7 +30,7 @@ export const faqs = [
   {
     question: 'What Is the Fall-Semester Commitment and Workshop Schedule?',
     answer:
-      'The cohort runs September 14–December 15. The September 14–October 11 intensive requires approximately one to two hours per week, two one-hour individual sessions, and attendance at three of four virtual workshops. From October 12–December 15, the commitment is one monthly group check-in plus a short feedback prompt approximately every two weeks. Final workshop times will be selected around accepted participants’ availability.',
+      'The cohort runs September 14–December 15. The September 14–October 11 intensive requires approximately one to two hours per week, two one-hour individual sessions, and attendance at three of four virtual workshops. From October 12–December 15, the commitment is one monthly group check-in plus a short feedback prompt approximately every two weeks. Final workshop times will be selected around accepted participants’ availability. The lighter phase does not include unlimited Slack or DM access, extra one-to-one sessions, or repeated resume-review cycles.',
   },
   {
     question: 'Do I Need to Be Attending a Conference?',
@@ -280,7 +280,7 @@ export function LandingPage() {
                 </ul>
                 <p className="phase-commitment">
                   <strong>Commitment</strong>
-                  Approximately one to two hours per week, plus two scheduled one-hour individual sessions. Attend at least three of four virtual workshops; final times will reflect accepted participants&apos; availability.
+                  About one to two hours per week, plus two one-hour individual sessions. Attend at least three of four virtual workshops; times will reflect cohort availability.
                 </p>
               </article>
 
@@ -291,15 +291,13 @@ export function LandingPage() {
                   <h3>Apply and Adjust</h3>
                 </header>
                 <ul className="phase-list">
-                  <li>October Progress and ApplyFirst Check-In</li>
-                  <li>November Recruiting and Conference Check-In</li>
-                  <li>December 15 Semester Closeout</li>
-                  <li>Short ApplyFirst Feedback About Every Two Weeks</li>
-                  <li>Continued Cohort-Resource Access</li>
+                  <li>Progress and ApplyFirst Check-In</li>
+                  <li>Recruiting and Conference Check-In</li>
+                  <li>Semester Closeout and Next Steps</li>
                 </ul>
                 <p className="phase-commitment">
-                  <strong>Commitment</strong>
-                  One monthly group check-in and a short feedback prompt approximately every two weeks. Conference feedback is timed around relevant event dates.
+                  <strong>Cadence</strong>
+                  One monthly group check-in and a short feedback prompt about every two weeks, with conference feedback timed around relevant event dates.
                 </p>
               </article>
             </div>
@@ -318,9 +316,6 @@ export function LandingPage() {
                 ))}
               </ol>
             </div>
-            <p className="support-boundary">
-              <strong>Support Boundary:</strong> Weekly workshops and guaranteed individual sessions end October 11. The lighter phase does not include unlimited Slack or DM access, extra one-to-one sessions, or repeated resume-review cycles.
-            </p>
           </div>
         </section>
 
@@ -358,32 +353,30 @@ export function LandingPage() {
         <section className="landing-section pricing-section" aria-labelledby="pricing-title">
           <div className="landing-shell pricing-layout">
             <SectionHeading
-              eyebrow="Two Ways to Participate"
-              title="Choose the Right Participation Track."
-              body="One application is used for both tracks."
+              eyebrow="Participation Options"
+              title="One Application. Two Possible Placements."
+              body="Both options are free for the Fall 2026 founding pilot."
               id="pricing-title"
             />
-            <div className="price-card">
-              <span>Fall 2026 Founding Pilot</span>
-              <strong>Free</strong>
-              <p>No payment or positive testimonial is required. The two tracks have different levels of support.</p>
-              <section className="track-option mentorship-track">
-                <div><span>Founding Mentorship Cohort</span><strong>{program.capacity} Students</strong></div>
-                <ul>
-                  <li>The complete two-phase mentorship experience described above</li>
-                  <li>Four workshops, two individual sessions, one resume re-review, and a 60-day plan</li>
-                  <li>Monthly check-ins, continued resources, and lightweight feedback through December 15</li>
-                </ul>
-              </section>
-              <section className="track-option beta-track">
-                <div><span>Extended Beta-Only Group</span><strong>Up to {program.betaCapacity} Students</strong></div>
-                <ul>
-                  <li>Early ApplyFirst and relevant conference-playbook access</li>
-                  <li>Short product-feedback prompts through December 15</li>
-                  <li>No guaranteed workshops, monthly mentorship check-ins, resume review, or one-to-one mentorship</li>
-                </ul>
-              </section>
-              <ApplicationButton label="Review the Application" />
+            <div className="track-comparison">
+              <article className="track-row mentorship-track">
+                <header>
+                  <span>Founding Mentorship Cohort</span>
+                  <strong>{program.capacity} Students</strong>
+                </header>
+                <p>The complete fall-semester mentorship experience described above.</p>
+              </article>
+              <article className="track-row beta-track">
+                <header>
+                  <span>Extended Beta-Only Group</span>
+                  <strong>Up to {program.betaCapacity} Students</strong>
+                </header>
+                <p>ApplyFirst and relevant conference-playbook access, plus short feedback prompts through December 15. No guaranteed workshops, reviews, or one-to-one mentorship.</p>
+              </article>
+              <footer className="track-comparison-footer">
+                <p>No payment or positive testimonial is required.</p>
+                <ApplicationButton label="Review the Application" />
+              </footer>
             </div>
           </div>
         </section>
