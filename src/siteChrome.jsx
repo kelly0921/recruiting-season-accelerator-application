@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { applicationAction, applicationState, program } from './program.js';
+import { applicationAction, program } from './program.js';
+import { useApplicationState } from './useApplicationState.js';
 
 const shortcuts = [
   ['fit', 'Who It\u0027s For'],
@@ -8,7 +9,8 @@ const shortcuts = [
 ];
 
 export function ProgramHeader({ compact = false, applicationPage = false }) {
-  const action = applicationAction(applicationState());
+  const state = useApplicationState();
+  const action = applicationAction(state);
   const [activeSection, setActiveSection] = useState(
     () => (window.location.pathname === '/faq' ? 'faq' : ''),
   );

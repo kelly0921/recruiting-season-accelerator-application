@@ -1,13 +1,10 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import './styles.css';
 import { FaqPage, LandingPage, PolicyPage } from './LandingPage.jsx';
-import {
-  applicationState,
-  applicationStepRequiresValidation,
-  program,
-} from './program.js';
+import { applicationStepRequiresValidation, program } from './program.js';
 import { ProgramFooter, ProgramHeader } from './siteChrome.jsx';
+import { useApplicationState } from './useApplicationState.js';
 import {
   academicStageOptions,
   conferenceInterestOptions,
@@ -133,7 +130,7 @@ function ApplicationPage() {
   const [turnstileToken, setTurnstileToken] = useState('');
   const [obstacleCount, setObstacleCount] = useState(0);
   const formRef = useRef(null);
-  const state = useMemo(() => applicationState(), []);
+  const state = useApplicationState();
   const canSubmit = state === 'open' && Boolean(import.meta.env.VITE_TURNSTILE_SITE_KEY);
 
   const validateStep = () => {

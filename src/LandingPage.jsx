@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
-import { applicationAction, applicationState, program } from './program.js';
+import { applicationAction, program } from './program.js';
 import { ProgramFooter, ProgramHeader } from './siteChrome.jsx';
+import { useApplicationState } from './useApplicationState.js';
 
 const bottlenecks = [
   ['01', 'Opportunity Discovery', 'You need better places to find high-fit opportunities.'],
@@ -92,7 +93,7 @@ function SectionHeading({ eyebrow, title, body, id, index }) {
 }
 
 function ApplicationButton({ className = 'button', label }) {
-  const state = applicationState();
+  const state = useApplicationState();
   const action = applicationAction(state);
   const resolvedLabel = state === 'closed' ? action.label : label || action.label;
   return <a className={className} href={action.href}>{resolvedLabel}</a>;
@@ -156,7 +157,7 @@ function useLandingPageMotion() {
 
 export function LandingPage() {
   useLandingPageMotion();
-  const state = applicationState();
+  const state = useApplicationState();
 
   return (
     <div className="program-site">
