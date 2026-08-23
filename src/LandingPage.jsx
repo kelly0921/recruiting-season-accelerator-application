@@ -263,7 +263,7 @@ export function LandingPage() {
                 </p>
               </div>
               <ul className="intensive-deliverables" aria-label="Intensive mentorship deliverables">
-                <li>Four Live Workshops and Q&amp;As</li>
+                <li>Four 75-Minute Live Workshops and Q&amp;As</li>
                 <li>One-Hour Resume Review</li>
                 <li>One Offline Resume Re-Review</li>
                 <li>One-Hour Strategy Session</li>
@@ -278,7 +278,7 @@ export function LandingPage() {
                   </li>
                 ))}
               </ol>
-              <small>Workshop exercises may adapt to the selected cohort. Weekly workshops end October 11.</small>
+              <small>Attend at least three of four virtual workshops. Final times will be selected around accepted participants&apos; availability; weekly workshops end October 11.</small>
             </div>
 
             <div className="semester-continuation" aria-labelledby="continuation-title">
