@@ -363,20 +363,9 @@ export function LandingPage() {
           </div>
         </section>
 
-        <section className="landing-section timeline-section" id="timeline" aria-labelledby="timeline-title">
-          <div className="landing-shell application-timeline-layout">
-            <SectionHeading eyebrow="Application Timeline" title="Three Dates to Know." id="timeline-title" index="04" />
-            <ol className="date-timeline">
-              <li><span>01</span><div><strong>Applications</strong><time>{program.applicationDates}</time></div></li>
-              <li><span>02</span><div><strong>Decisions</strong><time>{program.decisionDates}</time></div></li>
-              <li><span>03</span><div><strong>Onboarding Due</strong><time>{program.onboardingDueDate}</time></div></li>
-            </ol>
-          </div>
-        </section>
-
         <section className="landing-section faq-section" id="faq" aria-labelledby="faq-title">
           <div className="landing-shell faq-layout">
-            <SectionHeading eyebrow="Questions" title="Before You Apply." id="faq-title" index="05" />
+            <SectionHeading eyebrow="Questions" title="Before You Apply." id="faq-title" index="04" />
             <div className="faq-list">
               {faqs.slice(0, 5).map((item) => (
                 <details key={item.question}>

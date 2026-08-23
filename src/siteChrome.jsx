@@ -4,7 +4,6 @@ import { applicationAction, applicationState, program } from './program.js';
 const shortcuts = [
   ['fit', 'Who It\u0027s For'],
   ['program', 'Program'],
-  ['timeline', 'Timeline'],
   ['faq', 'FAQ'],
 ];
 
