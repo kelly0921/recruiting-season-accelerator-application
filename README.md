@@ -90,7 +90,7 @@ Add:
 | --- | --- | --- |
 | `VITE_TURNSTILE_SITE_KEY` | Plaintext | Renders the browser widget during the build |
 | `TURNSTILE_SECRET_KEY` | Secret | Verifies tokens inside the Pages Function |
-| `CLOUDFLARE_ACCOUNT_ID` | Secret | Selects the Cloudflare account used for Email Sending |
+| `CLOUDFLARE_ACCOUNT_ID` | Plaintext | Selects the Cloudflare account used for Email Sending |
 | `CLOUDFLARE_EMAIL_API_TOKEN` | Secret | Sends transactional email through the Email Sending REST API |
 | `CONFIRMATION_FROM_EMAIL` | Plaintext | Onboarded sender, such as `mentorship@kellychen.dev` |
 | `CONFIRMATION_REPLY_TO` | Plaintext | Address that receives applicant replies |

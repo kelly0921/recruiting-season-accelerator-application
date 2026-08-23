@@ -106,7 +106,7 @@ directly by Pages Functions.
 
 | Variable | Type | Value |
 | --- | --- | --- |
-| `CLOUDFLARE_ACCOUNT_ID` | Secret | Your Cloudflare Account ID |
+| `CLOUDFLARE_ACCOUNT_ID` | Plaintext | Your Cloudflare Account ID |
 | `CLOUDFLARE_EMAIL_API_TOKEN` | Secret | The scoped Email Sending token |
 | `CONFIRMATION_FROM_EMAIL` | Plaintext | `mentorship@kellychen.dev` |
 | `CONFIRMATION_REPLY_TO` | Plaintext | `kellychenmeiyi@gmail.com` |
