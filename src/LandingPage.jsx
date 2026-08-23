@@ -60,12 +60,7 @@ export const faqs = [
   {
     question: 'What Is Not Included?',
     answer:
-      'This is not a coding course, technical-interview tutoring service, referral program, or job guarantee. It also does not include unlimited Slack or direct-message support, additional guaranteed one-to-one sessions, or repeated resume-review cycles after the intensive.',
-  },
-  {
-    question: 'Does Participation Guarantee an Opportunity?',
-    answer:
-      'No. The program provides education, feedback, strategy, tools, and accountability, but it does not guarantee conference acceptance or funding, referrals, interviews, internships, offers, compensation, or employment.',
+      'This is not a coding course, technical-interview tutoring service, or referral program. It does not include unlimited Slack or direct-message support, additional guaranteed one-to-one sessions, or repeated resume-review cycles after the intensive, and it does not guarantee conference funding, interviews, internships, offers, or employment.',
   },
   {
     question: 'Is This Connected to Bloomberg or Kelly’s Employers?',
@@ -73,6 +68,14 @@ export const faqs = [
       'No. Recruiting Season Accelerator is independently operated by Kelly Chen and is not affiliated with, sponsored by, or endorsed by Bloomberg or any current or former employer.',
   },
 ];
+
+const homepageFaqQuestions = new Set([
+  'Do I Need to Be Attending a Conference?',
+  'What Do I Need to Apply?',
+  'What Happens After I Apply?',
+  'Why Is the Founding Cohort Free?',
+  'What Is Not Included?',
+]);
 
 function SectionHeading({ eyebrow, title, body, id, index }) {
   return (
@@ -180,9 +183,10 @@ export function LandingPage() {
                 <em><span>Opportunity</span> Strategy.</em>
               </h1>
               <p className="hero-lede">
-                A free Fall 2026 mentorship cohort for college students pursuing
-                early-career technology opportunities. Current students from every
-                college year may apply.
+                A Fall 2026 mentorship cohort for college students pursuing
+                early-career technology opportunities. Bring the recruiting work you
+                have already started; Kelly will help you identify what to improve,
+                prioritize, and do next.
               </p>
               <ul className="hero-benefit-list" aria-label="Program highlights">
                 <li>Four Live Workshops</li>
@@ -196,24 +200,24 @@ export function LandingPage() {
                 <a className="text-link" href="#program">See What&apos;s Included</a>
               </div>
               <p className="hero-microcopy">
-                Fall-semester cohort: September 14–December 15 · Ages 18+ · All college years · Free · Applications close August 31 at 11:59 PM ET
+                Applications close August 31 at 11:59 PM ET · Cohort runs September 14–December 15
               </p>
             </div>
 
             <aside className="strategy-card" aria-label="Program strategy">
               <div className="strategy-card-heading">
-                <span>Fall-Semester Cohort</span>
-                <small>September 14–December 15</small>
+                <span>Kelly&apos;s Approach</span>
+                <small>Diagnosis Before Advice</small>
               </div>
               <ol>
-                <li><span>01</span><div><strong>Intensive</strong><small>Four high-touch weeks from September 14–October 11.</small></div></li>
-                <li><span>02</span><div><strong>Apply and Adjust</strong><small>Lighter monthly support through December 15.</small></div></li>
-                <li><span>08</span><div><strong>Founding Mentees</strong><small>A focused cohort selected for fit and readiness.</small></div></li>
-                <li><span>$0</span><div><strong>Free Founding Pilot</strong><small>Consistent participation and candid feedback required.</small></div></li>
+                <li><span>01</span><div><strong>Diagnose</strong><small>Identify the bottleneck before adding more activity.</small></div></li>
+                <li><span>02</span><div><strong>Position</strong><small>Clarify the story your experience communicates.</small></div></li>
+                <li><span>03</span><div><strong>Prioritize</strong><small>Focus on the opportunities and actions that fit.</small></div></li>
+                <li><span>04</span><div><strong>Adjust</strong><small>Use real recruiting signals to refine the plan.</small></div></li>
               </ol>
               <div className="strategy-card-result">
-                <span>Leave With</span>
-                <strong>A Personalized 60-Day Opportunity Plan</strong>
+                <span>Working Principle</span>
+                <strong>Start With the Student, Not a Generic Checklist</strong>
               </div>
             </aside>
           </div>
@@ -224,7 +228,7 @@ export function LandingPage() {
             <SectionHeading
               eyebrow="Who It’s For"
               title="For Students Who Have Started—but Need Better Results."
-              body="Open to current college students age 18+ from every class year."
+              body="No prior internship is required. The strongest applicants can name where they feel stuck and are ready to test a more focused approach."
               id="fit-title"
               index="01"
             />
@@ -242,16 +246,15 @@ export function LandingPage() {
                 <p className="eyebrow">Eligibility</p>
                 <h3>You Can Apply If:</h3>
                 <ul>
-                  <li>Current college student, age 18+ by September 14</li>
+                  <li>Current college student from any class year, age 18+ by September 14</li>
                   <li>Pursuing software engineering or a related technology path</li>
-                  <li>Basic resume ready; no prior internship required</li>
+                  <li>Basic resume ready for review</li>
                 </ul>
               </article>
               <article>
                 <p className="eyebrow">Strong Fit</p>
                 <h3>You Are Ready To:</h3>
                 <ul>
-                  <li>Explore a fall conference—or prepare for one you have been accepted to</li>
                   <li>Share a concrete action from the past 30 days</li>
                   <li>Name a specific recruiting bottleneck or decision</li>
                   <li>Act on direct, individualized feedback</li>
@@ -260,7 +263,7 @@ export function LandingPage() {
               </article>
             </div>
             <p className="fit-preference-note"><strong>Conference Interest Is a Plus, Not a Requirement.</strong> The mentorship application asks about your current plans so Kelly can understand your goals and tailor the cohort—not to register you for conference materials.</p>
-            <p className="scope-note"><strong>Scope:</strong> Recruiting strategy—not technical-interview tutoring, referrals, job guarantees, unlimited private mentorship, or repeated resume-review cycles.</p>
+            <p className="scope-note"><strong>Program Focus:</strong> Opportunity strategy, positioning, and recruiting execution—not technical-interview tutoring, referrals, or unlimited private coaching.</p>
           </div>
         </section>
 
@@ -342,10 +345,11 @@ export function LandingPage() {
               <h2 id="founder-title">Meet Kelly, Your Mentor.</h2>
               <p>
                 Kelly Chen is a software engineer, product builder, speaker, and community
-                leader with experience across Visa, JPMorgan Chase, Bloomberg, conferences,
-                hackathons, and student mentorship. She pursued opportunities early in college
-                and found her full-time role through a conference. That range helps her diagnose
-                each student&apos;s real bottleneck instead of repeating generic recruiting advice.
+                leader. Her path spans early-college programs, internships, conferences,
+                hackathons, technical work, and student mentorship—including finding her
+                full-time role through a conference. That range helps her tailor advice to each
+                student&apos;s mix of experience, positioning, timing, and follow-through instead
+                of assuming every student needs the same next step.
               </p>
               <div className="experience-row" aria-label="Experience informing the program">
                 <strong>Visa</strong><strong>JPMorgan Chase</strong><strong>Bloomberg</strong>
@@ -367,7 +371,7 @@ export function LandingPage() {
           <div className="landing-shell faq-layout">
             <SectionHeading eyebrow="Questions" title="Before You Apply." id="faq-title" index="04" />
             <div className="faq-list">
-              {faqs.slice(0, 5).map((item) => (
+              {faqs.filter((item) => homepageFaqQuestions.has(item.question)).map((item) => (
                 <details key={item.question}>
                   <summary>{item.question}</summary>
                   <p>{item.answer}</p>
@@ -380,10 +384,10 @@ export function LandingPage() {
 
         <section className="final-cta">
           <div className="landing-shell">
-            <p className="eyebrow">Prepare Your Application</p>
-            <h2>Ready to Build Your Fall Opportunity Strategy?</h2>
-            <p>Bring a basic resume, one concrete action you have taken recently, and the question you most want Kelly&apos;s help solving.</p>
-            <ApplicationButton />
+            <p className="eyebrow">Next Step</p>
+            <h2>Review the Application When You&apos;re Ready.</h2>
+            <p>The form takes about 7–10 minutes. Review the questions and prepare your resume before you begin.</p>
+            <ApplicationButton label="Review the Application" />
           </div>
         </section>
       </main>

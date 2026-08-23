@@ -14,11 +14,13 @@ export function ProgramHeader({ compact = false, applicationPage = false }) {
   );
   const headerAction = applicationPage
     ? { label: 'Back to Program', href: '/' }
-    : action;
+    : action.label === 'Apply for the Founding Cohort'
+      ? { label: 'Application', href: action.href }
+      : action;
   const shortActionLabel = applicationPage
     ? 'Program'
     : action.label === 'Apply for the Founding Cohort'
-      ? 'Apply Now'
+      ? 'Application'
       : action.label === 'Preview the Application'
         ? 'Preview'
         : 'Future Cohort';
