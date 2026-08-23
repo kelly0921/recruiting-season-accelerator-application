@@ -119,7 +119,7 @@ export function ProgramFooter() {
       <nav aria-label="Program policies">
         <a href="/terms">Participant Terms</a>
         <a href="/privacy">Privacy</a>
-        <a href="/refund">Refund Policy</a>
+        <a href="/refund">Cost Policy</a>
         <a href={`mailto:${program.contactEmail}`}>Contact</a>
       </nav>
     </footer>

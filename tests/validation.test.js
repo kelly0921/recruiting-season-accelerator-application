@@ -40,7 +40,7 @@ function validApplication() {
     linkedInUrl: 'https://linkedin.com/in/example',
     recruitingMarket: 'Primarily U.S.-Based Roles',
     targetList: 'Stripe SWE internship, Bloomberg SWE internship, and fintech programs.',
-    conferenceInterest: 'Yes, I’m considering one',
+    conferenceInterest: 'Deciding which conference to pursue',
     conferenceDetails: 'Grace Hopper Celebration, likely in the fall.',
     currentExperience: 'Applied before but received few responses',
     applicationsSubmitted: '85',
@@ -52,6 +52,7 @@ function validApplication() {
     feedbackPriority: 'I want specific feedback on my resume positioning.',
     programFit: 'After weak response rates, I narrowed my target list and rewrote my project bullets around outcomes.',
     schedulingConstraints: 'Weekday evenings are easiest for me.',
+    betaInterest: 'Yes — consider me for an ApplyFirst beta-only spot',
     referralSource: "Kelly's LinkedIn post",
   };
   Object.entries(values).forEach(([key, value]) => data.set(key, value));
@@ -82,11 +83,11 @@ function validFutureInterest() {
   return data;
 }
 
-test('application dates enforce the 2026 ET window', () => {
-  assert.equal(getApplicationState(new Date('2026-07-23T23:00:00-04:00')), 'opening-soon');
-  assert.equal(getApplicationState(new Date('2026-07-24T00:00:00-04:00')), 'open');
-  assert.equal(getApplicationState(new Date('2026-07-30T23:59:59-04:00')), 'open');
-  assert.equal(getApplicationState(new Date('2026-07-31T00:00:00-04:00')), 'closed');
+test('application dates enforce the Fall 2026 ET window', () => {
+  assert.equal(getApplicationState(new Date('2026-08-24T23:59:59-04:00')), 'opening-soon');
+  assert.equal(getApplicationState(new Date('2026-08-25T00:00:00-04:00')), 'open');
+  assert.equal(getApplicationState(new Date('2026-09-01T23:59:59-04:00')), 'open');
+  assert.equal(getApplicationState(new Date('2026-09-02T00:00:00-04:00')), 'closed');
 });
 
 test('the pre-launch application can be browsed without field validation', () => {
@@ -97,7 +98,7 @@ test('the pre-launch application can be browsed without field validation', () =>
 
 test('a complete application passes server validation', () => {
   assert.equal(
-    validateApplication(validApplication(), new Date('2026-07-26T12:00:00-04:00')),
+    validateApplication(validApplication(), new Date('2026-08-26T12:00:00-04:00')),
     '',
   );
 });
@@ -106,14 +107,14 @@ test('recruiting funnel metrics and consolidated commitments are required', () =
   const invalidMetrics = validApplication();
   invalidMetrics.set('firstInterviews', '-1');
   assert.match(
-    validateApplication(invalidMetrics, new Date('2026-07-26T12:00:00-04:00')),
+    validateApplication(invalidMetrics, new Date('2026-08-26T12:00:00-04:00')),
     /whole number/,
   );
 
   const missingCommunity = validApplication();
   missingCommunity.delete('feedbackCommunityCommitment');
   assert.match(
-    validateApplication(missingCommunity, new Date('2026-07-26T12:00:00-04:00')),
+    validateApplication(missingCommunity, new Date('2026-08-26T12:00:00-04:00')),
     /required availability/,
   );
 });
@@ -131,10 +132,11 @@ test('application records preserve the structured funnel snapshot', () => {
   assert.equal(record.communityCommitment, 1);
   assert.equal(record.recruitingMarket, 'Primarily U.S.-Based Roles');
   assert.match(record.targetList, /Stripe/);
-  assert.equal(record.conferenceInterest, 'Yes, I’m considering one');
+  assert.equal(record.conferenceInterest, 'Deciding which conference to pursue');
   assert.match(record.conferenceDetails, /Grace Hopper/);
+  assert.equal(record.betaInterest, 'Yes — consider me for an ApplyFirst beta-only spot');
   assert.equal(record.adultConfirmed, 1);
-  assert.equal(record.termsVersion, '2026-founding-cohort-v1');
+  assert.equal(record.termsVersion, '2026-fall-founding-cohort-v2');
   assert.equal(record.acknowledgementsAcceptedAt, record.submittedAt);
 });
 
@@ -142,22 +144,38 @@ test('application option values are checked against server-side allowlists', () 
   const invalidMarket = validApplication();
   invalidMarket.set('recruitingMarket', 'Anywhere with guaranteed sponsorship');
   assert.match(
-    validateApplication(invalidMarket, new Date('2026-07-26T12:00:00-04:00')),
+    validateApplication(invalidMarket, new Date('2026-08-26T12:00:00-04:00')),
     /valid recruiting market/,
   );
 
   const invalidSupport = validApplication();
   invalidSupport.set('desiredSupport', 'Guaranteed referral');
   assert.match(
-    validateApplication(invalidSupport, new Date('2026-07-26T12:00:00-04:00')),
+    validateApplication(invalidSupport, new Date('2026-08-26T12:00:00-04:00')),
     /valid support areas/,
   );
 
   const invalidConferenceInterest = validApplication();
   invalidConferenceInterest.set('conferenceInterest', 'Only if admission is guaranteed');
   assert.match(
-    validateApplication(invalidConferenceInterest, new Date('2026-07-26T12:00:00-04:00')),
+    validateApplication(invalidConferenceInterest, new Date('2026-08-26T12:00:00-04:00')),
     /valid conference-interest option/,
+  );
+
+  const invalidBetaInterest = validApplication();
+  invalidBetaInterest.set('betaInterest', 'Automatically enroll me');
+  assert.match(
+    validateApplication(invalidBetaInterest, new Date('2026-08-26T12:00:00-04:00')),
+    /valid extended-beta preference/,
+  );
+});
+
+test('extended-beta consideration requires an explicit preference', () => {
+  const missingBetaInterest = validApplication();
+  missingBetaInterest.delete('betaInterest');
+  assert.match(
+    validateApplication(missingBetaInterest, new Date('2026-08-26T12:00:00-04:00')),
+    /Missing required field: betaInterest/,
   );
 });
 
@@ -165,14 +183,14 @@ test('conference interest is required while conference details remain optional',
   const missingInterest = validApplication();
   missingInterest.delete('conferenceInterest');
   assert.match(
-    validateApplication(missingInterest, new Date('2026-07-26T12:00:00-04:00')),
+    validateApplication(missingInterest, new Date('2026-08-26T12:00:00-04:00')),
     /Missing required field: conferenceInterest/,
   );
 
   const noDetails = validApplication();
   noDetails.delete('conferenceDetails');
   assert.equal(
-    validateApplication(noDetails, new Date('2026-07-26T12:00:00-04:00')),
+    validateApplication(noDetails, new Date('2026-08-26T12:00:00-04:00')),
     '',
   );
 });
@@ -183,7 +201,7 @@ test('support choices are limited to three', () => {
   data.append('desiredSupport', 'Career Direction');
   data.append('desiredSupport', 'Recruiting Accountability');
   assert.match(
-    validateApplication(data, new Date('2026-07-26T12:00:00-04:00')),
+    validateApplication(data, new Date('2026-08-26T12:00:00-04:00')),
     /between one and three/,
   );
 });
@@ -198,7 +216,7 @@ test('resume uploads must be PDFs no larger than 5 MB', () => {
     ),
   );
   assert.match(
-    validateApplication(wrongType, new Date('2026-07-26T12:00:00-04:00')),
+    validateApplication(wrongType, new Date('2026-08-26T12:00:00-04:00')),
     /PDF/,
   );
 
@@ -208,7 +226,7 @@ test('resume uploads must be PDFs no larger than 5 MB', () => {
     testFile('resume.pdf', 'application/pdf', maxResumeBytes + 1),
   );
   assert.match(
-    validateApplication(tooLarge, new Date('2026-07-26T12:00:00-04:00')),
+    validateApplication(tooLarge, new Date('2026-08-26T12:00:00-04:00')),
     /5 MB/,
   );
 });
@@ -268,9 +286,11 @@ test('the Cloudflare microsite contains details, both forms, and policy navigati
     readFile(chromeSourceUrl, 'utf8'),
   ]);
 
-  assert.match(landing, /Recruiting Season Is Here/);
-  assert.match(landing, /Weekly Workshops/);
-  assert.match(landing, /Private Sessions/);
+  assert.match(landing, /Early Opportunities Add Up/);
+  assert.match(landing, /Live Workshops and Q&As/);
+  assert.match(landing, /Individual Strategy Session/);
+  assert.match(landing, /Extended ApplyFirst Beta/);
+  assert.match(landing, /Free Fall 2026 Founding Cohort/);
   assert.match(landing, /Participant Terms/);
   assert.match(application, /path === '\/apply'/);
   assert.match(application, /<ApplicationPage/);

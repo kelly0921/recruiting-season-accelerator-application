@@ -1390,7 +1390,7 @@ footer a {
 
 .date-timeline {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 14px;
   margin: 46px 0 0;
   padding: 0;
@@ -1666,6 +1666,20 @@ footer a {
   .founder-layout {
     grid-template-columns: 200px minmax(0, 1fr);
   }
+
+  .date-timeline {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* The participation model uses a longer explanatory heading than the former price block. */
+.pricing-section .landing-section-heading h2 {
+  max-width: 680px;
+  white-space: normal;
+}
+
+.pricing-section .landing-section-heading > p:last-child {
+  color: var(--copy);
 }
 
 @media (max-width: 620px) {
@@ -2351,6 +2365,7 @@ body {
 
 .date-timeline li:nth-child(2) { background: var(--sky); }
 .date-timeline li:nth-child(3) { background: var(--butter); }
+.date-timeline li:nth-child(4) { background: var(--mint); }
 
 .date-timeline li > span {
   color: var(--rose);

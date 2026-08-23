@@ -1,7 +1,7 @@
 # Recruiting Season Accelerator Application
 
-Unified program microsite and application portal for Kelly Chen's eight-person 2026
-Recruiting Season Accelerator founding cohort.
+Unified program microsite and application portal for Kelly Chen's free Fall 2026
+Recruiting Season Accelerator founding mentorship cohort and extended product beta.
 
 ## What this repository contains
 
@@ -9,7 +9,7 @@ Recruiting Season Accelerator founding cohort.
 - A coordinated, accessible five-step React application
 - Structured recruiting-funnel metrics and cohort-fit questions
 - A lightweight future-cohort interest form
-- Program FAQ, Participant Terms, Privacy Notice, and Refund Policy routes
+- Program FAQ, Participant Terms, Privacy Notice, and Cost Policy routes
 - Cloudflare Pages Function submission handling
 - Cloudflare Turnstile server-side verification
 - D1 application-record storage
@@ -29,7 +29,7 @@ never be committed to this repository.
 | `/faq` | Program questions |
 | `/terms` | Participant Terms |
 | `/privacy` | Privacy Notice |
-| `/refund` | Refund and Feedback Credit Policy |
+| `/refund` | Cost and Participation Policy |
 
 ## Local development
 
@@ -67,9 +67,9 @@ Create and attach these under the Pages project's **Settings → Bindings**:
    - Run all SQL files in `migrations/` in numerical order against the production
      database, including `0003_refine_application_selection.sql` and
      `0004_refine_application_fit_and_acknowledgements.sql`, followed by
-     `0005_add_conference_interest.sql`
+     `0005_add_conference_interest.sql` and `0006_add_beta_interest.sql`
    - Existing production databases that already have migrations `0001` through
-     `0004` should run only migration `0005` before the updated site is deployed
+     `0005` should run only migration `0006` before the updated site is deployed
    - The future-interest endpoint also creates its table safely if the second
      migration has not yet been run
 
@@ -99,12 +99,13 @@ For the complete production setup and pre-LinkedIn verification sequence, follow
 
 ## Founding-cohort timeline
 
-- Applications open July 24, 2026
-- Applications are reviewed on a rolling basis
-- Applications close July 30 at 11:59 PM ET or earlier if all eight seats fill
-- Final decisions are planned by July 31
-- The August 1 kickoff is tentative and proceeds only if the cohort is confirmed
-- The price is $99; scholarship seats are not available for the founding cohort
+- Applications open August 25, 2026
+- Applications close September 1 at 11:59 PM ET
+- Decisions are planned for September 3
+- Asynchronous onboarding runs September 3–14
+- The four-week mentorship intensive runs September 14–October 11
+- Lightweight ApplyFirst and conference-playbook research continues through November 30
+- The Fall 2026 founding mentorship cohort and extended beta are free
 
 ## Future-cohort interest form
 

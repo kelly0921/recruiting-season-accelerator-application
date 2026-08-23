@@ -8,16 +8,18 @@ the Cloudflare bindings and Turnstile variables below are configured.
 
 The website currently communicates:
 
-- Applications open Friday, July 24, 2026
-- Applications are reviewed on a rolling basis
-- Applications close July 30 at 11:59 PM ET or earlier if all eight seats fill
-- Final decisions are planned by July 31
-- The August 1 kickoff is tentative and depends on confirming a viable cohort
-- The founding price is $99
-- Scholarship seats are not available
+- Applications open Tuesday, August 25, 2026
+- Applications close September 1 at 11:59 PM ET
+- Decisions are planned for September 3
+- Asynchronous onboarding runs September 3–14
+- The four-week intensive runs September 14–October 11
+- Product research and check-ins continue through November 30
+- Eight students may join the founding mentorship cohort, with two alternates
+- Up to seven additional students may join the extended beta
+- Both participation levels are free
 
-Before posting on LinkedIn, decide privately what minimum cohort size makes the
-August 1 kickoff viable. The public site does not promise a specific minimum.
+Before posting on LinkedIn, confirm the group-session dates and times that accepted
+mentees will receive during selection and onboarding.
 
 ## 2. Create the D1 Application Database
 
@@ -32,6 +34,7 @@ In the Cloudflare dashboard:
    - `migrations/0003_refine_application_selection.sql`
    - `migrations/0004_refine_application_fit_and_acknowledgements.sql`
    - `migrations/0005_add_conference_interest.sql`
+   - `migrations/0006_add_beta_interest.sql`
 5. Open **Workers & Pages → recruiting-accelerator-apply → Settings → Bindings**.
 6. Add a **D1 database binding**:
    - Variable name: `APPLICATIONS_DB`
@@ -41,8 +44,8 @@ In the Cloudflare dashboard:
 The D1 database stores the application answers and future-cohort interest-list
 records. It does not store the resume file itself.
 
-If the database was already configured with migrations `0001` through `0004`,
-run only `0005_add_conference_interest.sql` for the revised form. Run it once
+If the database was already configured with migrations `0001` through `0005`,
+run only `0006_add_beta_interest.sql` for the revised form. Run it once
 before deploying the updated code. The existing D1 binding, R2 bucket, and
 Turnstile keys do not need to be replaced.
 
@@ -114,6 +117,7 @@ SELECT
   target_list,
   conference_interest,
   conference_details,
+  beta_interest,
   adult_confirmed,
   acknowledgements_accepted_at,
   terms_version
@@ -166,9 +170,9 @@ Do not publish these on the landing page or in the LinkedIn post:
 - Private cohort-space invitation
 - Participant documents or resume links
 
-Send payment and onboarding information only after acceptance. Since no
-scholarships are offered, accepted applicants should receive the same clear $99
-payment instructions and refund deadline.
+Send scheduling and onboarding information only after acceptance. Do not request
+payment information; the Fall 2026 founding mentorship cohort and extended beta
+are free.
 
 ## 9. Final LinkedIn Preflight
 
@@ -176,12 +180,11 @@ Immediately before posting:
 
 - Open the landing page, `/apply`, `/faq`, and all policy pages.
 - Submit the controlled test described above.
-- Confirm the application dates, rolling-review language, $99 price, eight-seat
-  limit, no-scholarship policy, and tentative August 1 kickoff are consistent.
+- Confirm the August 25–September 1 application window, September 3 decision date,
+  September 14 start, eight mentorship spots, extended beta, and free pilot are consistent.
 - Confirm Kelly's portfolio links to the Cloudflare landing page—not the retired
   `chatgpt.site` version.
 - Check that the LinkedIn post links to
   `https://recruiting-accelerator-apply.pages.dev/`.
-- State that applications may close early if the cohort fills.
-- Avoid promising that the August 1 kickoff is guaranteed until the cohort is
-  confirmed.
+- Clarify that conference attendance is not required.
+- Distinguish the high-touch mentorship cohort from the extended beta benefits.

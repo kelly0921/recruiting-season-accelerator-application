@@ -1,4 +1,5 @@
 import {
+  betaInterestOptions,
   conferenceInterestOptions,
   environmentOptions,
   experienceOptions,
@@ -11,8 +12,8 @@ import {
   timeZoneOptions,
 } from '../../shared/applicationOptions.js';
 
-export const applicationOpenAt = '2026-07-24T00:00:00-04:00';
-export const applicationCloseAt = '2026-07-30T23:59:59-04:00';
+export const applicationOpenAt = '2026-08-25T00:00:00-04:00';
+export const applicationCloseAt = '2026-09-01T23:59:59-04:00';
 export const maxResumeBytes = 5 * 1024 * 1024;
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -33,6 +34,7 @@ const requiredTextFields = [
   'feedbackPriority',
   'programFit',
   'schedulingConstraints',
+  'betaInterest',
   'referralSource',
 ];
 
@@ -96,6 +98,7 @@ export function validateApplication(formData, now = new Date()) {
     feedbackPriority: 1200,
     programFit: 1200,
     schedulingConstraints: 800,
+    betaInterest: 120,
     referralSource: 120,
   };
 
@@ -153,6 +156,9 @@ export function validateApplication(formData, now = new Date()) {
   }
   if (!isAllowed(formData.get('conferenceInterest'), conferenceInterestOptions)) {
     return 'Choose a valid conference-interest option.';
+  }
+  if (!isAllowed(formData.get('betaInterest'), betaInterestOptions)) {
+    return 'Choose a valid extended-beta preference.';
   }
   if (!isAllowed(formData.get('currentExperience'), experienceOptions)) {
     return 'Choose a valid current-experience option.';
@@ -249,6 +255,7 @@ export function applicationRecord(formData, id, resumeKey, now = new Date()) {
     feedbackPriority: String(formData.get('feedbackPriority')).trim(),
     programFit: String(formData.get('programFit')).trim(),
     schedulingConstraints: String(formData.get('schedulingConstraints') || '').trim(),
+    betaInterest: String(formData.get('betaInterest')).trim(),
     desiredSupport: formData.getAll('desiredSupport'),
     referralSource: String(formData.get('referralSource')).trim(),
     marketingConsent: formData.get('marketingConsent') === 'yes' ? 1 : 0,

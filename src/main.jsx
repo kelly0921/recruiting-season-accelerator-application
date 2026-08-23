@@ -9,6 +9,7 @@ import {
 } from './program.js';
 import { ProgramFooter, ProgramHeader } from './siteChrome.jsx';
 import {
+  betaInterestOptions,
   conferenceInterestOptions,
   environmentOptions,
   experienceOptions,
@@ -238,9 +239,9 @@ function ApplicationPage() {
           <p className="eyebrow">Application Received</p>
           <h1>Thank You for Applying.</h1>
           <p>
-            Kelly reviews applications on a rolling basis. Final decisions are planned
-            by July 31 using the email address you provided. The August 1 kickoff remains
-            tentative until the cohort is confirmed.
+            Kelly plans to send decisions on September 3 using the email address you
+            provided. Accepted mentees complete asynchronous onboarding before the
+            four-week intensive begins September 14.
           </p>
           {message ? <p className="reference">{message}</p> : null}
           <a className="button" href={programUrl}>Return to Program Details</a>
@@ -283,9 +284,9 @@ function ApplicationPage() {
 
           <dl className="program-facts">
             <div><dt>Time</dt><dd>About 10–12 minutes</dd></div>
-            <div><dt>Deadline</dt><dd>July 30 · 11:59 PM ET</dd></div>
-            <div><dt>Program</dt><dd>Tentative August 1 kickoff</dd></div>
-            <div><dt>Price</dt><dd>$99 if accepted</dd></div>
+            <div><dt>Deadline</dt><dd>September 1 · 11:59 PM ET</dd></div>
+            <div><dt>Program</dt><dd>September 14–October 11</dd></div>
+            <div><dt>Price</dt><dd>Free founding pilot</dd></div>
           </dl>
 
           <div className="privacy-note">
@@ -318,7 +319,7 @@ function ApplicationPage() {
 
           {state === 'opening-soon' ? (
             <div className="opening-note" role="status">
-              <strong>Applications Open July 24.</strong>
+              <strong>Applications Open August 25.</strong>
               You can browse all five steps without entering information. Required-field
               checks and submission will activate when the application window opens.
             </div>
@@ -384,7 +385,7 @@ function ApplicationPage() {
                 required={false}
               />
               <label className="field">
-                <span>Are you planning to attend a career, technology, or student conference in the next 6–12 months?</span>
+                <span>Which statement best describes your current conference plans?</span>
                 <select name="conferenceInterest" required defaultValue="">
                   <option value="" disabled>Select One</option>
                   {conferenceInterestOptions.map((option) => <option key={option}>{option}</option>)}
@@ -393,7 +394,7 @@ function ApplicationPage() {
               <TextArea
                 label="Which conference are you considering, and approximately when?"
                 name="conferenceDetails"
-                hint="Share the conference name and approximate date if applicable."
+                hint="Share the conference name and approximate date if you already have one in mind."
                 maxLength="500"
                 required={false}
               />
@@ -476,9 +477,9 @@ function ApplicationPage() {
                 maxLength="1200"
               />
               <TextArea
-                label="Which days and time windows could you usually attend a weekly 60-minute Zoom workshop?"
+                label="Which days and time windows could you usually attend a weekly 75-minute Zoom workshop?"
                 name="schedulingConstraints"
-                hint="Include any dates you already know you cannot attend. The final time will be confirmed before payment."
+                hint="Include any dates you already know you cannot attend. The final schedule will be confirmed during selection and onboarding."
                 minLength="10"
                 maxLength="800"
               />
@@ -495,9 +496,9 @@ function ApplicationPage() {
               <fieldset className="commitments">
                 <legend>Availability and Commitment</legend>
                 {[
-                  ['participationCommitment', 'If the final schedule fits one of the windows I provided, I can attend at least three workshops and complete one to two hours of focused work each week.'],
-                  ['feedbackCommunityCommitment', 'I will submit weekly progress and resource feedback, participate respectfully, and contribute relevant updates or resources when I can.'],
-                  ['programAcknowledgement', 'I understand that the program costs $99, applying does not guarantee acceptance, and participation does not guarantee interviews, referrals, internships, or offers.'],
+                  ['participationCommitment', 'If the final schedule fits one of the windows I provided, I can attend at least three of four workshops, schedule both one-hour individual sessions, and complete approximately one to two hours of program work each week.'],
+                  ['feedbackCommunityCommitment', 'I will use ApplyFirst, provide short feedback through November 30, participate respectfully, and contribute relevant updates or resources when I can.'],
+                  ['programAcknowledgement', 'I understand that this is a free founding pilot, applying does not guarantee acceptance, and participation does not guarantee funding, referrals, interviews, internships, conference acceptance, or offers.'],
                 ].map(([name, label]) => (
                   <label className="confirmation" key={name}>
                     <input type="checkbox" name={name} value="yes" required />
@@ -519,6 +520,14 @@ function ApplicationPage() {
                   </span>
                 </label>
               </fieldset>
+
+              <label className="field">
+                <span>If you are not selected for one of the eight mentorship spots, would you like to be considered for an ApplyFirst beta-only spot?</span>
+                <select name="betaInterest" required defaultValue="">
+                  <option value="" disabled>Select One</option>
+                  {betaInterestOptions.map((option) => <option key={option}>{option}</option>)}
+                </select>
+              </label>
 
               <label className="field">
                 <span>How did you hear about the program?</span>
@@ -562,7 +571,7 @@ function ApplicationPage() {
                   {status === 'submitting'
                     ? 'Submitting…'
                     : state === 'opening-soon'
-                      ? 'Opens July 24'
+                      ? 'Opens August 25'
                       : 'Submit Application'}
                 </button>
               )}
@@ -795,7 +804,7 @@ function Router() {
     '/interest': 'Future Cohort Interest | Recruiting Season Accelerator',
     '/terms': 'Participant Terms | Recruiting Season Accelerator',
     '/privacy': 'Privacy Notice | Recruiting Season Accelerator',
-    '/refund': 'Refund Policy | Recruiting Season Accelerator',
+    '/refund': 'Cost and Participation Policy | Recruiting Season Accelerator',
     '/faq': 'FAQ | Recruiting Season Accelerator',
   };
   document.title = titles[path] || titles['/'];

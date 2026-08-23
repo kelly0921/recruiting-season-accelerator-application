@@ -1,4 +1,4 @@
-export const participantTermsVersion = '2026-founding-cohort-v1';
+export const participantTermsVersion = '2026-fall-founding-cohort-v2';
 
 export const opportunityOptions = [
   'Software Engineering Internship',
@@ -68,10 +68,17 @@ export const recruitingMarketOptions = [
 ];
 
 export const conferenceInterestOptions = [
-  'Yes, I’m registered',
-  'Yes, I’m considering one',
-  'Not currently',
-  'Not sure yet',
+  'Registered or accepted for a Fall 2026 conference',
+  'Applying or seeking funding',
+  'Deciding which conference to pursue',
+  'Interested but not planning one yet',
+  'Not currently interested in conferences',
+];
+
+export const betaInterestOptions = [
+  'Yes — consider me for an ApplyFirst beta-only spot',
+  'No — mentorship cohort only',
+  'Tell me more first',
 ];
 
 export const referralSourceOptions = [

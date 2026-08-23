@@ -3,42 +3,42 @@ import { applicationAction, applicationState, program } from './program.js';
 import { ProgramFooter, ProgramHeader } from './siteChrome.jsx';
 
 const bottlenecks = [
-  ['Positioning', 'Your experience is stronger than the story your resume currently tells.'],
-  ['Targeting', 'You are applying, but your role and company strategy is too broad—or too narrow.'],
-  ['Conversion', 'You are getting some traction but do not know where the process is breaking down.'],
-  ['Prioritization', 'You have options and advice, but no clear sequence for what to improve first.'],
+  ['Opportunity Discovery', 'You know opportunities exist, but you often find them too late or do not know where to look.'],
+  ['Prioritization', 'Internships, programs, conferences, and projects all compete for attention—without a clear order.'],
+  ['Positioning', 'You have projects, coursework, leadership, or work experience, but your resume does not show the full value.'],
+  ['Access and Follow-Through', 'You want to make events and new connections useful without defaulting to generic networking advice.'],
 ];
 
 const included = [
-  ['4', 'Weekly Workshops', 'Four live, 60-minute Zoom sessions built around focused exercises—not passive lectures.'],
-  ['3', 'Private Sessions', 'An initial diagnosis, midpoint course correction, and final continuation strategy.'],
-  ['1', 'Written Resume Review', 'Specific feedback on positioning, clarity, and the story your experience communicates.'],
-  ['1', 'Career Asset Review', 'Feedback on one additional asset—such as your portfolio, LinkedIn profile, outreach, or recruiting strategy—selected around your bottleneck.'],
-  ['4', 'Weeks of Support', 'A private cohort space for weekly updates, accountability, curated resource sharing, and learning from what others are testing—with ApplyFirst tools throughout.'],
-  ['1', 'Future Offer Strategy Session', 'One 30-minute strategy session for your next internship or new-grad offer, included for every founding participant.'],
+  ['4', 'Live Workshops and Q&As', 'Four 75-minute working sessions tailored to the cohort, with frameworks, guided exercises, and focused hot seats.'],
+  ['1', 'Live Resume Review', 'One 60-minute session to identify the strongest evidence and highest-impact changes in your current resume.'],
+  ['1', 'Individual Strategy Session', 'One 60-minute mentorship session focused on your primary bottleneck, priorities, and next steps.'],
+  ['1', 'Offline Resume Re-Review', 'One bounded follow-up review after you implement the initial feedback—not an unlimited revision cycle.'],
+  ['Early', 'ApplyFirst and Playbook Access', 'Use ApplyFirst to find and track opportunities, plus a conference playbook for events, funding, preparation, and follow-up.'],
+  ['60', 'Days of Direction', 'Leave with a personalized 60-day plan, then reconnect for an October progress check and November closing session.'],
 ];
 
 const journey = [
-  ['Week 1', 'Diagnose', 'Audit what you have already tried, compare effort with results, and identify the highest-leverage gap.'],
-  ['Week 2', 'Position', 'Turn your real experience into a sharper resume, career story, and value proposition.'],
-  ['Week 3', 'Test and Adjust', 'Use response patterns—not a generic checklist—to refine targeting, applications, and networking.'],
-  ['Week 4', 'Continue', 'Keep what works and leave with a personalized 60- or 90-day plan for what comes next.'],
+  ['Week 1 · Sep 14–20', 'Map Your Opportunities', 'Build a prioritized fall portfolio across internships, programs, conferences, hackathons, and other early-career paths.'],
+  ['Week 2 · Sep 21–27', 'Build Proof', 'Turn projects, coursework, leadership, and work into stronger evidence—then identify what experience to build next.'],
+  ['Week 3 · Sep 28–Oct 4', 'Turn Access Into Action', 'Prepare for conferences, career fairs, company events, or networking with a clear objective and follow-up system.'],
+  ['Week 4 · Oct 5–11', 'Build Your 60-Day System', 'Diagnose the remaining bottleneck and create a realistic weekly cadence that continues after the intensive.'],
 ];
 
 const outcomes = [
-  'A Personalized Recruiting Diagnosis',
-  'A Clearer Target Role and Company Strategy',
-  'An Improved Resume',
-  'A Prioritized Recruiting System',
-  'Personalized Feedback on an Additional Career Asset',
-  'A Written 60- or 90-Day Action Plan',
+  'A Prioritized Fall Opportunity Map',
+  'A Career Evidence Bank',
+  'A Revised Resume With One Follow-Up Review',
+  'A Conference or Event Strategy',
+  'An ApplyFirst Opportunity Pipeline',
+  'A Personalized 60-Day Recruiting Sprint',
 ];
 
 export const faqs = [
   {
     question: 'Who Is the Program Designed For?',
     answer:
-      'Primarily sophomores, juniors, and seniors pursuing software engineering internships or new-grad roles. Selective freshmen who are at least 18 and already have meaningful technical or recruiting experience may also apply.',
+      'Primarily college freshmen and sophomores who will be at least 18 when the program begins and are pursuing software engineering or closely related technical opportunities. Previous internship experience is not required, but applicants should have a basic resume and be ready to take action.',
   },
   {
     question: 'Is This a Coding or Technical Interview Course?',
@@ -48,27 +48,32 @@ export const faqs = [
   {
     question: 'What Is the Weekly Time Commitment and Workshop Schedule?',
     answer:
-      'The program includes one live, 60-minute Zoom workshop each week, three 30-minute private sessions across the four weeks, and approximately one to two hours of focused work between workshops. The tentative kickoff is August 1 if a viable cohort is confirmed. The recurring workshop day and time will be finalized with accepted participants before payment and onboarding. Applicants should not assume recordings will be available; private sessions are scheduled individually.',
+      'The intensive runs September 14–October 11. Founding mentees attend four 75-minute group sessions, schedule one 60-minute resume review and one 60-minute strategy session, and complete approximately one to two hours of total program work each week. Participants should attend at least three workshops and continue lightweight ApplyFirst feedback through November 30.',
+  },
+  {
+    question: 'Do I Need to Be Attending a Conference?',
+    answer:
+      'No. The cohort will intentionally include students who are registered, applying or seeking funding, deciding which event to pursue, and not attending one this fall. The same playbook can support career fairs, hackathons, company programs, and other recruiting events.',
+  },
+  {
+    question: 'What Is the Difference Between the Mentorship Cohort and the Extended Beta?',
+    answer:
+      `Eight founding mentees receive the four workshops, two individual sessions, resume re-review, personalized 60-day plan, ApplyFirst, and the conference playbook. Up to ${program.betaCapacity} additional beta participants receive ApplyFirst and playbook access plus feedback check-ins, but not guaranteed resume reviews, individual mentorship, or weekly workshops.`,
   },
   {
     question: 'What Happens After I Apply?',
     answer:
-      `Applications are reviewed on a rolling basis and close July 30 at 11:59 PM ET or earlier if all ${program.capacity} seats are filled. Final decisions are planned by July 31. Accepted applicants receive private payment and onboarding instructions. The August 1 kickoff remains tentative until the cohort is confirmed.`,
+      `Applications open August 25 and close September 1 at 11:59 PM ET. Decisions are planned for September 3. Kelly will select ${program.capacity} mentees, ${program.alternateCapacity} alternates, and up to ${program.betaCapacity} extended beta testers. Accepted participants complete asynchronous onboarding before September 14.`,
   },
   {
-    question: 'Does Applying or Participating Guarantee an Interview or Offer?',
+    question: 'Why Is the Founding Cohort Free?',
     answer:
-      'No. The program provides education, feedback, strategy, and accountability. It does not guarantee referrals, interviews, internships, offers, compensation, or employment outcomes.',
+      'This is a free founding pilot. Kelly provides structured mentorship, personalized feedback, and early product access; participants commit time, use the tools in real situations, and provide candid feedback through November 30. Positive feedback and public testimonials are never required.',
   },
   {
-    question: 'How Does the $20 Feedback Credit Work?',
+    question: 'Does Applying or Participating Guarantee an Opportunity?',
     answer:
-      'Participants who complete the published participation and feedback requirements within 14 days after the final workshop may receive a $20 partial refund. Feedback may be positive, neutral, or critical.',
-  },
-  {
-    question: 'Are Scholarships Available for the Founding Cohort?',
-    answer:
-      'No scholarship seats are available for this first cohort. Accepted applicants receive private payment instructions, and no payment is collected with the application.',
+      'No. The program provides education, feedback, strategy, tools, and accountability. It does not guarantee conference acceptance or funding, referrals, interviews, internships, offers, compensation, or employment outcomes.',
   },
   {
     question: 'Is This Connected to Bloomberg or Kelly’s Employers?',
@@ -153,18 +158,17 @@ function useLandingPageMotion() {
 export function LandingPage() {
   useLandingPageMotion();
   const state = applicationState();
-  const effectivePrice = program.price - program.feedbackCredit;
 
   return (
     <div className="program-site">
       <a className="skip-link" href="#main-content">Skip to content</a>
       <div className={`announcement ${state}`}>
-        <span>Founding Cohort · {program.capacity} Students Maximum</span>
+        <span>Free Fall 2026 Founding Cohort · {program.capacity} Mentorship Spots</span>
         <strong>
           {state === 'opening-soon'
-            ? 'Applications Open July 24, 2026'
+            ? 'Applications Open August 25, 2026'
             : state === 'open'
-              ? 'Rolling Applications Close July 30 at 11:59 PM ET'
+              ? 'Applications Close September 1 at 11:59 PM ET'
               : 'Founding Cohort Applications Are Closed'}
         </strong>
       </div>
@@ -174,39 +178,39 @@ export function LandingPage() {
         <section className="program-hero">
           <div className="landing-shell hero-layout">
             <div className="program-hero-copy">
-              <p className="eyebrow">A Focused Four-Week Recruiting Reset</p>
+              <p className="eyebrow">Free Fall 2026 Founding Cohort</p>
               <h1>
-                <span className="hero-setup">Recruiting Season Is Here!</span>
-                <em><span>Apply</span> With a Strategy.</em>
+                <span className="hero-setup">Early Opportunities Add Up.</span>
+                <em><span>Build</span> Your Fall Strategy.</em>
               </h1>
               <p className="hero-lede">
-                Personalized mentorship for college students pursuing software engineering
-                internships and new-grad roles who are already putting in the work—but are
-                not seeing the response, interviews, or progress their experience should support.
+                A free mentorship cohort for college freshmen and sophomores who want a
+                more intentional way to find, pursue, and make the most of early-career
+                technology opportunities.
               </p>
               <div className="hero-actions">
                 <ApplicationButton />
                 <a className="text-link" href="#program">See What&apos;s Included</a>
               </div>
               <p className="hero-microcopy">
-                Application-based · $99 upfront ($79 after optional feedback credit) · No payment when applying
+                Ages 18+ · Eight mentorship spots · Free founding pilot · Apply August 25–September 1
               </p>
             </div>
 
             <aside className="strategy-card" aria-label="Program strategy">
               <div className="strategy-card-heading">
-                <span>Four-Week Strategy Brief</span>
-                <small>Founding Cohort</small>
+                <span>Fall Opportunity Strategy</span>
+                <small>Four-Week Intensive</small>
               </div>
               <ol>
-                <li><span>01</span><div><strong>Diagnose</strong><small>Find the real recruiting bottleneck.</small></div></li>
-                <li><span>02</span><div><strong>Position</strong><small>Strengthen your resume and story.</small></div></li>
-                <li><span>03</span><div><strong>Apply</strong><small>Build a focused opportunity system.</small></div></li>
-                <li><span>04</span><div><strong>Adjust</strong><small>Use results to decide what comes next.</small></div></li>
+                <li><span>01</span><div><strong>Discover</strong><small>Find opportunities worth pursuing.</small></div></li>
+                <li><span>02</span><div><strong>Position</strong><small>Show credible evidence from what you have done.</small></div></li>
+                <li><span>03</span><div><strong>Connect</strong><small>Prepare for events and real conversations.</small></div></li>
+                <li><span>04</span><div><strong>Execute</strong><small>Build a system you can continue independently.</small></div></li>
               </ol>
               <div className="strategy-card-result">
                 <span>Leave With</span>
-                <strong>A Personalized 60- or 90-Day Plan</strong>
+                <strong>A Personalized 60-Day Opportunity Plan</strong>
               </div>
             </aside>
           </div>
@@ -216,14 +220,14 @@ export function LandingPage() {
           <div className="landing-shell snapshot-layout">
             <div>
               <p className="eyebrow">Program at a Glance</p>
-              <h2 id="snapshot-title">Small Cohort. Focused Support.</h2>
-              <p>A deliberately limited cohort creates room for useful context, direct feedback, and individual strategy.</p>
+              <h2 id="snapshot-title">Small Cohort. A Full Fall Strategy.</h2>
+              <p>High-touch mentorship during the four-week intensive, with lightweight product research continuing through November.</p>
             </div>
             <dl className="snapshot-grid">
-              <div><dt>4</dt><dd>Weekly Workshops</dd><small>Live, focused, practical</small></div>
-              <div><dt>3</dt><dd>Private Sessions</dd><small>Personalized to your bottleneck</small></div>
-              <div><dt>{program.capacity}</dt><dd>Students Maximum</dd><small>A deliberately small cohort</small></div>
-              <div><dt>${program.price}</dt><dd>Upfront Cost</dd><small>${effectivePrice} after the optional $20 feedback credit</small></div>
+              <div><dt>4</dt><dd>Live Workshops</dd><small>75-minute working sessions and Q&As</small></div>
+              <div><dt>2</dt><dd>Individual Sessions</dd><small>One resume review and one strategy session</small></div>
+              <div><dt>{program.capacity}</dt><dd>Founding Mentees</dd><small>Plus up to {program.betaCapacity} extended beta testers</small></div>
+              <div><dt>Free</dt><dd>Founding Pilot</dd><small>Real participation and candid feedback required</small></div>
             </dl>
           </div>
         </section>
@@ -231,9 +235,9 @@ export function LandingPage() {
         <section className="landing-section" id="fit" aria-labelledby="fit-title">
           <div className="landing-shell">
             <SectionHeading
-              eyebrow="Start With the Bottleneck"
-              title="Find the Bottleneck That Matters Most."
-              body="Built for students whose materials and effort look solid on paper, but whose results point to a harder-to-see positioning, targeting, or conversion gap."
+              eyebrow="Who It’s For"
+              title="Build Early-Career Momentum Intentionally."
+              body="Designed for freshmen and sophomores who want a clearer system for finding opportunities, building evidence, and deciding what deserves their attention this fall."
               id="fit-title"
             />
             <div className="bottleneck-grid">
@@ -248,17 +252,17 @@ export function LandingPage() {
             <div className="fit-panel">
               <article>
                 <p className="eyebrow">A Strong Fit</p>
-                <h3>You Are Ready to Use Specific Feedback.</h3>
+                <h3>You Are Ready to Explore and Take Action.</h3>
                 <ul>
-                  <li>You are pursuing a SWE internship or new-grad role.</li>
-                  <li>You have a project, coursework, research, program, leadership experience, or prior recruiting attempt.</li>
-                  <li>You can complete focused work between sessions.</li>
-                  <li>You want clearer priorities—not unlimited access or a shortcut.</li>
+                  <li>You will be a college freshman or sophomore in Fall 2026 and at least 18 when the program begins.</li>
+                  <li>You are pursuing software engineering or a closely related technical path.</li>
+                  <li>You have a basic resume; previous internship experience is not required.</li>
+                  <li>You can commit one to two hours per week and provide candid product feedback through November.</li>
                 </ul>
               </article>
               <article>
                 <p className="eyebrow">Not the Right Format</p>
-                <h3>This Is Not a Beginner Coding Course or Referral Service.</h3>
+                <h3>This Is Not a Coding Course or Referral Service.</h3>
                 <ul>
                   <li>No LeetCode curriculum or daily application management</li>
                   <li>No guaranteed referrals, interviews, internships, or offers</li>
@@ -270,8 +274,8 @@ export function LandingPage() {
             <div className="fit-selection-note">
               <h3>What Kelly Looks For:</h3>
               <p>
-                Students who have already started recruiting, can act on direct feedback,
-                and have a specific bottleneck the program can realistically help address.
+                Students who show audience fit, a realistic commitment, recent action toward
+                a career goal, and a question Kelly and the program can meaningfully help solve.
               </p>
             </div>
           </div>
@@ -282,7 +286,7 @@ export function LandingPage() {
             <SectionHeading
               eyebrow="What’s Included"
               title="Everything Works Together."
-              body="Each part supports the same progression: diagnose, position, apply, adjust, and decide."
+              body="Opportunity discovery, positioning, access, and execution work as one system—with personal guidance where context matters most."
               id="program-title"
             />
             <div className="included-grid">
@@ -297,11 +301,11 @@ export function LandingPage() {
 
             <div className="journey">
               <div className="journey-heading">
-                <p className="eyebrow">The Four-Week Journey</p>
-                <h3>Four Weeks. One Strategy That Adapts.</h3>
-                <p className="journey-summary">
-                  This is not a generic weekly checklist. Each step uses your materials,
-                  decisions, and recruiting response patterns to determine what to change next.
+                  <p className="eyebrow">The Four-Week Intensive</p>
+                  <h3>Four Weeks. Four Useful Artifacts.</h3>
+                  <p className="journey-summary">
+                  The detailed exercises and hot seats will adapt after Kelly reviews the
+                  selected cohort, while the overall progression stays consistent.
                 </p>
               </div>
               <ol>
@@ -327,11 +331,11 @@ export function LandingPage() {
             />
             <aside className="sample-output" aria-label="Illustrative recruiting plan">
               <p className="eyebrow">Sample Output</p>
-              <h3>A 60-Day Recruiting Plan</h3>
+              <h3>A 60-Day Opportunity Sprint</h3>
               <ol>
-                <li><span>Weeks 1–2</span><strong>Rewrite Positioning</strong></li>
-                <li><span>Weeks 3–4</span><strong>Run a Focused Target-Company Sprint</strong></li>
-                <li><span>Weeks 5–8</span><strong>Review Response Patterns and Adjust</strong></li>
+                <li><span>Weeks 1–2</span><strong>Act on Priority Opportunities</strong></li>
+                <li><span>Weeks 3–4</span><strong>Build Evidence and Relationships</strong></li>
+                <li><span>Weeks 5–8</span><strong>Review Progress and Adjust</strong></li>
               </ol>
               <small>Illustrative format; each participant&apos;s plan is personalized.</small>
             </aside>
@@ -356,9 +360,10 @@ export function LandingPage() {
               <p>
                 Kelly Chen is a software engineer, product builder, speaker, and community
                 leader whose experience spans Visa, JPMorgan Chase, Bloomberg, early-career
-                programs, and student mentorship. That range helps her spot gaps generic
-                checklists miss and tailor advice to each student&apos;s actual materials,
-                goals, and response patterns—not offer employer access.
+                programs, conferences, hackathons, and student mentorship. She found and
+                pursued opportunities early in college and ultimately found her full-time role
+                through a conference. That range helps her tailor advice to a student&apos;s real
+                context—not offer employer access.
               </p>
               <div className="experience-row" aria-label="Experience informing the program">
                 <strong>Visa</strong><strong>JPMorgan Chase</strong><strong>Bloomberg</strong>
@@ -379,16 +384,18 @@ export function LandingPage() {
         <section className="landing-section pricing-section" aria-labelledby="pricing-title">
           <div className="landing-shell pricing-layout">
             <SectionHeading
-              eyebrow="Founding Cohort"
-              title="Four Weeks of Personalized Support."
+              eyebrow="Two Ways to Participate"
+              title="Mentorship or Extended Beta."
+              body="One application helps Kelly select a focused mentorship cohort and a broader group of product testers across different opportunity and conference stages."
               id="pricing-title"
             />
             <div className="price-card">
-              <span>Founding Price</span>
-              <strong>${program.price}</strong>
-              <p>Paid privately after acceptance. Scholarship seats are not available for the founding cohort.</p>
-              <div><span>Optional Feedback Credit</span><strong>−${program.feedbackCredit}</strong></div>
-              <div><span>Effective Cost After Credit</span><strong>${effectivePrice}</strong></div>
+              <span>Fall 2026 Founding Pilot</span>
+              <strong>Free</strong>
+              <p>No payment or positive testimonial is required. Participants exchange consistent use and candid feedback for early access and structured support.</p>
+              <div><span>Founding Mentorship Cohort</span><strong>{program.capacity} Students</strong></div>
+              <div><span>Extended ApplyFirst Beta</span><strong>Up to {program.betaCapacity} More</strong></div>
+              <div><span>Feedback Period</span><strong>Through November 30</strong></div>
               <ApplicationButton label="Review the Application" />
             </div>
           </div>
@@ -400,7 +407,8 @@ export function LandingPage() {
             <ol className="date-timeline">
               <li><span>01</span><div><strong>Applications</strong><time>{program.applicationDates}</time></div></li>
               <li><span>02</span><div><strong>Decisions</strong><time>{program.decisionDates}</time></div></li>
-              <li><span>03</span><div><strong>Program Begins</strong><time>{program.startDate}</time></div></li>
+              <li><span>03</span><div><strong>Four-Week Intensive</strong><time>{program.intensiveDates}</time></div></li>
+              <li><span>04</span><div><strong>Fall Research Ends</strong><time>{program.researchEndDate}</time></div></li>
             </ol>
           </div>
         </section>
@@ -423,8 +431,8 @@ export function LandingPage() {
         <section className="final-cta">
           <div className="landing-shell">
             <p className="eyebrow">Prepare Your Application</p>
-            <h2>Ready to Build a Clearer Recruiting Plan?</h2>
-            <p>Have your resume, LinkedIn profile, graduation date, and current recruiting goals ready.</p>
+            <h2>Ready to Build Your Fall Opportunity Strategy?</h2>
+            <p>Bring a basic resume, one concrete action you have taken recently, and the question you most want Kelly&apos;s help solving.</p>
             <ApplicationButton />
           </div>
         </section>
@@ -441,11 +449,13 @@ const policyContent = {
     title: 'Participant Terms',
     updated: 'Draft for the 2026 Founding Cohort',
     sections: [
-      ['Program and Operator', `Recruiting Season Accelerator is a four-week educational and mentorship program operated by Kelly Chen. Questions may be sent to ${program.contactEmail}.`],
-      ['Enrollment and Price', `The founding-cohort price is $${program.price}. Applying does not guarantee acceptance, and a seat is confirmed only after acceptance and private payment.`],
-      ['Included Support', 'The program includes four workshops, three private sessions, a written resume review, one additional personalized review, a private cohort space for updates and resource sharing, ApplyFirst resources, a continuation plan, and one future offer-strategy session. Themes may adapt without materially reducing the promised support.'],
+      ['Program and Operator', `Recruiting Season Accelerator is a Fall 2026 educational, mentorship, and product-research pilot operated by Kelly Chen. Questions may be sent to ${program.contactEmail}.`],
+      ['Enrollment and Cost', 'The Fall 2026 founding mentorship cohort and extended beta are free. Applying does not guarantee acceptance, and participation requires completing the applicable onboarding and participation expectations.'],
+      ['Included Mentorship Support', 'Founding mentees receive four 75-minute group workshops, one 60-minute resume-review session, one 60-minute strategy session, one bounded offline resume re-review, early ApplyFirst and conference-playbook access, a personalized 60-day plan, and scheduled October and November group check-ins. Session examples and exercises may adapt to cohort needs without materially reducing this support.'],
+      ['Extended Beta Support', 'Extended beta participants receive early ApplyFirst and conference-playbook access, onboarding guidance, and product-feedback prompts through November. They do not receive guaranteed resume reviews, individual mentorship, weekly workshops, referrals, or unlimited support.'],
+      ['Feedback and Conduct', 'Participants agree to use the applicable pilot resources, provide candid feedback through November 30, respect other participants, and protect information shared in the group. Feedback may be positive, neutral, or critical; a testimonial is not required.'],
       ['Participant Responsibility', 'Participants remain responsible for their applications, materials, decisions, attendance, and recruiting outcomes. Materials must be accurate and must not misrepresent experience.'],
-      ['No Employment Guarantee', 'Participation does not guarantee a referral, interview, internship, job offer, compensation level, or other employment outcome.'],
+      ['No Outcome Guarantee', 'Participation does not guarantee conference acceptance or funding, a referral, interview, internship, job offer, compensation level, or other employment outcome.'],
       ['Independent Program', 'The program is not affiliated with, sponsored by, or endorsed by Bloomberg or any current or former employer. All guidance is Kelly’s own.'],
     ],
   },
@@ -454,23 +464,23 @@ const policyContent = {
     title: 'Privacy Notice',
     updated: 'Draft for the 2026 Founding Cohort',
     sections: [
-      ['Information Collected', 'The application may collect contact information, school and graduation details, resume and profile links, recruiting goals and history, participation information, and optional feedback or outcome updates. The future cohort interest form collects contact, education, opportunity-interest, timing, and optional support-preference information.'],
-      ['How Information Is Used', 'Information is used to evaluate applications, select and onboard participants, deliver mentorship, operate workshops and support, improve resources, track aggregate program outcomes, plan future cohorts, and send requested cohort announcements.'],
-      ['Storage and Service Providers', 'Cloudflare processes application and future-cohort interest records, along with private resume files, for this portal. Other program vendors may process payment, scheduling, video, communication, or file information according to their own terms.'],
+      ['Information Collected', 'The application may collect contact information, school and graduation details, resume and profile links, early-career goals, recent actions, conference readiness, participation information, and optional feedback or outcome updates. Accepted participants may be asked for additional scheduling, onboarding, product-usage, and program-preference information.'],
+      ['How Information Is Used', 'Information is used to evaluate applications, select and onboard mentorship and beta participants, deliver the program, improve ApplyFirst and the conference playbook, track aggregate pilot learning, plan future cohorts, and send requested cohort announcements.'],
+      ['Storage and Service Providers', 'Cloudflare processes application and future-cohort interest records, along with private resume files, for this portal. Other program vendors may process scheduling, video, communication, research, or file information according to their own terms.'],
       ['Your Choices', `Information is not sold. Public use of a name, image, quote, school, employer, or outcome requires separate permission. Correction or deletion requests may be sent to ${program.contactEmail}.`],
       ['Retention', 'Rejected application data should generally be deleted within 60–90 days unless the applicant separately joins an updates list. Accepted-participant working files are minimized and removed or anonymized when no longer needed.'],
     ],
   },
   refund: {
     eyebrow: 'Program Policy',
-    title: 'Refund and Feedback Credit Policy',
+    title: 'Cost and Participation Policy',
     updated: 'Draft for the 2026 Founding Cohort',
     sections: [
-      ['Founding Price', `The program price is $${program.price}. A participant’s seat is confirmed after payment.`],
-      ['Refund Deadline', 'Accepted participants receive the applicable refund deadline with private payment instructions. The deadline will not be earlier than 24 hours after payment and will never be later than the first live workshop. After that point, payments are generally nonrefundable because live and individual-feedback capacity has been reserved.'],
-      ['Missed Participation', 'Missed workshops, private sessions, unused reviews, withdrawal, or lack of a desired recruiting outcome do not automatically create a refund right.'],
-      ['Program Changes', 'If Kelly cancels the entire program, participants receive a full refund. If a material included service cannot be delivered, Kelly will provide a reasonable replacement, rescheduled service, or proportionate refund.'],
-      ['Feedback Credit', `Participants may earn a $${program.feedbackCredit} partial refund by completing the published participation and feedback requirements within 14 days after the final workshop. Feedback may be positive, neutral, or critical; a testimonial or employment outcome is not required.`],
+      ['Founding-Pilot Cost', 'The Fall 2026 founding mentorship cohort and extended beta are free. No payment or payment information is required to apply or participate.'],
+      ['The Exchange', 'Kelly provides early access, structured mentorship, and personalized feedback according to each participation level. Participants commit time, use the resources in real situations, and provide candid feedback through November 30.'],
+      ['No Positive-Feedback Requirement', 'Feedback may be positive, neutral, or critical. Participation never requires a public testimonial, endorsement, or permission to use a participant’s identity.'],
+      ['Missed Participation', 'Repeatedly missing required sessions, onboarding, weekly actions, or feedback may result in removal from the pilot so limited capacity can be used responsibly.'],
+      ['Program Changes', 'ApplyFirst, the conference playbook, workshop examples, and research prompts may change during the founding period. Kelly will communicate material changes and will not use the pilot to promise referrals, funding, interviews, or employment outcomes.'],
     ],
   },
 };
