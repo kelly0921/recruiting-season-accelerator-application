@@ -18,39 +18,54 @@ const workshopThemes = [
 
 export const faqs = [
   {
-    question: 'Who Is the Program Designed For?',
+    question: 'What Is Recruiting Season Accelerator?',
     answer:
-      'Current college students age 18+ from every class year may apply. Applicants should be pursuing software engineering or a related technology path, have a basic resume, and be ready to act on feedback; prior internship experience is not required.',
+      'It is a free Fall 2026 mentorship cohort for college students pursuing early-career technology opportunities. A four-week intensive is followed by lighter check-ins and resource testing through December 15.',
   },
   {
-    question: 'Is This a Coding or Technical Interview Course?',
+    question: 'Who Can Apply?',
     answer:
-      'No. It focuses on opportunity strategy, positioning, organization, networking, and diagnosing why current recruiting efforts are not producing results.',
+      'Current college students from every class year may apply if they will be at least 18 by September 14. The program primarily supports software engineering and related technology paths; prior internship or conference experience is not required.',
   },
   {
-    question: 'What Is the Fall-Semester Commitment and Workshop Schedule?',
+    question: 'What Do Selected Mentees Receive?',
     answer:
-      'The cohort runs September 14–December 15. The September 14–October 11 intensive requires approximately one to two hours per week, two one-hour individual sessions, and attendance at three of four virtual workshops. From October 12–December 15, the commitment is one monthly group check-in plus a short feedback prompt approximately every two weeks. Final workshop times will be selected around accepted participants’ availability. The lighter phase does not include unlimited Slack or DM access, extra one-to-one sessions, or repeated resume-review cycles.',
+      'Eight mentees receive four 75-minute live workshops and Q&As, a one-hour resume review, one offline resume re-review, a one-hour strategy session, early ApplyFirst and conference-playbook access, and a personalized 60-day plan. Monthly check-ins, continued resource access, and lightweight feedback continue through December 15.',
+  },
+  {
+    question: 'What Is the Time Commitment?',
+    answer:
+      'From September 14–October 11, plan for approximately one to two hours per week plus two scheduled one-hour individual sessions, and attend at least three of four virtual workshops. From October 12–December 15, plan for one monthly group check-in and a short ApplyFirst feedback prompt about every two weeks; final live times will reflect accepted participants’ availability.',
   },
   {
     question: 'Do I Need to Be Attending a Conference?',
     answer:
-      'No. Conference attendance is not required, but the cohort is especially relevant for students who want to attend or have already been accepted to a fall conference. The application asks about conference plans only to understand mentorship fit; access for people outside the mentorship cohort will use a separate sign-up form.',
+      'No. Conference attendance is not required, but interest in attending—or an existing acceptance—is helpful context for tailoring your strategy. The mentorship application does not register you for conference materials; access outside the cohort uses a separate form.',
+  },
+  {
+    question: 'What Do I Need to Apply?',
+    answer:
+      'You need a basic resume, a LinkedIn profile, one concrete action you have taken recently, and a specific recruiting question or bottleneck. Applicants should also be willing to act on direct feedback, participate consistently, and test the included resources.',
   },
   {
     question: 'What Happens After I Apply?',
     answer:
-      `Applications run August 24–31 and close August 31 at 11:59 PM ET. Decisions are planned for September 3. Kelly will select ${program.capacity} mentees and ${program.alternateCapacity} alternates. Selected participants must complete asynchronous onboarding by September 14.`,
+      `Applications are accepted August 24–31 and close August 31 at 11:59 PM ET. Decisions are planned for September 3; Kelly will select ${program.capacity} mentees and ${program.alternateCapacity} alternates, and selected participants must complete asynchronous onboarding by September 14.`,
   },
   {
     question: 'Why Is the Founding Cohort Free?',
     answer:
-      'This is a founding pilot. Participants receive the stated support in exchange for consistent participation and candid product feedback—not positive feedback or a testimonial.',
+      'This is a founding pilot. There is no fee, scholarship process, or required positive testimonial; participants contribute consistent participation and candid feedback on ApplyFirst, the conference playbook, and the mentorship experience.',
   },
   {
-    question: 'Does Applying or Participating Guarantee an Opportunity?',
+    question: 'What Is Not Included?',
     answer:
-      'No. The program provides education, feedback, strategy, tools, and accountability. It does not guarantee conference acceptance or funding, referrals, interviews, internships, offers, compensation, or employment outcomes.',
+      'This is not a coding course, technical-interview tutoring service, referral program, or job guarantee. It also does not include unlimited Slack or direct-message support, additional guaranteed one-to-one sessions, or repeated resume-review cycles after the intensive.',
+  },
+  {
+    question: 'Does Participation Guarantee an Opportunity?',
+    answer:
+      'No. The program provides education, feedback, strategy, tools, and accountability, but it does not guarantee conference acceptance or funding, referrals, interviews, internships, offers, compensation, or employment.',
   },
   {
     question: 'Is This Connected to Bloomberg or Kelly’s Employers?',

@@ -295,7 +295,7 @@ test('the Cloudflare microsite contains details, both forms, and policy navigati
   assert.match(landing, /One-Hour Strategy Session/);
   assert.match(landing, /September 14–December 15/);
   assert.match(landing, /one monthly group check-in/);
-  assert.match(landing, /unlimited Slack or DM access/);
+  assert.match(landing, /unlimited Slack or direct-message support/);
   assert.match(landing, /Free Fall 2026 Founding Cohort/);
   assert.doesNotMatch(landing, /at least five freshmen or sophomores/);
   assert.doesNotMatch(application, /name="betaInterest"/);
