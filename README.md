@@ -71,7 +71,8 @@ Create and attach these under the Pages project's **Settings → Bindings**:
      `0005_add_conference_interest.sql`, `0006_add_beta_interest.sql`, and
      `0007_create_stage_one_application_fields.sql`, followed by
      `0008_add_confirmation_email_tracking.sql`, followed by
-     `0009_add_owner_notification_tracking.sql`
+     `0009_add_owner_notification_tracking.sql`, followed by
+     `0010_add_submission_rate_limits.sql`
    - The production database for the current Pages site was updated through
      migration `0007` on August 23, 2026. Do not rerun it there.
    - The future-interest endpoint also creates its table safely if the second
@@ -91,6 +92,9 @@ Create and attach these under the Pages project's **Settings → Bindings**:
 | `CONFIRMATION_FROM_EMAIL` | Plaintext | Onboarded sender, such as `mentorship@kellychen.dev` |
 | `CONFIRMATION_REPLY_TO` | Plaintext | Address that receives applicant replies |
 | `OWNER_NOTIFY_EMAIL` | Plaintext | Optional owner-notification destination; falls back to `CONFIRMATION_REPLY_TO` |
+| `SUBMISSION_RATE_LIMIT_SECRET` | Secret | Salts one-way hashes used for submission rate limiting |
+| `APPLICATION_SUBMISSIONS_ENABLED` | Plaintext | Set to `false` to pause applications immediately |
+| `INTEREST_SUBMISSIONS_ENABLED` | Plaintext | Set to `false` to pause the future-interest form |
 
 Deploy again after adding bindings or environment variables.
 

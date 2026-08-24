@@ -16,7 +16,11 @@ import {
   sendApplicationConfirmation,
   sendOwnerApplicationNotification,
 } from '../functions/_shared/confirmationEmail.js';
-import { validateSubmissionGuard } from '../functions/_shared/submissionGuard.js';
+import {
+  checkSubmissionRateLimit,
+  validateRequestSize,
+  validateSubmissionGuard,
+} from '../functions/_shared/submissionGuard.js';
 import { applicationStepRequiresValidation } from '../src/program.js';
 
 const landingSourceUrl = new URL('../src/LandingPage.jsx', import.meta.url);
@@ -345,6 +349,59 @@ test('submission guard accepts a human-paced same-origin form and rejects traps'
   const tooFast = new FormData();
   tooFast.set('formStartedAt', String(now));
   assert.match(validateSubmissionGuard(request, tooFast, now), /could not be verified/);
+});
+
+test('request size validation rejects oversized bodies before parsing', () => {
+  const oversized = new Request('https://example.com/api/applications', {
+    method: 'POST',
+    headers: { 'Content-Length': String(7 * 1024 * 1024) },
+  });
+  assert.match(
+    validateRequestSize(oversized, 6 * 1024 * 1024, 'Upload is too large.'),
+    /too large/,
+  );
+
+  const normal = new Request('https://example.com/api/applications', {
+    method: 'POST',
+    headers: { 'Content-Length': String(1024) },
+  });
+  assert.equal(validateRequestSize(normal, 6 * 1024 * 1024), '');
+});
+
+test('rate limiting stores a hashed address and blocks excess attempts', async () => {
+  let boundValues;
+  const database = {
+    prepare() {
+      return {
+        bind(...values) {
+          boundValues = values;
+          return {
+            first: async () => ({
+              attempts: 21,
+              window_started_at: 1_000_000,
+            }),
+          };
+        },
+      };
+    },
+  };
+  const request = new Request('https://example.com/api/applications', {
+    headers: { 'CF-Connecting-IP': '192.0.2.44' },
+  });
+  const result = await checkSubmissionRateLimit({
+    database,
+    request,
+    secret: 'rate-limit-secret',
+    scope: 'application',
+    maxAttempts: 20,
+    windowMs: 60_000,
+    now: 1_030_000,
+  });
+
+  assert.equal(result.allowed, false);
+  assert.equal(result.retryAfterSeconds, 30);
+  assert.match(boundValues[0], /^[a-f0-9]{64}$/);
+  assert.doesNotMatch(boundValues[0], /192\.0\.2\.44/);
 });
 
 test('owner notification summarizes a saved application and replies to the student', async () => {

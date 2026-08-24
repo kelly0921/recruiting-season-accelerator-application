@@ -2,14 +2,21 @@ import {
   futureInterestRecord,
   validateFutureInterest,
 } from '../_shared/validation.js';
-import { validateSubmissionGuard } from '../_shared/submissionGuard.js';
+import {
+  checkSubmissionRateLimit,
+  validateRequestSize,
+  validateSubmissionGuard,
+} from '../_shared/submissionGuard.js';
 
-const json = (body, status = 200) =>
+const maxInterestRequestBytes = 256 * 1024;
+
+const json = (body, status = 200, headers = {}) =>
   new Response(JSON.stringify(body), {
     status,
     headers: {
       'Content-Type': 'application/json; charset=utf-8',
       'Cache-Control': 'no-store',
+      ...headers,
     },
   });
 
@@ -37,13 +44,45 @@ async function ensureInterestSchema(database) {
 }
 
 export async function onRequestPost({ request, env }) {
-  if (!env.APPLICATIONS_DB) {
+  if (env.INTEREST_SUBMISSIONS_ENABLED === 'false') {
+    return json({ error: 'Future cohort updates are temporarily paused.' }, 503);
+  }
+
+  if (!env.APPLICATIONS_DB || !env.SUBMISSION_RATE_LIMIT_SECRET) {
     return json({ error: 'Future cohort updates are still being configured.' }, 503);
   }
+
+  const sizeError = validateRequestSize(request, maxInterestRequestBytes);
+  if (sizeError) return json({ error: sizeError }, 413);
 
   const contentType = request.headers.get('content-type') || '';
   if (!contentType.includes('multipart/form-data')) {
     return json({ error: 'Expected a multipart form submission.' }, 415);
+  }
+
+  let rateLimit;
+  try {
+    rateLimit = await checkSubmissionRateLimit({
+      database: env.APPLICATIONS_DB,
+      request,
+      secret: env.SUBMISSION_RATE_LIMIT_SECRET,
+      scope: 'future-interest',
+      maxAttempts: 30,
+    });
+  } catch (error) {
+    console.error(JSON.stringify({
+      message: 'Future interest rate limit failed',
+      error: error instanceof Error ? error.message : String(error),
+    }));
+    return json({ error: 'Future cohort updates are temporarily unavailable.' }, 503);
+  }
+
+  if (!rateLimit.allowed) {
+    return json(
+      { error: 'Too many submission attempts. Please wait before trying again.' },
+      429,
+      { 'Retry-After': String(rateLimit.retryAfterSeconds) },
+    );
   }
 
   let formData;

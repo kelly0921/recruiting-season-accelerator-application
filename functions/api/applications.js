@@ -7,14 +7,21 @@ import {
   sendApplicationConfirmation,
   sendOwnerApplicationNotification,
 } from '../_shared/confirmationEmail.js';
-import { validateSubmissionGuard } from '../_shared/submissionGuard.js';
+import {
+  checkSubmissionRateLimit,
+  validateRequestSize,
+  validateSubmissionGuard,
+} from '../_shared/submissionGuard.js';
 
-const json = (body, status = 200) =>
+const maxApplicationRequestBytes = 6 * 1024 * 1024;
+
+const json = (body, status = 200, headers = {}) =>
   new Response(JSON.stringify(body), {
     status,
     headers: {
       'Content-Type': 'application/json; charset=utf-8',
       'Cache-Control': 'no-store',
+      ...headers,
     },
   });
 
@@ -88,13 +95,51 @@ async function attemptEmail(label, applicationId, send) {
 }
 
 export async function onRequestPost({ request, env }) {
-  if (!env.APPLICATIONS_DB || !env.RESUMES_BUCKET) {
+  if (env.APPLICATION_SUBMISSIONS_ENABLED === 'false') {
+    return json({
+      error: 'Applications are temporarily paused. Please try again later or contact Kelly.',
+    }, 503);
+  }
+
+  if (!env.APPLICATIONS_DB || !env.RESUMES_BUCKET || !env.SUBMISSION_RATE_LIMIT_SECRET) {
     return json({ error: 'Application services are not fully configured.' }, 503);
   }
+
+  const sizeError = validateRequestSize(
+    request,
+    maxApplicationRequestBytes,
+    'The submission is too large. Upload a PDF no larger than 5 MB.',
+  );
+  if (sizeError) return json({ error: sizeError }, 413);
 
   const contentType = request.headers.get('content-type') || '';
   if (!contentType.includes('multipart/form-data')) {
     return json({ error: 'Expected a multipart form submission.' }, 415);
+  }
+
+  let rateLimit;
+  try {
+    rateLimit = await checkSubmissionRateLimit({
+      database: env.APPLICATIONS_DB,
+      request,
+      secret: env.SUBMISSION_RATE_LIMIT_SECRET,
+      scope: 'application',
+      maxAttempts: 20,
+    });
+  } catch (error) {
+    console.error(JSON.stringify({
+      message: 'Application rate limit failed',
+      error: error instanceof Error ? error.message : String(error),
+    }));
+    return json({ error: 'Application services are temporarily unavailable.' }, 503);
+  }
+
+  if (!rateLimit.allowed) {
+    return json(
+      { error: 'Too many submission attempts. Please wait before trying again.' },
+      429,
+      { 'Retry-After': String(rateLimit.retryAfterSeconds) },
+    );
   }
 
   let formData;

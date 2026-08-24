@@ -41,6 +41,7 @@ In the Cloudflare dashboard:
    - `migrations/0007_create_stage_one_application_fields.sql`
    - `migrations/0008_add_confirmation_email_tracking.sql`
    - `migrations/0009_add_owner_notification_tracking.sql`
+   - `migrations/0010_add_submission_rate_limits.sql`
 5. Open **Workers & Pages → recruiting-accelerator-apply → Settings → Bindings**.
 6. Add a **D1 database binding**:
    - Variable name: `APPLICATIONS_DB`
@@ -52,9 +53,9 @@ records. It does not store the resume file itself.
 
 The production database bound to the current Pages site was updated through
 `0007_create_stage_one_application_fields.sql` and verified on August 23, 2026.
-Do not rerun migrations `0001` through `0008` there. Run migration `0009` once to
-add owner-notification tracking before testing this feature. The existing D1
-binding and R2 bucket do not need to be replaced.
+Do not rerun migrations `0001` through `0009` there. Run migration `0010` once to
+add hashed submission-rate-limit tracking before testing this feature. The existing
+D1 binding and R2 bucket do not need to be replaced.
 
 ## 3. Create Private Resume Storage
 
@@ -78,7 +79,8 @@ The application follows the same capture-first reliability model used by
 ApplyFirst. It does not depend on a third-party verification widget. The browser
 supplies a hidden timing marker and bot-trap field, while the Pages Function
 enforces same-origin requests, the application window, required fields,
-allowlists, text limits, and PDF validation before storing anything.
+allowlists, text limits, early request-size limits, hashed-IP rate limiting, and
+PDF validation before storing anything. Raw IP addresses are not stored.
 
 ## 5. Configure Application Confirmation Email
 
@@ -104,6 +106,9 @@ directly by Pages Functions.
 | `CONFIRMATION_FROM_EMAIL` | Plaintext | `mentorship@kellychen.dev` |
 | `CONFIRMATION_REPLY_TO` | Plaintext | `kellychenmeiyi@gmail.com` |
 | `OWNER_NOTIFY_EMAIL` | Plaintext | `kellychenmeiyi@gmail.com` |
+| `SUBMISSION_RATE_LIMIT_SECRET` | Secret | Generate a private random value; never commit it |
+| `APPLICATION_SUBMISSIONS_ENABLED` | Plaintext | `true`; change to `false` to pause applications |
+| `INTEREST_SUBMISSIONS_ENABLED` | Plaintext | `true`; change to `false` to pause future-interest submissions |
 
 The student confirmation includes the applicant's reference number, September 3
 decision date, and next-step expectations. The separate owner notification includes
