@@ -1,7 +1,7 @@
 # Cloudflare and LinkedIn Launch Checklist
 
 Use this checklist before announcing Recruiting Season Accelerator publicly.
-The production form, Cloudflare bindings, Turnstile variables, and storage are
+The production form, Cloudflare bindings, submission safeguards, and storage are
 configured. Use the checks below to verify them before the public announcement.
 
 ## 1. Confirm the Public Timeline
@@ -40,6 +40,7 @@ In the Cloudflare dashboard:
    - `migrations/0006_add_beta_interest.sql`
    - `migrations/0007_create_stage_one_application_fields.sql`
    - `migrations/0008_add_confirmation_email_tracking.sql`
+   - `migrations/0009_add_owner_notification_tracking.sql`
 5. Open **Workers & Pages → recruiting-accelerator-apply → Settings → Bindings**.
 6. Add a **D1 database binding**:
    - Variable name: `APPLICATIONS_DB`
@@ -51,9 +52,9 @@ records. It does not store the resume file itself.
 
 The production database bound to the current Pages site was updated through
 `0007_create_stage_one_application_fields.sql` and verified on August 23, 2026.
-Do not rerun migrations `0001` through `0007` there. Run migration `0008` once to
-add confirmation-email tracking before testing this feature. The existing D1
-binding, R2 bucket, and Turnstile keys do not need to be replaced.
+Do not rerun migrations `0001` through `0008` there. Run migration `0009` once to
+add owner-notification tracking before testing this feature. The existing D1
+binding and R2 bucket do not need to be replaced.
 
 ## 3. Create Private Resume Storage
 
@@ -71,21 +72,13 @@ In Cloudflare:
 Resumes are saved under `founding-cohort-2026/<application-id>.pdf`. The D1 row
 stores the corresponding private object key.
 
-## 4. Configure Cloudflare Turnstile
+## 4. Confirm Submission Safeguards
 
-1. Open **Turnstile** in Cloudflare.
-2. Create a widget for `recruiting-accelerator-apply.pages.dev`.
-3. Use the managed widget mode.
-4. Copy the site key and secret key.
-5. In **Workers & Pages → recruiting-accelerator-apply → Settings → Environment Variables**, add:
-
-| Variable | Type | Value |
-| --- | --- | --- |
-| `VITE_TURNSTILE_SITE_KEY` | Plaintext | Turnstile site key |
-| `TURNSTILE_SECRET_KEY` | Secret | Turnstile secret key |
-
-Set both for Production. The site key is intentionally public; the secret key
-must remain encrypted and must never be committed to GitHub.
+The application follows the same capture-first reliability model used by
+ApplyFirst. It does not depend on a third-party verification widget. The browser
+supplies a hidden timing marker and bot-trap field, while the Pages Function
+enforces same-origin requests, the application window, required fields,
+allowlists, text limits, and PDF validation before storing anything.
 
 ## 5. Configure Application Confirmation Email
 
@@ -110,23 +103,21 @@ directly by Pages Functions.
 | `CLOUDFLARE_EMAIL_API_TOKEN` | Secret | The scoped Email Sending token |
 | `CONFIRMATION_FROM_EMAIL` | Plaintext | `mentorship@kellychen.dev` |
 | `CONFIRMATION_REPLY_TO` | Plaintext | `kellychenmeiyi@gmail.com` |
+| `OWNER_NOTIFY_EMAIL` | Plaintext | `kellychenmeiyi@gmail.com` |
 
-The confirmation includes the applicant's reference number, September 3 decision
-date, and next-step expectations. It does not include application answers or the
-resume. An email failure never deletes or invalidates a saved application; the
-success screen tells the applicant to retain the reference number instead.
+The student confirmation includes the applicant's reference number, September 3
+decision date, and next-step expectations. The separate owner notification includes
+a concise review summary and replies directly to the applicant. Neither email
+attaches the resume. Email failure never deletes or invalidates a saved application.
 
 ## 6. Redeploy After Configuration
-
-`VITE_TURNSTILE_SITE_KEY` is inserted during the frontend build, so adding the
-variable is not enough by itself.
 
 1. Open the Pages project's **Deployments** tab.
 2. Retry the latest production deployment, or push a new commit to `main`.
 3. Wait for the production deployment to succeed.
 4. Open `https://recruiting-accelerator-apply.pages.dev/apply`.
-5. Confirm the Turnstile widget appears and the final submit button is enabled
-   during the application window.
+5. Confirm the final submit button is enabled during the application window and
+   no verification widget blocks the form.
 
 ## 7. Run One Controlled End-to-End Test
 
@@ -136,7 +127,9 @@ Before sharing the LinkedIn post:
    `kellychenmeiyi+launch-test@gmail.com` and a small test PDF.
 2. Confirm the success screen displays an application reference.
 3. Confirm the receipt arrives and that Reply goes to `kellychenmeiyi@gmail.com`.
-4. In the D1 console, run:
+4. Confirm the owner notification arrives at `OWNER_NOTIFY_EMAIL` and that Reply
+   addresses the applicant.
+5. In the D1 console, run:
 
 ```sql
 SELECT
@@ -160,15 +153,19 @@ SELECT
   confirmation_email_status,
   confirmation_email_sent_at,
   confirmation_email_message_id,
-  confirmation_email_error
+  confirmation_email_error,
+  owner_notification_status,
+  owner_notification_sent_at,
+  owner_notification_message_id,
+  owner_notification_error
 FROM applications
 ORDER BY submitted_at DESC;
 ```
 
-5. Confirm the test row appears and the confirmation status is `delivered` or `queued`.
-6. Open the private R2 bucket and confirm the matching PDF exists under the
+6. Confirm the test row appears and both email statuses are `delivered` or `queued`.
+7. Open the private R2 bucket and confirm the matching PDF exists under the
    `founding-cohort-2026/` prefix.
-7. Test `/interest` once and confirm the record appears with:
+8. Test `/interest` once and confirm the record appears with:
 
 ```sql
 SELECT
@@ -182,25 +179,25 @@ FROM future_cohort_interest
 ORDER BY submitted_at DESC;
 ```
 
-8. Remove the test records and test PDF after verification so they are not
+9. Remove the test records and test PDF after verification so they are not
    confused with real applicants.
 
 ## 8. Know How Applications Will Be Reviewed
 
-There is currently no private application dashboard or separate owner notification
-when someone submits. Applicants receive a transactional receipt. During the
-application window:
+There is currently no private application dashboard. Applicants receive a
+transactional receipt and Kelly receives a separate owner notification after the
+application is stored. During the application window:
 
 - Check the `applications` D1 table at least once each day.
 - Review the associated resume from the private R2 bucket.
 - Update the D1 `status` field manually as applications move through review.
 - Check `confirmation_email_status` for `failed` or `not_configured` receipts.
+- Check `owner_notification_status` for failed owner alerts.
 - Do not download resumes onto shared or public devices.
 - Do not export applicant data into public analytics or public spreadsheets.
 
-An owner-only review dashboard or submission notification can be added later,
-but it is not required for a small eight-person founding cohort if the D1 table
-is checked consistently.
+An owner-only review dashboard can be added later, but it is not required for a
+small eight-person founding cohort if the D1 table is checked consistently.
 
 ## 9. Prepare the Private Operational Links
 

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import './styles.css';
 import { FaqPage, LandingPage, PolicyPage } from './LandingPage.jsx';
@@ -64,89 +64,35 @@ function TextArea({ label, name, hint, required = true, ...props }) {
   );
 }
 
-function Turnstile({ action, onToken, onError, configurationMessage }) {
-  const container = useRef(null);
-  const widgetId = useRef(null);
-  const siteKey = import.meta.env.VITE_TURNSTILE_SITE_KEY;
+function SubmissionGuardFields() {
+  const [formStartedAt] = useState(() => String(Date.now()));
 
-  useEffect(() => {
-    if (!siteKey) return undefined;
-
-    let cancelled = false;
-    const renderWidget = () => {
-      if (cancelled || !container.current || !window.turnstile) return;
-      widgetId.current = window.turnstile.render(container.current, {
-        sitekey: siteKey,
-        action,
-        callback: onToken,
-        'expired-callback': () => {
-          onToken('');
-          if (widgetId.current !== null) {
-            window.turnstile.reset(widgetId.current);
-          }
-        },
-        'error-callback': () => {
-          onToken('');
-          onError?.();
-        },
-        theme: 'light',
-      });
-    };
-
-    if (window.turnstile) {
-      renderWidget();
-    } else {
-      const interval = window.setInterval(() => {
-        if (window.turnstile) {
-          window.clearInterval(interval);
-          renderWidget();
-        }
-      }, 200);
-      return () => {
-        cancelled = true;
-        window.clearInterval(interval);
-      };
-    }
-
-    return () => {
-      cancelled = true;
-      if (window.turnstile && widgetId.current !== null) {
-        window.turnstile.remove(widgetId.current);
-      }
-    };
-  }, [action, onError, onToken, siteKey]);
-
-  if (!siteKey) {
-    return (
-      <p className="configuration-note">
-        {configurationMessage || (
-          <>
-            Submission protection is being configured. You can review the application now,
-            but submission will remain unavailable until launch.
-          </>
-        )}
-      </p>
-    );
-  }
-
-  return <div className="turnstile" ref={container} aria-label="Spam protection" />;
+  return (
+    <>
+      <input type="hidden" name="formStartedAt" value={formStartedAt} />
+      <div className="submission-trap" aria-hidden="true">
+        <label>
+          Leave This Field Empty
+          <input
+            type="text"
+            name="website"
+            tabIndex="-1"
+            autoComplete="off"
+          />
+        </label>
+      </div>
+    </>
+  );
 }
 
 function ApplicationPage() {
   const [currentStep, setCurrentStep] = useState(0);
   const [status, setStatus] = useState('idle');
   const [message, setMessage] = useState('');
-  const [turnstileToken, setTurnstileToken] = useState('');
-  const [turnstileVersion, setTurnstileVersion] = useState(0);
   const [obstacleCount, setObstacleCount] = useState(0);
   const formRef = useRef(null);
   const state = useApplicationState();
-  const canSubmit = state === 'open' && Boolean(import.meta.env.VITE_TURNSTILE_SITE_KEY);
-  const handleTurnstileError = useCallback(() => {
-    setMessage(
-      'Cloudflare verification could not load. Refresh the check or reload the page and try again.',
-    );
-  }, []);
+  const canSubmit = state === 'open';
 
   const validateStep = () => {
     const panel = formRef.current?.querySelector(`[data-step="${currentStep}"]`);
@@ -199,10 +145,10 @@ function ApplicationPage() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (!validateStep() || !canSubmit || !turnstileToken) {
+    if (!validateStep() || !canSubmit) {
       setMessage(
         state === 'open'
-          ? 'Complete the spam-protection check before submitting.'
+          ? 'Complete all required fields before submitting.'
           : 'Applications are not currently accepting submissions.',
       );
       return;
@@ -211,7 +157,6 @@ function ApplicationPage() {
     setStatus('submitting');
     setMessage('');
     const data = new FormData(event.currentTarget);
-    data.set('cf-turnstile-response', turnstileToken);
 
     try {
       const response = await fetch('/api/applications', {
@@ -233,8 +178,6 @@ function ApplicationPage() {
     } catch (error) {
       setStatus('error');
       setMessage(error.message);
-      setTurnstileToken('');
-      setTurnstileVersion((version) => version + 1);
     }
   };
 
@@ -333,6 +276,7 @@ function ApplicationPage() {
           ) : null}
 
           <form ref={formRef} onSubmit={handleSubmit} onChange={handleChoices}>
+            <SubmissionGuardFields />
             <div className={currentStep === 0 ? 'step-panel active' : 'step-panel'} data-step="0">
               <div className="field-row">
                 <TextField label="Full Name" name="fullName" autoComplete="name" />
@@ -450,15 +394,6 @@ function ApplicationPage() {
                 </label>
               </fieldset>
 
-              {currentStep === 2 ? (
-                <Turnstile
-                  key={turnstileVersion}
-                  action="application_submit"
-                  onToken={setTurnstileToken}
-                  onError={handleTurnstileError}
-                />
-              ) : null}
-
               <p className="legal-copy">
                 By submitting, you confirm that the information is accurate and agree
                 that Kelly may use it to evaluate and operate the program under the{' '}
@@ -474,7 +409,6 @@ function ApplicationPage() {
               {currentStep > 0 ? (
                 <button type="button" className="button secondary" onClick={() => {
                   setMessage('');
-                  if (currentStep === 2) setTurnstileToken('');
                   setCurrentStep((step) => step - 1);
                 }}>
                   Back
@@ -504,27 +438,19 @@ function ApplicationPage() {
 function FutureInterestPage() {
   const [status, setStatus] = useState('idle');
   const [message, setMessage] = useState('');
-  const [turnstileToken, setTurnstileToken] = useState('');
-  const [turnstileVersion, setTurnstileVersion] = useState(0);
-  const canSubmit = Boolean(import.meta.env.VITE_TURNSTILE_SITE_KEY);
-  const handleTurnstileError = useCallback(() => {
-    setMessage(
-      'Cloudflare verification could not load. Refresh the check or reload the page and try again.',
-    );
-  }, []);
+  const canSubmit = true;
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (!canSubmit || !turnstileToken) {
-      setMessage('Complete the spam-protection check before joining the list.');
+    if (!canSubmit) {
+      setMessage('Complete all required fields before joining the list.');
       return;
     }
 
     setStatus('submitting');
     setMessage('');
     const data = new FormData(event.currentTarget);
-    data.set('cf-turnstile-response', turnstileToken);
 
     try {
       const response = await fetch('/api/interest', {
@@ -546,8 +472,6 @@ function FutureInterestPage() {
     } catch (error) {
       setStatus('error');
       setMessage(error.message);
-      setTurnstileToken('');
-      setTurnstileVersion((version) => version + 1);
     }
   };
 
@@ -613,6 +537,7 @@ function FutureInterestPage() {
           </div>
 
           <form onSubmit={handleSubmit}>
+            <SubmissionGuardFields />
             <div className="field-row">
               <TextField
                 label="Full Name"
@@ -677,14 +602,6 @@ function FutureInterestPage() {
                 announcements by email.
               </span>
             </label>
-
-            <Turnstile
-              key={turnstileVersion}
-              action="interest_submit"
-              onToken={setTurnstileToken}
-              onError={handleTurnstileError}
-              configurationMessage="Submission protection is being configured. The interest form will be available as soon as setup is complete."
-            />
 
             <p className="legal-copy">
               Your information is never sold. You can request correction, deletion,

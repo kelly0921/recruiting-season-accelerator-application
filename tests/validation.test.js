@@ -12,9 +12,11 @@ import {
 } from '../functions/_shared/validation.js';
 import {
   buildApplicationConfirmationEmail,
+  buildOwnerApplicationNotificationEmail,
   sendApplicationConfirmation,
+  sendOwnerApplicationNotification,
 } from '../functions/_shared/confirmationEmail.js';
-import { verifyTurnstile } from '../functions/_shared/turnstile.js';
+import { validateSubmissionGuard } from '../functions/_shared/submissionGuard.js';
 import { applicationStepRequiresValidation } from '../src/program.js';
 
 const landingSourceUrl = new URL('../src/LandingPage.jsx', import.meta.url);
@@ -318,31 +320,77 @@ test('missing email configuration does not invalidate a saved application', asyn
   assert.match(outcome.error, /Missing email configuration/);
 });
 
-test('Turnstile verification checks the expected action and hostname', async () => {
-  const originalFetch = globalThis.fetch;
-  globalThis.fetch = async () => new Response(JSON.stringify({
-    success: true,
-    action: 'application_submit',
-    hostname: 'recruiting-accelerator-apply.pages.dev',
-    'error-codes': [],
-  }), { status: 200, headers: { 'Content-Type': 'application/json' } });
+test('submission guard accepts a human-paced same-origin form and rejects traps', () => {
+  const now = Date.now();
+  const request = new Request(
+    'https://recruiting-accelerator-apply.pages.dev/api/applications',
+    {
+      method: 'POST',
+      headers: {
+        Origin: 'https://recruiting-accelerator-apply.pages.dev',
+        'Sec-Fetch-Site': 'same-origin',
+      },
+    },
+  );
+  const formData = new FormData();
+  formData.set('formStartedAt', String(now - 10_000));
+  formData.set('website', '');
+  assert.equal(validateSubmissionGuard(request, formData, now), '');
 
-  try {
-    const valid = await verifyTurnstile('valid-token', 'secret', '192.0.2.1', {
-      expectedAction: 'application_submit',
-      expectedHostname: 'recruiting-accelerator-apply.pages.dev',
-    });
-    assert.equal(valid.success, true);
+  const trapped = new FormData();
+  trapped.set('formStartedAt', String(now - 10_000));
+  trapped.set('website', 'https://spam.example');
+  assert.match(validateSubmissionGuard(request, trapped, now), /could not be verified/);
 
-    const wrongAction = await verifyTurnstile('valid-token', 'secret', '192.0.2.1', {
-      expectedAction: 'interest_submit',
-      expectedHostname: 'recruiting-accelerator-apply.pages.dev',
-    });
-    assert.equal(wrongAction.success, false);
-    assert.ok(wrongAction.errorCodes.includes('action-mismatch'));
-  } finally {
-    globalThis.fetch = originalFetch;
-  }
+  const tooFast = new FormData();
+  tooFast.set('formStartedAt', String(now));
+  assert.match(validateSubmissionGuard(request, tooFast, now), /could not be verified/);
+});
+
+test('owner notification summarizes a saved application and replies to the student', async () => {
+  const application = applicationRecord(
+    validApplication(),
+    'application-test-id',
+    'founding-cohort-2026/application-test-id.pdf',
+  );
+  const email = buildOwnerApplicationNotificationEmail({
+    application,
+    reference: 'ABC12345',
+  });
+  assert.match(email.subject, /New Recruiting Season Accelerator Application/);
+  assert.match(email.text, /ABC12345/);
+  assert.match(email.text, /Example Applicant/);
+  assert.match(email.text, /founding-cohort-2026\/application-test-id\.pdf/);
+  assert.equal(email.reply_to, 'applicant@example.com');
+
+  let payload;
+  const outcome = await sendOwnerApplicationNotification({
+    env: {
+      CLOUDFLARE_ACCOUNT_ID: 'account-id',
+      CLOUDFLARE_EMAIL_API_TOKEN: 'secret-token',
+      CONFIRMATION_FROM_EMAIL: 'mentorship@kellychen.dev',
+      CONFIRMATION_REPLY_TO: 'kelly@example.com',
+      OWNER_NOTIFY_EMAIL: 'owner@example.com',
+    },
+    application,
+    reference: 'ABC12345',
+    fetchImpl: async (url, options) => {
+      payload = JSON.parse(options.body);
+      return new Response(JSON.stringify({
+        success: true,
+        errors: [],
+        result: {
+          delivered: ['owner@example.com'],
+          queued: [],
+          permanent_bounces: [],
+        },
+      }), { status: 200, headers: { 'Content-Type': 'application/json' } });
+    },
+  });
+  assert.equal(outcome.sent, true);
+  assert.equal(payload.to, 'owner@example.com');
+  assert.equal(payload.reply_to, 'applicant@example.com');
+  assert.equal(payload.from.address, 'mentorship@kellychen.dev');
 });
 
 test('a complete future cohort interest form passes validation', () => {
@@ -404,9 +452,8 @@ test('the Cloudflare microsite contains details, both forms, and policy navigati
   assert.match(application, /path === '\/interest'/);
   assert.match(application, /<FutureInterestPage/);
   assert.match(application, /fetch\('\/api\/interest'/);
-  assert.match(application, /currentStep === 2 \? \(/);
-  assert.match(application, /action="application_submit"/);
-  assert.doesNotMatch(application, /window\.turnstile\.reset\(\)/);
+  assert.match(application, /<SubmissionGuardFields \/>/);
+  assert.doesNotMatch(application, /turnstile/i);
   assert.match(chrome, /href="\/terms"/);
   assert.match(chrome, /href="\/privacy"/);
   assert.match(chrome, /href="\/refund"/);

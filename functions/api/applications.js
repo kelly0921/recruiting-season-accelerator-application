@@ -3,8 +3,11 @@ import {
   validateApplication,
   validateResumeSignature,
 } from '../_shared/validation.js';
-import { sendApplicationConfirmation } from '../_shared/confirmationEmail.js';
-import { verifyTurnstile } from '../_shared/turnstile.js';
+import {
+  sendApplicationConfirmation,
+  sendOwnerApplicationNotification,
+} from '../_shared/confirmationEmail.js';
+import { validateSubmissionGuard } from '../_shared/submissionGuard.js';
 
 const json = (body, status = 200) =>
   new Response(JSON.stringify(body), {
@@ -32,15 +35,60 @@ async function recordConfirmationEmailOutcome(env, applicationId, outcome) {
       applicationId,
     ).run();
   } catch (error) {
-    console.error('Confirmation email status update failed', {
+    console.error(JSON.stringify({
+      message: 'Confirmation email status update failed',
       applicationId,
-      message: error.message,
-    });
+      error: error instanceof Error ? error.message : String(error),
+    }));
+  }
+}
+
+async function recordOwnerNotificationOutcome(env, applicationId, outcome) {
+  try {
+    await env.APPLICATIONS_DB.prepare(
+      `UPDATE applications
+       SET owner_notification_status = ?1,
+           owner_notification_sent_at = ?2,
+           owner_notification_error = ?3,
+           owner_notification_message_id = ?4
+       WHERE id = ?5`,
+    ).bind(
+      outcome.status,
+      outcome.sent ? new Date().toISOString() : '',
+      String(outcome.error || '').slice(0, 500),
+      String(outcome.messageId || '').slice(0, 200),
+      applicationId,
+    ).run();
+  } catch (error) {
+    console.error(JSON.stringify({
+      message: 'Owner notification status update failed',
+      applicationId,
+      error: error instanceof Error ? error.message : String(error),
+    }));
+  }
+}
+
+async function attemptEmail(label, applicationId, send) {
+  try {
+    return await send();
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    console.error(JSON.stringify({
+      message: `${label} failed`,
+      applicationId,
+      error: message,
+    }));
+    return {
+      sent: false,
+      status: 'failed',
+      error: message,
+      messageId: '',
+    };
   }
 }
 
 export async function onRequestPost({ request, env }) {
-  if (!env.APPLICATIONS_DB || !env.RESUMES_BUCKET || !env.TURNSTILE_SECRET_KEY) {
+  if (!env.APPLICATIONS_DB || !env.RESUMES_BUCKET) {
     return json({ error: 'Application services are not fully configured.' }, 503);
   }
 
@@ -56,30 +104,15 @@ export async function onRequestPost({ request, env }) {
     return json({ error: 'Unable to read the submitted form.' }, 400);
   }
 
+  const guardError = validateSubmissionGuard(request, formData);
+  if (guardError) return json({ error: guardError }, 400);
+
   const error = validateApplication(formData);
   if (error) return json({ error }, 400);
 
   const resume = formData.get('resume');
   const resumeSignatureError = await validateResumeSignature(resume);
   if (resumeSignatureError) return json({ error: resumeSignatureError }, 400);
-
-  const turnstileResult = await verifyTurnstile(
-    String(formData.get('cf-turnstile-response') || ''),
-    env.TURNSTILE_SECRET_KEY,
-    request.headers.get('CF-Connecting-IP'),
-    {
-      expectedAction: 'application_submit',
-      expectedHostname: new URL(request.url).hostname,
-    },
-  );
-  if (!turnstileResult.success) {
-    console.warn('Turnstile application verification failed', {
-      errorCodes: turnstileResult.errorCodes,
-      action: turnstileResult.action,
-      hostname: turnstileResult.hostname,
-    });
-    return json({ error: 'Spam-protection verification failed. Please try again.' }, 400);
-  }
 
   const id = crypto.randomUUID();
   const resumeKey = `founding-cohort-2026/${id}.pdf`;
@@ -166,39 +199,38 @@ export async function onRequestPost({ request, env }) {
         409,
       );
     }
-    console.error('Application insert failed', databaseError);
+    console.error(JSON.stringify({
+      message: 'Application insert failed',
+      error: databaseError instanceof Error ? databaseError.message : String(databaseError),
+    }));
     return json({ error: 'Your application could not be saved. Please try again.' }, 500);
   }
 
   const reference = id.slice(0, 8).toUpperCase();
-  let confirmationEmail;
-
-  try {
-    confirmationEmail = await sendApplicationConfirmation({
+  const [confirmationEmail, ownerNotification] = await Promise.all([
+    attemptEmail('Applicant confirmation email', id, () => sendApplicationConfirmation({
       env,
       fullName: record.fullName,
       email: record.email,
       reference,
-    });
-  } catch (error) {
-    confirmationEmail = {
-      sent: false,
-      status: 'failed',
-      error: error.message,
-      messageId: '',
-    };
-    console.error('Application confirmation email failed', {
-      applicationId: id,
-      message: error.message,
-    });
-  }
+    })),
+    attemptEmail('Owner application notification', id, () => sendOwnerApplicationNotification({
+      env,
+      application: record,
+      reference,
+    })),
+  ]);
 
-  await recordConfirmationEmailOutcome(env, id, confirmationEmail);
+  await Promise.all([
+    recordConfirmationEmailOutcome(env, id, confirmationEmail),
+    recordOwnerNotificationOutcome(env, id, ownerNotification),
+  ]);
 
   return json({
     ok: true,
     reference,
     confirmationEmailSent: confirmationEmail.sent,
+    ownerNotificationSent: ownerNotification.sent,
   }, 201);
 }
 

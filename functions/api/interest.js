@@ -2,7 +2,7 @@ import {
   futureInterestRecord,
   validateFutureInterest,
 } from '../_shared/validation.js';
-import { verifyTurnstile } from '../_shared/turnstile.js';
+import { validateSubmissionGuard } from '../_shared/submissionGuard.js';
 
 const json = (body, status = 200) =>
   new Response(JSON.stringify(body), {
@@ -37,7 +37,7 @@ async function ensureInterestSchema(database) {
 }
 
 export async function onRequestPost({ request, env }) {
-  if (!env.APPLICATIONS_DB || !env.TURNSTILE_SECRET_KEY) {
+  if (!env.APPLICATIONS_DB) {
     return json({ error: 'Future cohort updates are still being configured.' }, 503);
   }
 
@@ -53,26 +53,11 @@ export async function onRequestPost({ request, env }) {
     return json({ error: 'Unable to read the submitted form.' }, 400);
   }
 
+  const guardError = validateSubmissionGuard(request, formData);
+  if (guardError) return json({ error: guardError }, 400);
+
   const error = validateFutureInterest(formData);
   if (error) return json({ error }, 400);
-
-  const turnstileResult = await verifyTurnstile(
-    String(formData.get('cf-turnstile-response') || ''),
-    env.TURNSTILE_SECRET_KEY,
-    request.headers.get('CF-Connecting-IP'),
-    {
-      expectedAction: 'interest_submit',
-      expectedHostname: new URL(request.url).hostname,
-    },
-  );
-  if (!turnstileResult.success) {
-    console.warn('Turnstile interest verification failed', {
-      errorCodes: turnstileResult.errorCodes,
-      action: turnstileResult.action,
-      hostname: turnstileResult.hostname,
-    });
-    return json({ error: 'Spam-protection verification failed. Please try again.' }, 400);
-  }
 
   const record = futureInterestRecord(formData, crypto.randomUUID());
 

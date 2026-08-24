@@ -584,6 +584,14 @@ footer a {
   margin-top: 14px;
 }
 
+.submission-trap {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
 .success-card .configuration-note {
   margin: 0 auto 4px;
   text-align: left;

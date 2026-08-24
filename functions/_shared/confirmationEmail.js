@@ -15,6 +15,18 @@ function firstName(fullName) {
   return String(fullName || '').trim().split(/\s+/)[0] || 'there';
 }
 
+function singleLine(value = '') {
+  return String(value).replace(/\s+/g, ' ').trim();
+}
+
+function emailRow(label, value) {
+  return `
+    <tr>
+      <th style="width:150px;padding:10px 14px 10px 0;border-bottom:1px solid #e5e9ee;color:#607589;font-size:13px;text-align:left;vertical-align:top;">${escapeHtml(label)}</th>
+      <td style="padding:10px 0;border-bottom:1px solid #e5e9ee;color:#253f57;font-size:14px;">${escapeHtml(value || 'Not provided')}</td>
+    </tr>`;
+}
+
 export function buildApplicationConfirmationEmail({ fullName, email, reference }) {
   const safeName = escapeHtml(firstName(fullName));
   const safeReference = escapeHtml(reference);
@@ -94,13 +106,79 @@ export function buildApplicationConfirmationEmail({ fullName, email, reference }
   };
 }
 
-export async function sendApplicationConfirmation({
-  env,
-  fullName,
-  email,
-  reference,
-  fetchImpl = fetch,
-}) {
+export function buildOwnerApplicationNotificationEmail({ application, reference }) {
+  const ownerEmail = '';
+  const roles = Array.isArray(application.rolesExploring)
+    ? application.rolesExploring.join(', ')
+    : String(application.rolesExploring || '');
+  const subject = `New ${programName} Application · ${singleLine(application.fullName)}`;
+  const fields = [
+    ['Reference', reference],
+    ['Submitted', application.submittedAt],
+    ['Name', application.fullName],
+    ['Email', application.email],
+    ['School', application.school],
+    ['Academic Area', application.major],
+    ['Fall 2026 College Year', application.academicStage],
+    ['Expected Graduation', application.graduationDate],
+    ['Roles or Paths', roles],
+    ['Conference Plans', application.conferenceInterest],
+    ['LinkedIn', application.linkedInUrl],
+  ];
+  const text = [
+    `New ${programName} application`,
+    '',
+    ...fields.map(([label, value]) => `${label}: ${value || 'Not provided'}`),
+    '',
+    'The full application is stored in D1. The resume is stored privately in R2.',
+    `Resume key: ${application.resumeKey}`,
+    '',
+    'Reply to this email to contact the applicant directly.',
+  ].join('\n');
+  const html = `<!doctype html>
+<html lang="en">
+  <body style="margin:0;background:#f6f3ed;color:#163052;font-family:Arial,Helvetica,sans-serif;">
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f6f3ed;padding:30px 16px;">
+      <tr>
+        <td align="center">
+          <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:640px;background:#ffffff;border:1px solid #d9e0e8;border-radius:18px;overflow:hidden;">
+            <tr><td style="height:7px;background:#3d6f92;"></td></tr>
+            <tr>
+              <td style="padding:32px 36px;">
+                <p style="margin:0 0 10px;color:#567087;font-size:12px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;">${programName}</p>
+                <h1 style="margin:0 0 8px;color:#163052;font-size:26px;line-height:1.25;">New Application Received</h1>
+                <p style="margin:0 0 22px;color:#567087;font-size:14px;line-height:1.55;">The application and private resume were saved successfully before this notification was sent.</p>
+                <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-top:1px solid #d9e0e8;">
+                  ${fields.map(([label, value]) => emailRow(label, value)).join('')}
+                </table>
+                <div style="margin-top:22px;padding:15px 17px;background:#edf4f7;border-radius:10px;color:#344d63;font-size:14px;line-height:1.55;">
+                  Review the full answers in D1 and retrieve the matching resume from the private R2 object:<br>
+                  <strong style="color:#163052;">${escapeHtml(application.resumeKey)}</strong>
+                </div>
+                <p style="margin:22px 0 0;color:#567087;font-size:13px;">Reply to this email to contact ${escapeHtml(application.fullName)} directly.</p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>`;
+
+  return {
+    to: ownerEmail,
+    from: {
+      address: '',
+      name: programName,
+    },
+    reply_to: application.email,
+    subject,
+    html,
+    text,
+  };
+}
+
+async function sendEmailPayload({ env, payload, recipient, fetchImpl }) {
   const requiredConfiguration = [
     ['CLOUDFLARE_ACCOUNT_ID', env.CLOUDFLARE_ACCOUNT_ID],
     ['CLOUDFLARE_EMAIL_API_TOKEN', env.CLOUDFLARE_EMAIL_API_TOKEN],
@@ -118,9 +196,8 @@ export async function sendApplicationConfirmation({
     };
   }
 
-  const payload = buildApplicationConfirmationEmail({ fullName, email, reference });
+  payload.to = recipient;
   payload.from.address = String(env.CONFIRMATION_FROM_EMAIL).trim();
-  payload.reply_to = String(env.CONFIRMATION_REPLY_TO || defaultReplyTo).trim();
 
   const response = await fetchImpl(
     `https://api.cloudflare.com/client/v4/accounts/${encodeURIComponent(env.CLOUDFLARE_ACCOUNT_ID)}/email/sending/send`,
@@ -148,13 +225,13 @@ export async function sendApplicationConfirmation({
     throw new Error(details || `Cloudflare Email Service returned HTTP ${response.status}.`);
   }
 
-  const normalizedEmail = String(email).trim().toLowerCase();
+  const normalizedEmail = String(recipient).trim().toLowerCase();
   const delivered = (result.result?.delivered || []).map((value) => value.toLowerCase());
   const queued = (result.result?.queued || []).map((value) => value.toLowerCase());
   const bounced = (result.result?.permanent_bounces || []).map((value) => value.toLowerCase());
 
   if (bounced.includes(normalizedEmail)) {
-    throw new Error('The confirmation email permanently bounced.');
+    throw new Error('The transactional email permanently bounced.');
   }
 
   if (!delivered.includes(normalizedEmail) && !queued.includes(normalizedEmail)) {
@@ -167,4 +244,30 @@ export async function sendApplicationConfirmation({
     messageId: String(result.result?.message_id || ''),
     error: '',
   };
+}
+
+export async function sendApplicationConfirmation({
+  env,
+  fullName,
+  email,
+  reference,
+  fetchImpl = fetch,
+}) {
+  const payload = buildApplicationConfirmationEmail({ fullName, email, reference });
+  payload.reply_to = String(env.CONFIRMATION_REPLY_TO || defaultReplyTo).trim();
+  return sendEmailPayload({ env, payload, recipient: email, fetchImpl });
+}
+
+export async function sendOwnerApplicationNotification({
+  env,
+  application,
+  reference,
+  fetchImpl = fetch,
+}) {
+  const recipient = String(
+    env.OWNER_NOTIFY_EMAIL || env.CONFIRMATION_REPLY_TO || defaultReplyTo,
+  ).trim();
+  const payload = buildOwnerApplicationNotificationEmail({ application, reference });
+  payload.reply_to = application.email;
+  return sendEmailPayload({ env, payload, recipient, fetchImpl });
 }

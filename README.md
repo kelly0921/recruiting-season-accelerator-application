@@ -11,7 +11,7 @@ Recruiting Season Accelerator founding mentorship cohort application.
 - A lightweight future-cohort interest form
 - Program FAQ, Participant Terms, Privacy Notice, and Cost Policy routes
 - Cloudflare Pages Function submission handling
-- Cloudflare Turnstile server-side verification
+- Same-origin, honeypot, timing, and server-side submission validation
 - D1 application-record storage
 - Private R2 PDF-resume storage
 - Transactional application-receipt email with delivery-status tracking
@@ -70,7 +70,8 @@ Create and attach these under the Pages project's **Settings → Bindings**:
      `0004_refine_application_fit_and_acknowledgements.sql`, followed by
      `0005_add_conference_interest.sql`, `0006_add_beta_interest.sql`, and
      `0007_create_stage_one_application_fields.sql`, followed by
-     `0008_add_confirmation_email_tracking.sql`
+     `0008_add_confirmation_email_tracking.sql`, followed by
+     `0009_add_owner_notification_tracking.sql`
    - The production database for the current Pages site was updated through
      migration `0007` on August 23, 2026. Do not rerun it there.
    - The future-interest endpoint also creates its table safely if the second
@@ -83,21 +84,13 @@ Create and attach these under the Pages project's **Settings → Bindings**:
 
 ### Required environment variables
 
-Create a Cloudflare Turnstile widget for the production `pages.dev` hostname.
-Add:
-
 | Variable | Visibility | Purpose |
 | --- | --- | --- |
-| `VITE_TURNSTILE_SITE_KEY` | Plaintext | Renders the browser widget during the build |
-| `TURNSTILE_SECRET_KEY` | Secret | Verifies tokens inside the Pages Function |
 | `CLOUDFLARE_ACCOUNT_ID` | Plaintext | Selects the Cloudflare account used for Email Sending |
 | `CLOUDFLARE_EMAIL_API_TOKEN` | Secret | Sends transactional email through the Email Sending REST API |
 | `CONFIRMATION_FROM_EMAIL` | Plaintext | Onboarded sender, such as `mentorship@kellychen.dev` |
 | `CONFIRMATION_REPLY_TO` | Plaintext | Address that receives applicant replies |
-
-Apply `VITE_TURNSTILE_SITE_KEY` to both production and preview builds if previews
-need working submissions. Restrict production submissions to the production
-hostname in the Turnstile widget.
+| `OWNER_NOTIFY_EMAIL` | Plaintext | Optional owner-notification destination; falls back to `CONFIRMATION_REPLY_TO` |
 
 Deploy again after adding bindings or environment variables.
 
@@ -163,7 +156,7 @@ It collects:
 - Explicit consent to receive future cohort announcements
 
 Submissions are validated in `/functions/api/interest.js`, protected by the same
-Turnstile configuration as the application, and stored in the
+same-origin and bot-trap checks as the application, and stored in the
 `future_cohort_interest` D1 table. Duplicate email submissions are acknowledged
 without creating duplicate records. The form does not request a resume, detailed
 recruiting history, or payment information.
