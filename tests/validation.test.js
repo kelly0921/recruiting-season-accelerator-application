@@ -14,6 +14,7 @@ import {
   buildApplicationConfirmationEmail,
   sendApplicationConfirmation,
 } from '../functions/_shared/confirmationEmail.js';
+import { verifyTurnstile } from '../functions/_shared/turnstile.js';
 import { applicationStepRequiresValidation } from '../src/program.js';
 
 const landingSourceUrl = new URL('../src/LandingPage.jsx', import.meta.url);
@@ -317,6 +318,33 @@ test('missing email configuration does not invalidate a saved application', asyn
   assert.match(outcome.error, /Missing email configuration/);
 });
 
+test('Turnstile verification checks the expected action and hostname', async () => {
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async () => new Response(JSON.stringify({
+    success: true,
+    action: 'application_submit',
+    hostname: 'recruiting-accelerator-apply.pages.dev',
+    'error-codes': [],
+  }), { status: 200, headers: { 'Content-Type': 'application/json' } });
+
+  try {
+    const valid = await verifyTurnstile('valid-token', 'secret', '192.0.2.1', {
+      expectedAction: 'application_submit',
+      expectedHostname: 'recruiting-accelerator-apply.pages.dev',
+    });
+    assert.equal(valid.success, true);
+
+    const wrongAction = await verifyTurnstile('valid-token', 'secret', '192.0.2.1', {
+      expectedAction: 'interest_submit',
+      expectedHostname: 'recruiting-accelerator-apply.pages.dev',
+    });
+    assert.equal(wrongAction.success, false);
+    assert.ok(wrongAction.errorCodes.includes('action-mismatch'));
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
 test('a complete future cohort interest form passes validation', () => {
   assert.equal(validateFutureInterest(validFutureInterest()), '');
 });
@@ -376,6 +404,9 @@ test('the Cloudflare microsite contains details, both forms, and policy navigati
   assert.match(application, /path === '\/interest'/);
   assert.match(application, /<FutureInterestPage/);
   assert.match(application, /fetch\('\/api\/interest'/);
+  assert.match(application, /currentStep === 2 \? \(/);
+  assert.match(application, /action="application_submit"/);
+  assert.doesNotMatch(application, /window\.turnstile\.reset\(\)/);
   assert.match(chrome, /href="\/terms"/);
   assert.match(chrome, /href="\/privacy"/);
   assert.match(chrome, /href="\/refund"/);

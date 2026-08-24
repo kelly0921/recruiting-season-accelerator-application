@@ -56,12 +56,21 @@ export async function onRequestPost({ request, env }) {
   const error = validateFutureInterest(formData);
   if (error) return json({ error }, 400);
 
-  const turnstileValid = await verifyTurnstile(
+  const turnstileResult = await verifyTurnstile(
     String(formData.get('cf-turnstile-response') || ''),
     env.TURNSTILE_SECRET_KEY,
     request.headers.get('CF-Connecting-IP'),
+    {
+      expectedAction: 'interest_submit',
+      expectedHostname: new URL(request.url).hostname,
+    },
   );
-  if (!turnstileValid) {
+  if (!turnstileResult.success) {
+    console.warn('Turnstile interest verification failed', {
+      errorCodes: turnstileResult.errorCodes,
+      action: turnstileResult.action,
+      hostname: turnstileResult.hostname,
+    });
     return json({ error: 'Spam-protection verification failed. Please try again.' }, 400);
   }
 

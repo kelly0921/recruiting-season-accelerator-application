@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import './styles.css';
 import { FaqPage, LandingPage, PolicyPage } from './LandingPage.jsx';
@@ -64,7 +64,7 @@ function TextArea({ label, name, hint, required = true, ...props }) {
   );
 }
 
-function Turnstile({ onToken, configurationMessage }) {
+function Turnstile({ action, onToken, onError, configurationMessage }) {
   const container = useRef(null);
   const widgetId = useRef(null);
   const siteKey = import.meta.env.VITE_TURNSTILE_SITE_KEY;
@@ -77,9 +77,18 @@ function Turnstile({ onToken, configurationMessage }) {
       if (cancelled || !container.current || !window.turnstile) return;
       widgetId.current = window.turnstile.render(container.current, {
         sitekey: siteKey,
+        action,
         callback: onToken,
-        'expired-callback': () => onToken(''),
-        'error-callback': () => onToken(''),
+        'expired-callback': () => {
+          onToken('');
+          if (widgetId.current !== null) {
+            window.turnstile.reset(widgetId.current);
+          }
+        },
+        'error-callback': () => {
+          onToken('');
+          onError?.();
+        },
         theme: 'light',
       });
     };
@@ -105,7 +114,7 @@ function Turnstile({ onToken, configurationMessage }) {
         window.turnstile.remove(widgetId.current);
       }
     };
-  }, [onToken, siteKey]);
+  }, [action, onError, onToken, siteKey]);
 
   if (!siteKey) {
     return (
@@ -128,10 +137,16 @@ function ApplicationPage() {
   const [status, setStatus] = useState('idle');
   const [message, setMessage] = useState('');
   const [turnstileToken, setTurnstileToken] = useState('');
+  const [turnstileVersion, setTurnstileVersion] = useState(0);
   const [obstacleCount, setObstacleCount] = useState(0);
   const formRef = useRef(null);
   const state = useApplicationState();
   const canSubmit = state === 'open' && Boolean(import.meta.env.VITE_TURNSTILE_SITE_KEY);
+  const handleTurnstileError = useCallback(() => {
+    setMessage(
+      'Cloudflare verification could not load. Refresh the check or reload the page and try again.',
+    );
+  }, []);
 
   const validateStep = () => {
     const panel = formRef.current?.querySelector(`[data-step="${currentStep}"]`);
@@ -218,8 +233,8 @@ function ApplicationPage() {
     } catch (error) {
       setStatus('error');
       setMessage(error.message);
-      if (window.turnstile) window.turnstile.reset();
       setTurnstileToken('');
+      setTurnstileVersion((version) => version + 1);
     }
   };
 
@@ -435,7 +450,14 @@ function ApplicationPage() {
                 </label>
               </fieldset>
 
-              <Turnstile onToken={setTurnstileToken} />
+              {currentStep === 2 ? (
+                <Turnstile
+                  key={turnstileVersion}
+                  action="application_submit"
+                  onToken={setTurnstileToken}
+                  onError={handleTurnstileError}
+                />
+              ) : null}
 
               <p className="legal-copy">
                 By submitting, you confirm that the information is accurate and agree
@@ -452,6 +474,7 @@ function ApplicationPage() {
               {currentStep > 0 ? (
                 <button type="button" className="button secondary" onClick={() => {
                   setMessage('');
+                  if (currentStep === 2) setTurnstileToken('');
                   setCurrentStep((step) => step - 1);
                 }}>
                   Back
@@ -482,7 +505,13 @@ function FutureInterestPage() {
   const [status, setStatus] = useState('idle');
   const [message, setMessage] = useState('');
   const [turnstileToken, setTurnstileToken] = useState('');
+  const [turnstileVersion, setTurnstileVersion] = useState(0);
   const canSubmit = Boolean(import.meta.env.VITE_TURNSTILE_SITE_KEY);
+  const handleTurnstileError = useCallback(() => {
+    setMessage(
+      'Cloudflare verification could not load. Refresh the check or reload the page and try again.',
+    );
+  }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -517,8 +546,8 @@ function FutureInterestPage() {
     } catch (error) {
       setStatus('error');
       setMessage(error.message);
-      if (window.turnstile) window.turnstile.reset();
       setTurnstileToken('');
+      setTurnstileVersion((version) => version + 1);
     }
   };
 
@@ -650,7 +679,10 @@ function FutureInterestPage() {
             </label>
 
             <Turnstile
+              key={turnstileVersion}
+              action="interest_submit"
               onToken={setTurnstileToken}
+              onError={handleTurnstileError}
               configurationMessage="Submission protection is being configured. The interest form will be available as soon as setup is complete."
             />
 
