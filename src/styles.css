@@ -506,6 +506,20 @@ input[type="file"]::file-selector-button {
   color: #8a2f2f;
 }
 
+.step-message {
+  margin: 14px 0 22px;
+  border: 1px solid #e6bcbc;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.step-panel.validation-attempted input:invalid,
+.step-panel.validation-attempted select:invalid,
+.step-panel.validation-attempted textarea:invalid {
+  border-color: #b54d4d;
+  box-shadow: 0 0 0 3px rgba(181, 77, 77, 0.12);
+}
+
 footer {
   display: flex;
   width: min(1180px, calc(100% - 48px));

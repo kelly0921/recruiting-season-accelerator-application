@@ -23,6 +23,38 @@ const steps = [
   { id: 'commitment', label: 'Commitment' },
 ];
 
+const applicationFieldLabels = {
+  fullName: 'your full name',
+  email: 'a valid email address',
+  school: 'your school',
+  major: 'your academic area or program',
+  graduationDate: 'your expected graduation month and year',
+  academicStage: 'your Fall 2026 college year',
+  isAdult: 'the age confirmation',
+  linkedInUrl: 'your full LinkedIn profile URL, including https://',
+  resume: 'your resume PDF',
+  fallGoal: 'your fall opportunity goal',
+  recentAction: 'one recent action you have taken',
+  kellyQuestion: 'the question you want Kelly’s help with',
+  conferenceInterest: 'your current conference plans',
+};
+
+function invalidFieldMessage(control) {
+  const label = applicationFieldLabels[control.name] || 'this required field';
+
+  if (control.validity?.tooShort) {
+    return `Add a little more detail for ${label} before continuing.`;
+  }
+  if (control.validity?.typeMismatch && control.name === 'linkedInUrl') {
+    return 'Enter your full LinkedIn profile URL, including https://, before continuing.';
+  }
+  if (control.validity?.typeMismatch && control.name === 'email') {
+    return 'Enter a valid email address before continuing.';
+  }
+
+  return `Complete ${label} before continuing.`;
+}
+
 function CheckboxGroup({ legend, name, options, help, max }) {
   return (
     <fieldset className="field-group">
@@ -90,6 +122,7 @@ function ApplicationPage() {
   const [status, setStatus] = useState('idle');
   const [message, setMessage] = useState('');
   const [obstacleCount, setObstacleCount] = useState(0);
+  const [validationAttemptedStep, setValidationAttemptedStep] = useState(null);
   const formRef = useRef(null);
   const state = useApplicationState();
   const canSubmit = state === 'open';
@@ -100,8 +133,12 @@ function ApplicationPage() {
     const invalidControl = controls.find((control) => !control.checkValidity());
 
     if (invalidControl) {
+      setStatus('error');
+      setMessage(invalidFieldMessage(invalidControl));
+      setValidationAttemptedStep(currentStep);
+      invalidControl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      invalidControl.focus({ preventScroll: true });
       invalidControl.reportValidity();
-      invalidControl.focus();
       return false;
     }
 
@@ -113,12 +150,17 @@ function ApplicationPage() {
         'input[name="obstacles"]:checked',
       ).length;
       if (!roles || !obstacles) {
+        setStatus('error');
         setMessage('Choose at least one role or path and one current obstacle.');
+        setValidationAttemptedStep(currentStep);
+        panel.querySelector('fieldset')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
         return false;
       }
     }
 
+    setStatus('idle');
     setMessage('');
+    setValidationAttemptedStep(null);
     return true;
   };
 
@@ -136,9 +178,11 @@ function ApplicationPage() {
     );
     if (checked.length > 2) {
       event.target.checked = false;
+      setStatus('error');
       setMessage('Choose up to two current obstacles.');
     } else {
       setObstacleCount(checked.length);
+      setStatus('idle');
       setMessage('');
     }
   };
@@ -257,6 +301,11 @@ function ApplicationPage() {
             <span>{Math.round(((currentStep + 1) / steps.length) * 100)}%</span>
           </div>
           <p className="required-fields-note">All fields are required unless marked Optional.</p>
+          {message ? (
+            <p className={status === 'error' ? 'form-message error step-message' : 'form-message step-message'} role="alert">
+              {message}
+            </p>
+          ) : null}
 
           <ol className="progress" aria-label="Application progress">
             {steps.map((step, index) => (
@@ -277,7 +326,7 @@ function ApplicationPage() {
 
           <form ref={formRef} onSubmit={handleSubmit} onChange={handleChoices}>
             <SubmissionGuardFields />
-            <div className={currentStep === 0 ? 'step-panel active' : 'step-panel'} data-step="0">
+            <div className={`${currentStep === 0 ? 'step-panel active' : 'step-panel'}${validationAttemptedStep === 0 ? ' validation-attempted' : ''}`} data-step="0">
               <div className="field-row">
                 <TextField label="Full Name" name="fullName" autoComplete="name" />
                 <TextField label="Email Address" name="email" type="email" autoComplete="email" />
@@ -318,7 +367,7 @@ function ApplicationPage() {
               </label>
             </div>
 
-            <div className={currentStep === 1 ? 'step-panel active' : 'step-panel'} data-step="1">
+            <div className={`${currentStep === 1 ? 'step-panel active' : 'step-panel'}${validationAttemptedStep === 1 ? ' validation-attempted' : ''}`} data-step="1">
               <CheckboxGroup
                 legend="Which roles or paths are you currently exploring?"
                 name="rolesExploring"
@@ -363,7 +412,7 @@ function ApplicationPage() {
               </label>
             </div>
 
-            <div className={currentStep === 2 ? 'step-panel active' : 'step-panel'} data-step="2">
+            <div className={`${currentStep === 2 ? 'step-panel active' : 'step-panel'}${validationAttemptedStep === 2 ? ' validation-attempted' : ''}`} data-step="2">
               <fieldset className="commitments">
                 <legend>Participation Expectations</legend>
                 {[
@@ -403,12 +452,12 @@ function ApplicationPage() {
               </p>
             </div>
 
-            {message ? <p className={status === 'error' ? 'form-message error' : 'form-message'} role="alert">{message}</p> : null}
-
             <div className="form-actions">
               {currentStep > 0 ? (
                 <button type="button" className="button secondary" onClick={() => {
+                  setStatus('idle');
                   setMessage('');
+                  setValidationAttemptedStep(null);
                   setCurrentStep((step) => step - 1);
                 }}>
                   Back
